@@ -1,6 +1,8 @@
 # Transcribe
 
-Use Whisper speech-to-text models directly in your browser. Built with [Transformers.js](https://github.com/xenova/transformers.js), based on the [Whisper Web](https://github.com/xenova/whisper-web/) demo.
+Use Whisper speech-to-text models directly in your browser. Built with [Transformers.js](https://github.com/xenova/transformers.js), based on the [Whisper Web](https://github.com/xenova/whisper-web/).
+
+**Live Demo**: <https://stekhn.github.io/transcribe/>
 
 ## Usage
 
