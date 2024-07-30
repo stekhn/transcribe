@@ -6,24 +6,14 @@ Use Whisper speech-to-text models directly in your browser. Built with [Transfor
 
 ## Usage
 
-1. Clone the repo and install dependencies:
+1. Clone the repository `git clone git@github.com:stekhn/transcribe.git`
+2. Install dependencies `npm install`
+3. Start development server `npm run dev`
+4. Build the website `npm run build`
 
-    ```bash
-    git clone https://github.com/xenova/whisper-web.git
-    cd whisper-web
-    npm install
-    ```
+The project requires [Node.js](https://nodejs.org/en/download/) to run locally. The development server runs on <http://localhost:5173/>.
 
-2. Run the development server:
-
-    ```bash
-    npm run dev
-    ```
-
-    > Firefox users need to change the `dom.workers.modules.enabled` setting in `about:config` to `true` to enable Web Workers.
-    > Check out [this issue](https://github.com/xenova/whisper-web/issues/8) for more details.
-
-3. Open the link (e.g., [http://localhost:5173/](http://localhost:5173/)) in your browser.
+Firefox users might need to change the `dom.workers.modules.enabled` setting in `about:config` to `true` to enable Web Workers. Check out [this issue](https://github.com/xenova/whisper-web/issues/8) for more details.
 
 ## Deployment
 
