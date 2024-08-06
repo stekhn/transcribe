@@ -1,4 +1,5 @@
-import { useRef, useEffect } from "react";
+import { useState } from "react";
+import { Switch } from "@headlessui/react";
 
 import { TranscriberData } from "../hooks/useTranscriber";
 import { formatAudioTimestamp } from "../utils/AudioUtils";
@@ -8,7 +9,7 @@ interface Props {
 }
 
 export default function Transcript({ transcribedData }: Props) {
-    const divRef = useRef<HTMLDivElement>(null);
+    const [showTimestamps, setShowTimestamps] = useState(true);
 
     const saveBlob = (blob: Blob, filename: string) => {
         const url = URL.createObjectURL(blob);
@@ -39,29 +40,43 @@ export default function Transcript({ transcribedData }: Props) {
         saveBlob(blob, "transcript.json");
     };
 
-    // Scroll to the bottom when the component updates
-    useEffect(() => {
-        if (divRef.current) {
-            const diff = Math.abs(
-                divRef.current.offsetHeight +
-                    divRef.current.scrollTop -
-                    divRef.current.scrollHeight,
-            );
-
-            if (diff <= 64) {
-                // We're close enough to the bottom, so scroll to the bottom
-                divRef.current.scrollTop = divRef.current.scrollHeight;
-            }
-        }
-    });
-
     return (
-        <div ref={divRef} className='w-full flex flex-col p-5'>
+        <div className='w-full flex flex-col p-5'>
+            <fieldset className='flex flex-row items-center justify-end mb-5'>
+                <label className='text-sm text-gray-500 mr-2'>
+                    Show timestamps
+                </label>
+                <Switch
+                    checked={showTimestamps}
+                    onChange={setShowTimestamps}
+                    className={`${
+                        showTimestamps ? "bg-teal-500" : "bg-gray-300"
+                    }
+                relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-300`}
+                >
+                    <span
+                        className={`${
+                            showTimestamps ? "translate-x-6" : "translate-x-1"
+                        }
+                    inline-block w-4 h-4 transform bg-white rounded-full transition-transform duration-300`}
+                    />
+                </Switch>
+            </fieldset>
+            {transcribedData?.chunks && !showTimestamps && (
+                <div className='w-full flex flex-row bg-white rounded-lg ring-1 ring-slate-700/10 p-2 px-3'>
+                    <div>
+                        {transcribedData.chunks.map((chunk, i) => (
+                            <span key={i}>{chunk.text}</span>
+                        ))}
+                    </div>
+                </div>
+            )}
             {transcribedData?.chunks &&
+                showTimestamps &&
                 transcribedData.chunks.map((chunk, i) => (
                     <div
                         key={`${i}-${chunk.text}`}
-                        className='w-full flex flex-row mb-2 bg-white rounded-lg p-2 px-3 ring-1 ring-slate-700/10'
+                        className='w-full flex flex-row mb-2 bg-white rounded-lg ring-1 ring-slate-700/10 p-2 px-3'
                     >
                         <div className='mr-5'>
                             {formatAudioTimestamp(chunk.timestamp[0])}
@@ -70,7 +85,7 @@ export default function Transcript({ transcribedData }: Props) {
                     </div>
                 ))}
             {transcribedData && !transcribedData.isBusy && (
-                <div className='flex items-center ml-auto mt-3'>
+                <div className='flex items-center ml-auto mt-5'>
                     <div>
                         <button
                             onClick={exportTXT}

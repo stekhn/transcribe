@@ -252,7 +252,6 @@ export function AudioManager(props: { transcriber: Transcriber }) {
                         setAudioDownloadUrl(e);
                     }}
                 />
-                <VerticalBar />
                 <FileTile
                     icon={<FolderIcon />}
                     text={"File"}
@@ -268,7 +267,6 @@ export function AudioManager(props: { transcriber: Transcriber }) {
                 />
                 {navigator.mediaDevices && (
                     <>
-                        <VerticalBar />
                         <RecordTile
                             icon={<MicrophoneIcon />}
                             text={"Record"}
@@ -287,7 +285,7 @@ export function AudioManager(props: { transcriber: Transcriber }) {
             }
             {audioData && (
                 <>
-                    <div className='flex relative z-10 mt-10 w-full gap-x-2'>
+                    <div className='flex relative z-10 mt-5 w-full gap-x-2'>
                         <AudioPlayer
                             audioUrl={audioData.url}
                             mimeType={audioData.mimeType}
@@ -365,17 +363,13 @@ function Settings(props: { transcriber: Transcriber }) {
     );
 }
 
-function VerticalBar() {
-    return <div className='w-[1px] bg-slate-200'></div>;
-}
-
 function AudioDataBar(props: { progress: number }) {
     return <ProgressBar progress={`${Math.round(props.progress * 100)}%`} />;
 }
 
 function ProgressBar(props: { progress: string }) {
     return (
-        <div className='w-full bg-gray-200 rounded-full h-1 dark:bg-gray-700'>
+        <div className='w-full bg-gray-200 rounded-full mt-3 h-1 dark:bg-gray-700'>
             <div
                 className='bg-blue-600 h-1 rounded-full transition-all duration-100'
                 style={{ width: props.progress }}
@@ -578,7 +572,7 @@ function Tile(props: {
     return (
         <button
             onClick={props.onClick}
-            className='flex flex-1 items-center justify-center rounded-lg p-2 bg-blue text-slate-500 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200'
+            className='flex flex-1 items-center justify-center rounded-lg p-2 bg-white text-slate-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg ring-1 ring-slate-700/10'
         >
             <div className='w-7 h-7'>{props.icon}</div>
             {props.text && (
