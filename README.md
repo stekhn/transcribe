@@ -36,7 +36,7 @@ git add dist -f
 Create a commit:
 
 ```shell
-git commit -m "Adding build"
+git commit -m "Add build"
 ```
 
 Push your local changes to Github:

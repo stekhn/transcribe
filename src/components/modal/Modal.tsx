@@ -46,10 +46,10 @@ export default function Modal({
                             leaveFrom='opacity-100 scale-100'
                             leaveTo='opacity-0 scale-95'
                         >
-                            <Dialog.Panel className='w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all'>
+                            <Dialog.Panel className='w-full max-w-md transform overflow-hidden rounded-2xl bg-white dark:bg-gray-800 dark:text-white p-6 text-left align-middle shadow-xl transition-all'>
                                 <Dialog.Title
                                     as='h3'
-                                    className='text-lg font-medium leading-6 text-gray-900'
+                                    className='text-lg font-medium leading-6 text-gray-900 dark:text-white'
                                 >
                                     {title}
                                 </Dialog.Title>
@@ -64,13 +64,13 @@ export default function Modal({
                                             disabled={!submitEnabled}
                                             className={`inline-flex ml-4 justify-center rounded-md border border-transparent ${
                                                 submitEnabled
-                                                    ? "bg-blue-600"
-                                                    : "bg-grey-300"
+                                                    ? "bg-blue-700"
+                                                    : "bg-grey-300 dark:bg-grey-700"
                                             } px-4 py-2 text-sm font-medium text-blue-100 ${
                                                 submitEnabled
-                                                    ? "hover:bg-blue-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                                                    ? "hover:bg-blue-800 focus:border-blue-500"
                                                     : ""
-                                            } transition-all duration-300`}
+                                            }`}
                                             onClick={onSubmit}
                                         >
                                             {submitText}
@@ -78,7 +78,7 @@ export default function Modal({
                                     )}
                                     <button
                                         type='button'
-                                        className='inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-300'
+                                        className='inline-flex justify-center rounded-md border border-transparent bg-gray-300 dark:bg-gray-700 px-4 py-2 text-sm font-medium dark:text-white hover:bg-blue-200 dark:hover:bg-gray-700 focus:border-blue-500'
                                         onClick={onClose}
                                     >
                                         Close

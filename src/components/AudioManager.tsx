@@ -332,7 +332,7 @@ function Settings(props: { transcriber: Transcriber }) {
         <div className='text-sm text-gray-500'>
             <label>Choose a model:</label>
             <select
-                className='mt-1 mb-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                className='mt-1 mb-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-blue-500 block w-full p-2.5 dark:bg-gray-900 dark:border-gray-700 dark:placeholder-gray-400 dark:text-white'
                 defaultValue={props.transcriber.model}
                 onChange={(e) => {
                     props.transcriber.setModel(e.target.value);
@@ -347,7 +347,7 @@ function Settings(props: { transcriber: Transcriber }) {
             </select>
             <label>Select the source language:</label>
             <select
-                className='mt-1 mb-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                className='mt-1 mb-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-blue-500 block w-full p-2.5 dark:bg-gray-900 dark:border-gray-700 dark:placeholder-gray-400 dark:text-white'
                 defaultValue={props.transcriber.language}
                 onChange={(e) => {
                     props.transcriber.setLanguage(e.target.value);
@@ -369,7 +369,7 @@ function AudioDataBar(props: { progress: number }) {
 
 function ProgressBar(props: { progress: string }) {
     return (
-        <div className='w-full bg-gray-200 rounded-full mt-3 h-1 dark:bg-gray-700'>
+        <div className='w-full bg-gray-200 rounded-full mt-3 h-1 dark:bg-gray-900'>
             <div
                 className='bg-blue-600 h-1 rounded-full transition-all duration-100'
                 style={{ width: props.progress }}
@@ -572,7 +572,7 @@ function Tile(props: {
     return (
         <button
             onClick={props.onClick}
-            className='flex flex-1 items-center justify-center rounded-lg p-2 bg-white text-slate-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg ring-1 ring-slate-700/10'
+            className='flex flex-1 items-center justify-center border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-slate-500 dark:text-white hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-gray-900 rounded-lg p-2'
         >
             <div className='w-7 h-7'>{props.icon}</div>
             {props.text && (

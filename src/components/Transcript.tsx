@@ -76,20 +76,20 @@ export default function Transcript({ transcribedData }: Props) {
                     checked={showTimestamps}
                     onChange={setShowTimestamps}
                     className={`${
-                        showTimestamps ? "bg-teal-500" : "bg-gray-300"
-                    }
-                relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-300`}
+                        showTimestamps
+                            ? "bg-blue-700"
+                            : "bg-gray-300 dark:bg-gray-700"
+                    } relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-300`}
                 >
                     <span
                         className={`${
                             showTimestamps ? "translate-x-6" : "translate-x-1"
-                        }
-                    inline-block w-4 h-4 transform bg-white rounded-full transition-transform duration-300`}
+                        } inline-block w-4 h-4 transform bg-white dark:bg-gray-900 rounded-full transition-transform duration-300`}
                     />
                 </Switch>
             </fieldset>
             {transcribedData?.chunks && !showTimestamps && (
-                <div className='w-full flex flex-row bg-white rounded-lg ring-1 ring-slate-700/10 p-2 px-3'>
+                <div className='w-full flex flex-row  border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 rounded-lg p-2 px-3 mb-2'>
                     <div>
                         {transcribedData.chunks.map((chunk, i) => (
                             <span key={i}>{chunk.text}</span>
@@ -102,7 +102,7 @@ export default function Transcript({ transcribedData }: Props) {
                 transcribedData.chunks.map((chunk, i) => (
                     <div
                         key={`${i}-${chunk.text}`}
-                        className='w-full flex flex-row mb-2 bg-white rounded-lg ring-1 ring-slate-700/10 p-2 px-3'
+                        className='w-full flex flex-row border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 rounded-lg p-2 px-3 mb-2'
                     >
                         <div className='mr-5'>
                             {formatAudioTimestamp(chunk.timestamp[0])}
@@ -111,23 +111,23 @@ export default function Transcript({ transcribedData }: Props) {
                     </div>
                 ))}
             {transcribedData && !transcribedData.isBusy && (
-                <div className='flex items-center ml-auto mt-5'>
+                <div className='flex items-center ml-auto mt-3'>
                     <div>
                         <button
                             onClick={exportTXT}
-                            className='text-white bg-teal-500 hover:bg-teal-600 focus:ring-4 focus:ring-teal-300 font-medium rounded-lg text-sm px-4 py-2 text-center ml-2 dark:bg-teal-600 dark:hover:bg-teal-700 dark:focus:ring-teal-800 inline-flex items-center'
+                            className='inline-flex items-center text-white font-medium text-sm text-center bg-blue-700 hover:bg-blue-800 focus:border-blue-500 rounded-lg px-4 py-2 ml-2'
                         >
                             Export TXT
                         </button>
                         <button
                             onClick={exportSRT}
-                            className='text-white bg-teal-500 hover:bg-teal-600 focus:ring-4 focus:ring-teal-300 font-medium rounded-lg text-sm px-4 py-2 text-center ml-2 dark:bg-teal-600 dark:hover:bg-teal-700 dark:focus:ring-teal-800 inline-flex items-center'
+                            className='inline-flex items-center text-white font-medium text-sm text-center bg-blue-700 hover:bg-blue-800 focus:border-blue-500 rounded-lg px-4 py-2 ml-2'
                         >
                             Export SRT
                         </button>
                         <button
                             onClick={exportJSON}
-                            className='text-white bg-teal-500 hover:bg-teal-600 focus:ring-4 focus:ring-teal-300 font-medium rounded-lg text-sm px-4 py-2 text-center ml-2 dark:bg-teal-600 dark:hover:bg-teal-700 dark:focus:ring-teal-800 inline-flex items-center'
+                            className='inline-flex items-center text-white font-medium text-sm text-center bg-blue-700 hover:bg-blue-800 focus:border-blue-500 rounded-lg px-4 py-2 ml-2'
                         >
                             Export JSON
                         </button>
