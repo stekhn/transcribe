@@ -285,7 +285,7 @@ export function AudioManager(props: { transcriber: Transcriber }) {
             }
             {audioData && (
                 <>
-                    <div className='flex relative z-10 mt-5 w-full gap-x-2'>
+                    <div className='flex relative z-10 w-full gap-x-2 mt-5'>
                         <AudioPlayer
                             audioUrl={audioData.url}
                             mimeType={audioData.mimeType}

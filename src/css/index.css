@@ -13,10 +13,16 @@ body,
     height: 100%;
 }
 
+.container {
+    max-width: 41rem;
+}
+
 audio::-webkit-media-controls-panel {
     background-color: white;
 }
 
-.container {
-    max-width: 41rem;
+@media (prefers-color-scheme: dark) {
+    audio {
+        filter: sepia(100%) invert(92%) hue-rotate(-5deg);
+    }
 }

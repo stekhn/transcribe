@@ -53,7 +53,7 @@ export default function Modal({
                                 >
                                     {title}
                                 </Dialog.Title>
-                                <div className='mt-3 text-sm text-slate-500'>
+                                <div className='mt-2 text-sm text-slate-500'>
                                     {content}
                                 </div>
 
@@ -62,7 +62,7 @@ export default function Modal({
                                         <button
                                             type='button'
                                             disabled={!submitEnabled}
-                                            className={`inline-flex ml-4 justify-center rounded-md border border-transparent ${
+                                            className={`inline-flex ml-2 justify-center rounded-lg border border-transparent ${
                                                 submitEnabled
                                                     ? "bg-blue-700"
                                                     : "bg-grey-300 dark:bg-grey-700"
@@ -78,7 +78,7 @@ export default function Modal({
                                     )}
                                     <button
                                         type='button'
-                                        className='inline-flex justify-center rounded-md border border-transparent bg-slate-200 dark:bg-slate-700 px-4 py-2 text-sm font-medium dark:text-white hover:bg-blue-200 dark:hover:bg-slate-700 focus:border-blue-500'
+                                        className='inline-flex justify-center rounded-lg border border-transparent bg-slate-200 dark:bg-slate-700 px-4 py-2 text-sm font-medium dark:text-white hover:bg-blue-200 dark:hover:bg-slate-700 focus:border-blue-500'
                                         onClick={onClose}
                                     >
                                         Close

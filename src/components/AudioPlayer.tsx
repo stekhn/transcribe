@@ -16,12 +16,10 @@ export default function AudioPlayer(props: {
     }, [props.audioUrl]);
 
     return (
-        <audio
-            ref={audioPlayer}
-            controls
-            className='flex-auto h-11 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 rounded-lg'
-        >
-            <source ref={audioSource} type={props.mimeType}></source>
-        </audio>
+        <div className='flex-auto border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 rounded-lg'>
+            <audio ref={audioPlayer} controls className='w-full h-11'>
+                <source ref={audioSource} type={props.mimeType}></source>
+            </audio>
+        </div>
     );
 }
