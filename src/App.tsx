@@ -16,13 +16,13 @@ function App() {
                 </h2>
             </header>
 
-            <section className='container flex items-center rounded-lg bg-white dark:bg-slate-800 shadow-xl shadow-black/5 ring-1 ring-slate-700/10 m-5 w-full'>
+            <section className='container flex items-center rounded-lg bg-white dark:bg-slate-800 shadow-xl shadow-slate-950/5 dark:shadow-slate-950/50 border border-slate-200 dark:border-slate-700 m-5 w-full'>
                 <div className='transform overflow-hidden p-5 text-left align-middle w-full transition-all'>
                     <AudioManager transcriber={transcriber} />
                 </div>
             </section>
             {transcriber.output && (
-                <section className='container flex items-center rounded-lg bg-white dark:bg-slate-800 shadow-xl shadow-black/5 ring-1 ring-slate-700/10 m-5 w-full'>
+                <section className='container flex items-center rounded-lg bg-white dark:bg-slate-800 shadow-xl shadow-slate-950/5 border border-slate-200 dark:border-slate-700 m-5 w-full'>
                     <Transcript transcribedData={transcriber.output} />
                 </section>
             )}
