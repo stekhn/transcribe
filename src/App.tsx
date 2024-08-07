@@ -5,26 +5,24 @@ import { useTranscriber } from "./hooks/useTranscriber";
 function App() {
     const transcriber = useTranscriber();
 
-    // dark:bg-gray-900 dark:border-gray-700 dark:placeholder-gray-400 dark:text-white
-
     return (
-        <div className='flex flex-col items-center min-h-full bg-gray-50 p-5 dark:bg-gray-900 text-slate-900 dark:text-slate-100'>
+        <div className='flex flex-col items-center min-h-full bg-slate-50 p-5 dark:bg-slate-900 text-slate-900 dark:text-slate-100'>
             <header className='text-3xl sm:text-5xl font-extrabold tracking-tight text-center m-5'>
                 <h1 className='text-3xl sm:text-5xl font-extrabold tracking-tight text-center '>
                     Transcribe
                 </h1>
-                <h2 className='text-xl font-semibold tracking-tight text-center mt-3'>
+                <h2 className='text-xl font-semibold tracking-tight text-center mt-2'>
                     Use Whisper speech-to-text models directly in your browser
                 </h2>
             </header>
 
-            <section className='container flex items-center rounded-lg bg-white dark:bg-gray-800 shadow-xl shadow-black/5 ring-1 ring-slate-700/10 m-5 w-full'>
+            <section className='container flex items-center rounded-lg bg-white dark:bg-slate-800 shadow-xl shadow-black/5 ring-1 ring-slate-700/10 m-5 w-full'>
                 <div className='transform overflow-hidden p-5 text-left align-middle w-full transition-all'>
                     <AudioManager transcriber={transcriber} />
                 </div>
             </section>
             {transcriber.output && (
-                <section className='container flex items-center rounded-lg bg-white dark:bg-gray-800 shadow-xl shadow-black/5 ring-1 ring-slate-700/10 m-5 w-full'>
+                <section className='container flex items-center rounded-lg bg-white dark:bg-slate-800 shadow-xl shadow-black/5 ring-1 ring-slate-700/10 m-5 w-full'>
                     <Transcript transcribedData={transcriber.output} />
                 </section>
             )}

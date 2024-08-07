@@ -69,7 +69,7 @@ export default function Transcript({ transcribedData }: Props) {
     return (
         <div className='w-full flex flex-col p-5'>
             <fieldset className='flex flex-row items-center justify-end mb-5'>
-                <label className='text-sm text-gray-500 mr-2'>
+                <label className='text-sm text-slate-500 mr-2'>
                     Show timestamps
                 </label>
                 <Switch
@@ -78,18 +78,18 @@ export default function Transcript({ transcribedData }: Props) {
                     className={`${
                         showTimestamps
                             ? "bg-blue-700"
-                            : "bg-gray-300 dark:bg-gray-700"
+                            : "bg-slate-300 dark:bg-slate-700"
                     } relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-300`}
                 >
                     <span
                         className={`${
                             showTimestamps ? "translate-x-6" : "translate-x-1"
-                        } inline-block w-4 h-4 transform bg-white dark:bg-gray-900 rounded-full transition-transform duration-300`}
+                        } inline-block w-4 h-4 transform bg-white dark:bg-slate-900 rounded-full transition-transform duration-300`}
                     />
                 </Switch>
             </fieldset>
             {transcribedData?.chunks && !showTimestamps && (
-                <div className='w-full flex flex-row  border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 rounded-lg p-2 px-3 mb-2'>
+                <div className='w-full flex flex-row  border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 rounded-lg p-2 px-3 mb-2'>
                     <div>
                         {transcribedData.chunks.map((chunk, i) => (
                             <span key={i}>{chunk.text}</span>
@@ -102,7 +102,7 @@ export default function Transcript({ transcribedData }: Props) {
                 transcribedData.chunks.map((chunk, i) => (
                     <div
                         key={`${i}-${chunk.text}`}
-                        className='w-full flex flex-row border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 rounded-lg p-2 px-3 mb-2'
+                        className='w-full flex flex-row border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 rounded-lg p-2 px-3 mb-2'
                     >
                         <div className='mr-5'>
                             {formatAudioTimestamp(chunk.timestamp[0])}

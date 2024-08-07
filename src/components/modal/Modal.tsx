@@ -46,14 +46,14 @@ export default function Modal({
                             leaveFrom='opacity-100 scale-100'
                             leaveTo='opacity-0 scale-95'
                         >
-                            <Dialog.Panel className='w-full max-w-md transform overflow-hidden rounded-2xl bg-white dark:bg-gray-800 dark:text-white p-6 text-left align-middle shadow-xl transition-all'>
+                            <Dialog.Panel className='w-full max-w-md transform overflow-hidden rounded-2xl bg-white dark:bg-slate-800 dark:text-white p-6 text-left align-middle shadow-xl transition-all'>
                                 <Dialog.Title
                                     as='h3'
-                                    className='text-lg font-medium leading-6 text-gray-900 dark:text-white'
+                                    className='text-lg font-medium leading-6 text-slate-900 dark:text-white'
                                 >
                                     {title}
                                 </Dialog.Title>
-                                <div className='mt-3 text-sm text-gray-500'>
+                                <div className='mt-3 text-sm text-slate-500'>
                                     {content}
                                 </div>
 
@@ -78,7 +78,7 @@ export default function Modal({
                                     )}
                                     <button
                                         type='button'
-                                        className='inline-flex justify-center rounded-md border border-transparent bg-gray-300 dark:bg-gray-700 px-4 py-2 text-sm font-medium dark:text-white hover:bg-blue-200 dark:hover:bg-gray-700 focus:border-blue-500'
+                                        className='inline-flex justify-center rounded-md border border-transparent bg-slate-200 dark:bg-slate-700 px-4 py-2 text-sm font-medium dark:text-white hover:bg-blue-200 dark:hover:bg-slate-700 focus:border-blue-500'
                                         onClick={onClose}
                                     >
                                         Close
