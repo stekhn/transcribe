@@ -132,7 +132,7 @@ export function AudioManager(props: { transcriber: Transcriber }) {
             <Settings transcriber={props.transcriber} />
             <div className='text-sm text-slate-500'>
                 <label>Add the audio source:</label>
-                <div className='flex flex-row w-full gap-x-2 mt-1 mb-5'>
+                <div className='flex flex-col min-[440px]:flex-row w-full gap-2 mt-1 mb-5'>
                     <UrlTile
                         icon={<AnchorIcon />}
                         text={"Link"}
@@ -175,7 +175,7 @@ export function AudioManager(props: { transcriber: Transcriber }) {
             }
             {audioData && (
                 <>
-                    <div className='flex relative z-10 w-full gap-x-2'>
+                    <div className='flex flex-col sm:flex-row relative z-10 w-full gap-2'>
                         <AudioPlayer
                             audioUrl={audioData.url}
                             mimeType={audioData.mimeType}
