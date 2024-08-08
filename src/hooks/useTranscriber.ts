@@ -1,6 +1,12 @@
 import { useCallback, useMemo, useState } from "react";
 import { useWorker } from "./useWorker";
-import Constants from "../utils/Constants";
+import {
+    DEFAULT_MODEL,
+    DEFAULT_SUBTASK,
+    DEFAULT_QUANTIZED,
+    DEFAULT_MULTILINGUAL,
+    DEFAULT_LANGUAGE,
+} from "../config";
 
 interface ProgressItem {
     file: string;
@@ -126,17 +132,12 @@ export function useTranscriber(): Transcriber {
         }
     });
 
-    const [model, setModel] = useState<string>(Constants.DEFAULT_MODEL);
-    const [subtask, setSubtask] = useState<string>(Constants.DEFAULT_SUBTASK);
-    const [quantized, setQuantized] = useState<boolean>(
-        Constants.DEFAULT_QUANTIZED,
-    );
-    const [multilingual, setMultilingual] = useState<boolean>(
-        Constants.DEFAULT_MULTILINGUAL,
-    );
-    const [language, setLanguage] = useState<string>(
-        Constants.DEFAULT_LANGUAGE,
-    );
+    const [model, setModel] = useState<string>(DEFAULT_MODEL);
+    const [subtask, setSubtask] = useState<string>(DEFAULT_SUBTASK);
+    const [quantized, setQuantized] = useState<boolean>(DEFAULT_QUANTIZED);
+    const [multilingual, setMultilingual] =
+        useState<boolean>(DEFAULT_MULTILINGUAL);
+    const [language, setLanguage] = useState<string>(DEFAULT_LANGUAGE);
 
     const onInputChange = useCallback(() => {
         setTranscript(undefined);

@@ -64,11 +64,11 @@ export default function Modal({
                                             disabled={!submitEnabled}
                                             className={`inline-flex ml-2 justify-center rounded-lg border border-transparent ${
                                                 submitEnabled
-                                                    ? "bg-blue-700"
+                                                    ? "bg-blue-500"
                                                     : "bg-grey-300 dark:bg-grey-700"
                                             } px-4 py-2 text-sm font-medium text-blue-100 ${
                                                 submitEnabled
-                                                    ? "hover:bg-blue-800 focus:border-blue-500"
+                                                    ? "hover:bg-blue-600 focus:border-blue-500"
                                                     : ""
                                             }`}
                                             onClick={onSubmit}

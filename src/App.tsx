@@ -29,7 +29,7 @@ function App() {
 
             <div className='flex flex-col flex-auto items-center'>&nbsp;</div>
 
-            <footer className='mt-5 text-center'>
+            <footer className='mt-5 text-center text-sm text-slate-500'>
                 Made with{" "}
                 <a
                     className='underline'

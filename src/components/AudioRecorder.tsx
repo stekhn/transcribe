@@ -126,7 +126,7 @@ export default function AudioRecorder(props: {
                 className={`text-white text-center focus:border-blue-500 font-medium rounded-lg text-sm text-center whitespace-nowrap px-5 py-2.5 my-5 ${
                     recording
                         ? "bg-red-700 hover:bg-red-800"
-                        : "bg-blue-700 hover:bg-blue-800"
+                        : "bg-blue-500 hover:bg-blue-600"
                 }`}
                 onClick={handleToggleRecording}
             >
