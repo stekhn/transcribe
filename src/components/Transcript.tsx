@@ -66,7 +66,7 @@ export default function Transcript({ transcribedData }: Props) {
     const ExportButton = (props: ExportButtonProps) => (
         <button
             onClick={props.onClick}
-            className='inline-flex items-center text-white font-medium text-sm text-center bg-blue-500 hover:bg-blue-600 focus:border-blue-500 rounded-lg px-4 py-2 ml-2'
+            className='inline-flex items-center text-white font-medium text-sm text-center bg-blue-500 hover:bg-blue-600 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-700 dark:focus:ring-slate-400 rounded-lg px-4 py-2 ml-2'
         >
             {props.label}
         </button>
@@ -74,13 +74,11 @@ export default function Transcript({ transcribedData }: Props) {
 
     return (
         <div className='w-full flex flex-col p-5'>
-            <div className='flex flex-row items-center justify-end'>
-                <Switch
-                    checked={showTimestamps}
-                    onChange={setShowTimestamps}
-                    label='Show timestamps:'
-                />
-            </div>
+            <Switch
+                checked={showTimestamps}
+                onChange={setShowTimestamps}
+                label='Show timestamps'
+            />
             {transcribedData?.chunks && (
                 <div className='my-5'>
                     {showTimestamps ? (

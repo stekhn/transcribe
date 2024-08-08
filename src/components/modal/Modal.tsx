@@ -68,7 +68,7 @@ export default function Modal({
                                                     : "bg-grey-300 dark:bg-grey-700"
                                             } px-4 py-2 text-sm font-medium text-blue-100 ${
                                                 submitEnabled
-                                                    ? "hover:bg-blue-600 focus:border-blue-500"
+                                                    ? "hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-700 dark:focus:ring-slate-400 "
                                                     : ""
                                             }`}
                                             onClick={onSubmit}
@@ -78,7 +78,7 @@ export default function Modal({
                                     )}
                                     <button
                                         type='button'
-                                        className='inline-flex justify-center rounded-lg border border-transparent bg-slate-200 dark:bg-slate-700 px-4 py-2 text-sm font-medium dark:text-white hover:bg-blue-200 dark:hover:bg-slate-700 focus:border-blue-500'
+                                        className='inline-flex justify-center rounded-lg border border-transparent bg-slate-200 dark:bg-slate-700 px-4 py-2 text-sm font-medium dark:text-white hover:bg-blue-200 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-700 dark:focus:ring-slate-400 '
                                         onClick={onClose}
                                     >
                                         Close

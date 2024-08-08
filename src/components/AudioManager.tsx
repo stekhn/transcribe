@@ -130,43 +130,43 @@ export function AudioManager(props: { transcriber: Transcriber }) {
     return (
         <>
             <Settings transcriber={props.transcriber} />
-            <label className='text-sm text-slate-500'>
-                Add the audio source:
-            </label>
-            <div className='flex flex-row gap-x-2 py-2 w-full'>
-                <UrlTile
-                    icon={<AnchorIcon />}
-                    text={"Link"}
-                    onUrlUpdate={(e) => {
-                        props.transcriber.onInputChange();
-                        setAudioDownloadUrl(e);
-                    }}
-                />
-                <FileTile
-                    icon={<FolderIcon />}
-                    text={"File"}
-                    onFileUpdate={(decoded, blobUrl, mimeType) => {
-                        props.transcriber.onInputChange();
-                        setAudioData({
-                            buffer: decoded,
-                            url: blobUrl,
-                            source: AudioSource.FILE,
-                            mimeType: mimeType,
-                        });
-                    }}
-                />
-                {navigator.mediaDevices && (
-                    <>
-                        <RecordTile
-                            icon={<MicrophoneIcon />}
-                            text={"Record"}
-                            setAudioData={(e) => {
-                                props.transcriber.onInputChange();
-                                setAudioFromRecording(e);
-                            }}
-                        />
-                    </>
-                )}
+            <div className='text-sm text-slate-500'>
+                <label>Add the audio source:</label>
+                <div className='flex flex-row w-full gap-x-2 mt-1 mb-5'>
+                    <UrlTile
+                        icon={<AnchorIcon />}
+                        text={"Link"}
+                        onUrlUpdate={(e) => {
+                            props.transcriber.onInputChange();
+                            setAudioDownloadUrl(e);
+                        }}
+                    />
+                    <FileTile
+                        icon={<FolderIcon />}
+                        text={"File"}
+                        onFileUpdate={(decoded, blobUrl, mimeType) => {
+                            props.transcriber.onInputChange();
+                            setAudioData({
+                                buffer: decoded,
+                                url: blobUrl,
+                                source: AudioSource.FILE,
+                                mimeType: mimeType,
+                            });
+                        }}
+                    />
+                    {navigator.mediaDevices && (
+                        <>
+                            <RecordTile
+                                icon={<MicrophoneIcon />}
+                                text={"Record"}
+                                setAudioData={(e) => {
+                                    props.transcriber.onInputChange();
+                                    setAudioFromRecording(e);
+                                }}
+                            />
+                        </>
+                    )}
+                </div>
             </div>
             {
                 <AudioDataBar
@@ -175,7 +175,7 @@ export function AudioManager(props: { transcriber: Transcriber }) {
             }
             {audioData && (
                 <>
-                    <div className='flex relative z-10 w-full gap-x-2 mt-5'>
+                    <div className='flex relative z-10 w-full gap-x-2'>
                         <AudioPlayer
                             audioUrl={audioData.url}
                             mimeType={audioData.mimeType}
@@ -248,7 +248,7 @@ function AudioDataBar(props: { progress: number }) {
 
 function ProgressBar(props: { progress: string }) {
     return (
-        <div className='w-full bg-slate-200 rounded-full mt-3 h-1 dark:bg-slate-900'>
+        <div className='w-full bg-slate-200 rounded-full h-1 dark:bg-slate-900 mb-5'>
             <div
                 className='bg-blue-500 h-1 rounded-full transition-all duration-100'
                 style={{ width: props.progress }}
@@ -265,7 +265,7 @@ function Tile(props: {
     return (
         <button
             onClick={props.onClick}
-            className='flex flex-1 items-center justify-center border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-500 dark:text-white hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-slate-900 rounded-lg p-2'
+            className='flex flex-1 items-center justify-center rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-500  dark:text-white hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-700 dark:focus:ring-slate-400 p-2'
         >
             <div className='w-7 h-7'>{props.icon}</div>
             {props.text && (

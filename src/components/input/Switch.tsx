@@ -8,8 +8,8 @@ interface SwitchProps {
 
 export function Switch(props: SwitchProps) {
     return (
-        <div className='text-sm text-slate-500 mr-2'>
-            {props.label && <label className='mr-2'>props.label</label>}
+        <div className='flex flex-row items-center justify-end text-sm text-slate-500 mr-2'>
+            {props.label && <label className='mr-2'>{props.label}</label>}
             <HeadlessSwitch
                 checked={props.checked}
                 onChange={props.onChange}
@@ -17,7 +17,7 @@ export function Switch(props: SwitchProps) {
                     props.checked
                         ? "bg-blue-500"
                         : "bg-slate-300 dark:bg-slate-700"
-                } relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-300`}
+                } relative inline-flex h-6 w-11 items-center rounded-full focus:outline-none focus:ring-2 focus:ring-blue-700 dark:focus:ring-slate-400 transition-colors duration-300`}
             >
                 <span
                     className={`${

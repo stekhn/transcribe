@@ -20,7 +20,7 @@ export function Select(props: SelectProps) {
             <div className='relative'>
                 <select
                     id={props.id}
-                    className='appearance-none bg-slate-50 border border-slate-200 text-slate-900 text-sm rounded-lg focus:border-blue-500 block w-full p-2.5 dark:bg-slate-900 dark:border-slate-700 dark:placeholder-slate-400 dark:text-white mt-1 mb-3 '
+                    className='appearance-none bg-slate-50 border border-slate-200 text-slate-900 text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-700 dark:focus:ring-slate-400 block w-full p-2.5 dark:bg-slate-900 dark:border-slate-700 dark:placeholder-slate-400 dark:text-white mt-1 mb-3 '
                     defaultValue={props.defaultValue}
                     onChange={(e) => {
                         props.setValue(e.target.value);
