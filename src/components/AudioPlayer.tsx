@@ -15,7 +15,7 @@ export default function AudioPlayer(props: {
     }, [props.audioUrl]);
 
     return (
-        <div className='flex-auto rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900'>
+        <div className='flex-auto rounded-lg ring-1 ring-slate-200 dark:ring-slate-700 bg-white dark:bg-slate-900'>
             <audio
                 ref={audioPlayer}
                 controls

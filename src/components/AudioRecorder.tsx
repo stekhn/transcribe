@@ -123,7 +123,7 @@ export default function AudioRecorder(props: {
         <div className='flex flex-col justify-center'>
             <button
                 type='button'
-                className={`text-white text-center focus:outline-none focus:ring-2 focus:ring-blue-700 dark:focus:ring-slate-400 font-medium rounded-lg text-sm text-center whitespace-nowrap px-5 py-2.5 my-5 ${
+                className={`text-slate-100 text-center focus:outline-none focus:ring-2 focus:ring-blue-700 dark:focus:ring-slate-400 font-medium rounded-lg text-sm text-center whitespace-nowrap px-5 py-2.5 my-5 ${
                     recording
                         ? "bg-red-700 hover:bg-red-800"
                         : "bg-blue-500 hover:bg-blue-600 transition-colors duration-300"
@@ -136,7 +136,7 @@ export default function AudioRecorder(props: {
             </button>
 
             {recordedBlob && (
-                <div className='flex-auto w-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 rounded-lg'>
+                <div className='flex-auto w-full ring-1 ring-slate-200 dark:ring-slate-700 bg-white dark:bg-slate-900 rounded-lg'>
                     <audio ref={audioRef} controls className='w-full h-11'>
                         <source
                             src={URL.createObjectURL(recordedBlob)}

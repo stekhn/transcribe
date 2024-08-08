@@ -46,10 +46,10 @@ export default function Modal({
                             leaveFrom='opacity-100 scale-100'
                             leaveTo='opacity-0 scale-95'
                         >
-                            <Dialog.Panel className='w-full max-w-md transform overflow-hidden rounded-2xl bg-white dark:bg-slate-800 dark:text-white p-6 text-left align-middle shadow-xl transition-all'>
+                            <Dialog.Panel className='w-full max-w-md transform overflow-hidden rounded-2xl bg-white dark:bg-slate-800 dark:text-slate-100 p-6 text-left align-middle shadow-xl transition-all'>
                                 <Dialog.Title
                                     as='h3'
-                                    className='text-lg font-medium leading-6 text-slate-900 dark:text-white'
+                                    className='text-lg font-medium leading-6 text-slate-900 dark:text-slate-100'
                                 >
                                     {title}
                                 </Dialog.Title>
@@ -62,7 +62,7 @@ export default function Modal({
                                         <button
                                             type='button'
                                             disabled={!submitEnabled}
-                                            className={`inline-flex ml-2 justify-center rounded-lg border border-transparent ${
+                                            className={`inline-flex ml-2 justify-center rounded-lg ${
                                                 submitEnabled
                                                     ? "bg-blue-500"
                                                     : "bg-grey-300 dark:bg-grey-700"
@@ -78,7 +78,7 @@ export default function Modal({
                                     )}
                                     <button
                                         type='button'
-                                        className='inline-flex justify-center rounded-lg border border-transparent bg-slate-200 dark:bg-slate-700 px-4 py-2 text-sm font-medium dark:text-white hover:bg-blue-200 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-700 dark:focus:ring-slate-400 '
+                                        className='inline-flex justify-center rounded-lg bg-slate-200 dark:bg-slate-700 px-4 py-2 text-sm font-medium dark:text-slate-100 hover:bg-blue-200 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-700 dark:focus:ring-slate-400 '
                                         onClick={onClose}
                                     >
                                         Close
