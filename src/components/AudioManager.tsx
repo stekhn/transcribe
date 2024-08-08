@@ -185,14 +185,13 @@ export function AudioManager(props: { transcriber: Transcriber }) {
                                 props.transcriber.start(audioData.buffer);
                             }}
                             isModelLoading={props.transcriber.isModelLoading}
-                            // isAudioLoading ||
                             isTranscribing={props.transcriber.isBusy}
                         />
                     </div>
                     {props.transcriber.progressItems.length > 0 && (
-                        <div className='relative z-10 p-4 w-full'>
-                            <label>
-                                Loading model files... (only run once)
+                        <div className='relative z-10 w-full text-sm mt-5'>
+                            <label className='text-slate-500 block mb-2'>
+                                Loading Whisper model:
                             </label>
                             {props.transcriber.progressItems.map((data) => (
                                 <div key={data.file}>

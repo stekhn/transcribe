@@ -12,7 +12,9 @@ function App() {
                     Transcribe
                 </h1>
                 <h2 className='text-xl font-semibold tracking-tight text-center mt-2'>
-                    Use Whisper speech-to-text models directly in your browser
+                    Use Whisper speech-to-text models directly in your browser.
+                    <br />
+                    Privacy-focused and free.
                 </h2>
             </header>
 
