@@ -4,17 +4,19 @@ export const DEFAULT_SUBTASK = "transcribe";
 export const DEFAULT_QUANTIZED = false;
 export const DEFAULT_MULTILINGUAL = true;
 
-export const DEFAULT_MODEL = "onnx-community/whisper-tiny";
+export const DEFAULT_MODEL = "Xenova/whisper-small";
 
 export const MODELS: { [key: string]: number } = {
-    "onnx-community/whisper-tiny": 120,
-    "onnx-community/whisper-base": 206,
-    "onnx-community/whisper-small": 586,
+    "onnx-community/whisper-small": 252,
+    "onnx-community/whisper-base": 101,
+    "onnx-community/whisper-tiny": 65,
+    "onnx-community/whisper-small.en": 252,
+    "onnx-community/whisper-base.en": 101,
+    "onnx-community/whisper-tiny.en": 44,
 };
 
 export const DEFAULT_LANGUAGE = "en";
 
-// List of supported languages: https://github.com/openai/whisper/blob/248b6cb124225dd263bb9bd32d060b6517e067f8/whisper/tokenizer.py#L79
 export const LANGUAGES: { [key: string]: string } = {
     sq: "albanian",
     ar: "arabic",

@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { pipeline, env } from "@xenova/transformers";
+import { pipeline, env } from "@huggingface/transformers";
 
 // Disable local models
 env.allowLocalModels = false;
@@ -35,6 +35,8 @@ class PipelineFactory {
 
 self.addEventListener("message", async (event) => {
     const message = event.data;
+
+    console.log(event.data);
 
     // Do some work...
     // TODO use message data
@@ -77,19 +79,14 @@ const transcribe = async (
     subtask,
     language,
 ) => {
-    const isDistilWhisper = model.startsWith("distil-whisper/");
-
-    let modelName = model;
-
-    if (!isDistilWhisper && !multilingual) {
-        modelName += ".en";
-    }
+    const isDistilWhisper = /^distil-whisper\//.test(model);
+    const isEnglish = /\.en$/.test(model);
 
     const p = AutomaticSpeechRecognitionPipelineFactory;
 
-    if (p.model !== modelName || p.quantized !== quantized) {
+    if (p.model !== model || p.quantized !== quantized) {
         // Invalidate model if different
-        p.model = modelName;
+        p.model = model;
         p.quantized = quantized;
 
         if (p.instance !== null) {
@@ -167,8 +164,8 @@ const transcribe = async (
         stride_length_s: isDistilWhisper ? 3 : 5,
 
         // Language and task
-        language: language,
-        task: subtask,
+        language: isEnglish ? "" : language,
+        task: isEnglish ? "" : subtask,
 
         // Return timestamps
         return_timestamps: true,
