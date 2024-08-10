@@ -1,0 +1,36 @@
+{
+    "name": "Transcribe – Whisper in Your Browser",
+    "short_name": "Transcribe",
+    "start_url": "https://stekhn.github.io/transcribe/",
+    "display": "standalone",
+    "theme_color": "#ffffff",
+    "background_color": "#f8fafc",
+    "icons": [
+        {
+            "src": "/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/android-chrome-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "/screenshot-wide.jpg",
+            "sizes": "1200x900",
+            "type": "image/jpg",
+            "form_factor": "wide",
+            "label": "Transcribe App"
+        },
+        {
+            "src": "/screenshot-narrow.jpg",
+            "sizes": "900x1200",
+            "type": "image/jpg",
+            "form_factor": "narrow",
+            "label": "Transcribe App"
+        }
+    ]
+}
