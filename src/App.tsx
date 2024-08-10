@@ -32,19 +32,19 @@ function App() {
             <div className='flex flex-col flex-auto items-center'>&nbsp;</div>
 
             <footer className='text-center text-sm text-slate-500 mt-5'>
-                Made with{" "}
-                <a
-                    className='underline'
-                    href='https://github.com/xenova/transformers.js'
-                >
-                    Transformers.js
-                </a>
-                , based on{" "}
+                Based on{" "}
                 <a
                     className='underline'
                     href='https://github.com/xenova/whisper-web/'
                 >
                     Whisper Web
+                </a>
+                , made with{" "}
+                <a
+                    className='underline'
+                    href='https://github.com/xenova/transformers.js'
+                >
+                    Transformers.js
                 </a>
                 .<br /> Check out the code on{" "}
                 <a
