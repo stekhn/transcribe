@@ -203,6 +203,9 @@ export function AudioManager(props: { transcriber: Transcriber }) {
                             ))}
                         </div>
                     )}
+                    {props.transcriber.error && (
+                        <Error error={props.transcriber.error} />
+                    )}
                 </>
             )}
         </>
@@ -252,6 +255,16 @@ function ProgressBar(props: { progress: string }) {
                 className='bg-blue-500 h-1 rounded-full transition-all duration-100'
                 style={{ width: props.progress }}
             ></div>
+        </div>
+    );
+}
+
+function Error(props: { error: { name: string; message: string } }) {
+    return (
+        <div className='rounded-lg text-sm text-red-500 bg-red-50 dark:bg-red-950 p-2.5 px-4 mt-5'>
+            <p>
+                {props.error.name}: {props.error.message}
+            </p>
         </div>
     );
 }

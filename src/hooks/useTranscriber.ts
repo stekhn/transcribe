@@ -55,12 +55,14 @@ export interface Transcriber {
     setSubtask: (subtask: string) => void;
     language?: string;
     setLanguage: (language: string) => void;
+    error?: { name: string; message: string } | undefined;
 }
 
 export function useTranscriber(): Transcriber {
     const [transcript, setTranscript] = useState<TranscriberData | undefined>(
         undefined,
     );
+    const [error, setError] = useState(undefined);
     const [isBusy, setIsBusy] = useState(false);
     const [isModelLoading, setIsModelLoading] = useState(false);
 
@@ -83,7 +85,6 @@ export function useTranscriber(): Transcriber {
                 break;
             case "update":
                 // Received partial update
-                // console.log("update", message);
                 // eslint-disable-next-line no-case-declarations
                 const updateMessage = message as TranscriberUpdateData;
                 setTranscript({
@@ -94,7 +95,6 @@ export function useTranscriber(): Transcriber {
                 break;
             case "complete":
                 // Received complete transcript
-                // console.log("complete", message);
                 // eslint-disable-next-line no-case-declarations
                 const completeMessage = message as TranscriberCompleteData;
                 setTranscript({
@@ -104,7 +104,6 @@ export function useTranscriber(): Transcriber {
                 });
                 setIsBusy(false);
                 break;
-
             case "initiate":
                 // Model file start load: add a new progress item to the list.
                 setIsModelLoading(true);
@@ -115,9 +114,8 @@ export function useTranscriber(): Transcriber {
                 break;
             case "error":
                 setIsBusy(false);
-                alert(
-                    `${message.data.message} This is most likely because you are using Safari on an M1/M2 Mac. Please try again from Chrome, Firefox, or Edge.\n\nIf this is not the case, please file a bug report.`,
-                );
+                setIsModelLoading(false);
+                setError(message.data);
                 break;
             case "done":
                 // Model file loaded: remove the progress item from the list.
@@ -125,7 +123,6 @@ export function useTranscriber(): Transcriber {
                     prev.filter((item) => item.file !== message.file),
                 );
                 break;
-
             default:
                 // initiate/download/done
                 break;
@@ -179,7 +176,7 @@ export function useTranscriber(): Transcriber {
         [webWorker, model, multilingual, quantized, subtask, language],
     );
 
-    const transcriber = useMemo(() => {
+    const transcriber: Transcriber = useMemo(() => {
         return {
             onInputChange,
             isBusy,
@@ -197,8 +194,11 @@ export function useTranscriber(): Transcriber {
             setSubtask,
             language,
             setLanguage,
+            error,
+            setError,
         };
     }, [
+        onInputChange,
         isBusy,
         isModelLoading,
         progressItems,
@@ -209,6 +209,7 @@ export function useTranscriber(): Transcriber {
         quantized,
         subtask,
         language,
+        error,
     ]);
 
     return transcriber;

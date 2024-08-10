@@ -1,8 +1,6 @@
 # Transcribe
 
-Use Whisper speech-to-text models directly in your browser. Privacy-focused and free.
-
-This web application is based on [Whisper Web](https://github.com/xenova/whisper-web/), built with [Transformers.js](https://github.com/xenova/transformers.js), using [ONNX](https://onnx.ai/) models from [Hugging Face](https://huggingface.co/models?sort=downloads&search=onnx+whisper).
+Use Whisper speech-to-text models directly in your browser. Privacy-focused and free. This web application is based on [Whisper Web](https://github.com/xenova/whisper-web/), built with [Transformers.js](https://github.com/xenova/transformers.js), using [ONNX](https://onnx.ai/) models from [Hugging Face](https://huggingface.co/models?sort=downloads&search=onnx+whisper).
 
 **Live Demo**: <https://stekhn.github.io/transcribe/>
 
@@ -60,15 +58,11 @@ Create a production build of the web application:
 npm run build
 ```
 
-By default, the build output will be placed in the folder `./dist`.
-
-Add the `./dist` folder to Git:
+Add the build folder `./dist` to Git:
 
 ```shell
 git add dist -f
 ```
-
-`-f` is required, since the `./dist` folder is excluded from Git by the `.gitignore` file. So, we need to force it.
 
 Create a commit:
 
@@ -76,7 +70,7 @@ Create a commit:
 git commit -m "Add build"
 ```
 
-Push your local changes to Github:
+Push local changes to Github:
 
 ```shell
 git subtree push --prefix dist origin gh-pages

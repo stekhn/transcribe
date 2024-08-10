@@ -23,9 +23,9 @@ class PipelineFactory {
             this.instance = pipeline(this.task, this.model, {
                 quantized: this.quantized,
                 progress_callback,
-
                 // For medium models, we need to load the `no_attentions` revision to avoid running out of memory
-                revision: this.model.includes("/whisper-medium") ? "no_attentions" : "main"
+                // revision: this.model.includes("/whisper-medium") ? "no_attentions" : "main"
+                revision: "main",
             });
         }
 
@@ -45,15 +45,22 @@ self.addEventListener("message", async (event) => {
         message.quantized,
         message.subtask,
         message.language,
-    );
-    if (transcript === null) return;
-
-    // Send the result back to the main thread
-    self.postMessage({
-        status: "complete",
-        task: "automatic-speech-recognition",
-        data: transcript,
+    ).catch((error) => {
+        self.postMessage({
+            status: "error",
+            task: "automatic-speech-recognition",
+            data: error,
+        });
     });
+
+    if (transcript) {
+        // Send the result back to the main thread
+        self.postMessage({
+            status: "complete",
+            task: "automatic-speech-recognition",
+            data: transcript,
+        });
+    }
 });
 
 class AutomaticSpeechRecognitionPipelineFactory extends PipelineFactory {
@@ -70,15 +77,16 @@ const transcribe = async (
     subtask,
     language,
 ) => {
-
     const isDistilWhisper = model.startsWith("distil-whisper/");
 
     let modelName = model;
+
     if (!isDistilWhisper && !multilingual) {
-        modelName += ".en"
+        modelName += ".en";
     }
 
     const p = AutomaticSpeechRecognitionPipelineFactory;
+
     if (p.model !== modelName || p.quantized !== quantized) {
         // Invalidate model if different
         p.model = modelName;
