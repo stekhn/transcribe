@@ -36,6 +36,7 @@ function App() {
                 <a
                     className='underline'
                     href='https://github.com/xenova/whisper-web/'
+                    target='_blank'
                 >
                     Whisper Web
                 </a>
@@ -43,6 +44,7 @@ function App() {
                 <a
                     className='underline'
                     href='https://github.com/xenova/transformers.js'
+                    target='_blank'
                 >
                     Transformers.js
                 </a>
@@ -50,6 +52,7 @@ function App() {
                 <a
                     className='underline'
                     href='https://github.com/stekhn/transcribe/'
+                    target='_blank'
                 >
                     Github
                 </a>
