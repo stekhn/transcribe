@@ -36,8 +36,6 @@ class PipelineFactory {
 self.addEventListener("message", async (event) => {
     const message = event.data;
 
-    console.log(event.data);
-
     // Do some work...
     // TODO use message data
     let transcript = await transcribe(

@@ -13,6 +13,8 @@ export const MODELS: { [key: string]: number } = {
     "onnx-community/whisper-small.en": 252,
     "onnx-community/whisper-base.en": 101,
     "onnx-community/whisper-tiny.en": 44,
+    "distil-whisper/distil-medium.en": 426,
+    "distil-whisper/distil-small.en": 196,
 };
 
 export const DEFAULT_LANGUAGE = "en";

@@ -123,7 +123,7 @@ export default function AudioRecorder(props: {
         <div className='flex flex-col justify-center'>
             <button
                 type='button'
-                className={`text-slate-100 text-center focus:outline-none focus:ring-2 focus:ring-blue-700 dark:focus:ring-slate-400 font-medium rounded-lg text-sm text-center whitespace-nowrap px-5 py-2.5 my-5 ${
+                className={`text-white text-center focus:outline-none focus:ring-2 focus:ring-blue-700 dark:focus:ring-slate-400 font-medium rounded-lg text-sm text-center whitespace-nowrap px-5 py-2.5 my-5 ${
                     recording
                         ? "bg-red-500 hover:bg-red-600"
                         : "bg-blue-500 hover:bg-blue-600 transition-colors duration-300"
