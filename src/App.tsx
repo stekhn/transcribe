@@ -25,7 +25,7 @@ function App() {
             </section>
             {transcriber.output && (
                 <section className='container flex items-center rounded-lg bg-white dark:bg-slate-800 shadow-xl shadow-slate-950/5 dark:shadow-slate-950/50 ring-1 ring-slate-200 dark:ring-slate-700 m-5 w-full'>
-                    <Transcript transcribedData={transcriber.output} />
+                    <Transcript transcriber={transcriber} />
                 </section>
             )}
 

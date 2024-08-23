@@ -55,6 +55,7 @@ export interface Transcriber {
     setSubtask: (subtask: string) => void;
     language?: string;
     setLanguage: (language: string) => void;
+    executionTime?: number;
     error?: { name: string; message: string } | undefined;
 }
 
@@ -65,6 +66,7 @@ export function useTranscriber(): Transcriber {
     const [error, setError] = useState(undefined);
     const [isBusy, setIsBusy] = useState(false);
     const [isModelLoading, setIsModelLoading] = useState(false);
+    const [executionTime, setExecutionTime] = useState(0);
 
     const [progressItems, setProgressItems] = useState<ProgressItem[]>([]);
 
@@ -103,6 +105,9 @@ export function useTranscriber(): Transcriber {
                     chunks: completeMessage.data.chunks,
                 });
                 setIsBusy(false);
+                break;
+            case "execution-time":
+                setExecutionTime(message.data);
                 break;
             case "initiate":
                 // Model file start load: add a new progress item to the list.
@@ -194,8 +199,8 @@ export function useTranscriber(): Transcriber {
             setSubtask,
             language,
             setLanguage,
+            executionTime,
             error,
-            setError,
         };
     }, [
         onInputChange,
@@ -209,6 +214,7 @@ export function useTranscriber(): Transcriber {
         quantized,
         subtask,
         language,
+        executionTime,
         error,
     ]);
 

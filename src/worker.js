@@ -35,6 +35,7 @@ class PipelineFactory {
 
 self.addEventListener("message", async (event) => {
     const message = event.data;
+    const startTime = performance.now();
 
     // Do some work...
     // TODO use message data
@@ -53,12 +54,20 @@ self.addEventListener("message", async (event) => {
         });
     });
 
+    const endTime = performance.now();
+
     if (transcript) {
         // Send the result back to the main thread
         self.postMessage({
             status: "complete",
             task: "automatic-speech-recognition",
             data: transcript,
+        });
+
+        self.postMessage({
+            status: "execution-time",
+            task: "automatic-speech-recognition",
+            data: endTime - startTime,
         });
     }
 });

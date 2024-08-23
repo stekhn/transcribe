@@ -1,15 +1,13 @@
 import { useState } from "react";
 
 import { Switch } from "./input/Switch";
-import { TranscriberData } from "../hooks/useTranscriber";
+import { Transcriber } from "../hooks/useTranscriber";
 import { formatAudioTimestamp } from "../utils/AudioUtils";
-import { formatTime } from "../utils/StringUtils";
+import { millisecondsToTime, secondsToSRT } from "../utils/StringUtils";
+import { Clock } from "./input/Icons";
 
-interface Props {
-    transcribedData: TranscriberData | undefined;
-}
-
-export default function Transcript({ transcribedData }: Props) {
+export default function Transcript(props: { transcriber: Transcriber }) {
+    const transcribedData = props.transcriber.output;
     const [showTimestamps, setShowTimestamps] = useState(true);
 
     const saveBlob = (blob: Blob, filename: string) => {
@@ -25,8 +23,8 @@ export default function Transcript({ transcribedData }: Props) {
         const jsonData = transcribedData?.chunks ?? [];
         const srt = jsonData
             .map((entry, index) => {
-                const start = formatTime(entry.timestamp[0] as number);
-                const end = formatTime(entry.timestamp[1] as number);
+                const start = secondsToSRT(entry.timestamp[0] as number);
+                const end = secondsToSRT(entry.timestamp[1] as number);
                 const text = entry.text.trim();
                 return `${index + 1}\n${start} --> ${end}\n${text}\n`;
             })
@@ -74,11 +72,23 @@ export default function Transcript({ transcribedData }: Props) {
 
     return (
         <div className='w-full flex flex-col p-5'>
-            <Switch
-                checked={showTimestamps}
-                onChange={setShowTimestamps}
-                label='Show timestamps'
-            />
+            <div className='flex flex-row items-center justify-end min-[440px]:justify-between'>
+                {props.transcriber.executionTime && (
+                    <div className='hidden min-[440px]:flex flex-row items-center text-sm text-slate-500'>
+                        <Clock className="size-6 fill-slate-300 mr-1" />
+                        <span className='whitespace-nowrap'>
+                            {millisecondsToTime(
+                                props.transcriber.executionTime,
+                            )}
+                        </span>
+                    </div>
+                )}
+                <Switch
+                    checked={showTimestamps}
+                    onChange={setShowTimestamps}
+                    label='Show timestamps'
+                />
+            </div>
             {transcribedData?.chunks && (
                 <div className='my-5'>
                     {showTimestamps ? (

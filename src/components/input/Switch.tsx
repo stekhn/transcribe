@@ -8,7 +8,7 @@ interface SwitchProps {
 
 export function Switch(props: SwitchProps) {
     return (
-        <div className='flex flex-row items-center justify-end text-sm text-slate-500 mr-2'>
+        <div className='flex flex-row items-center text-sm text-slate-500'>
             {props.label && <label className='mr-2'>{props.label}</label>}
             <HeadlessSwitch
                 checked={props.checked}
