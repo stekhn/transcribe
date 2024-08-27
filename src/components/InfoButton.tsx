@@ -20,7 +20,7 @@ export const InfoButton: React.FC<InfoButtonProps> = ({ icon, content }) => {
     return (
         <>
             <button
-                className='rounded-full align-sub focus:outline-none focus:ring-2 focus:ring-blue-700 dark:focus:ring-slate-400'
+                className='rounded-full align-bottom focus:outline-none focus:ring-2 focus:ring-blue-700 dark:focus:ring-slate-400'
                 onClick={handleClick}
             >
                 {icon}
