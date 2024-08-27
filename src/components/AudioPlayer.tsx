@@ -20,7 +20,7 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
     }, [audioUrl]);
 
     return (
-        <div className='flex-auto rounded-lg ring-1 ring-slate-200 dark:ring-slate-700 bg-white dark:bg-slate-900'>
+        <div className='flex-auto rounded-lg ring-1 ring-slate-200 dark:ring-slate-700 bg-white dark:bg-slate-900 firefox-hack'>
             <audio
                 ref={audioPlayer}
                 controls

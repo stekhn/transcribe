@@ -273,7 +273,7 @@ const Error: React.FC<ErrorProps> = ({ error }) => {
 };
 
 interface TileProps {
-    icon: JSX.Element;
+    icon: React.ReactElement;
     text: string;
     onClick: () => void;
 }
@@ -295,7 +295,7 @@ const Tile: React.FC<TileProps> = ({ icon, text, onClick }) => {
 };
 
 interface UrlTileProps {
-    icon: JSX.Element;
+    icon: React.ReactElement;
     text: string;
     onUrlUpdate: (url: string) => void;
 }
@@ -325,7 +325,7 @@ const UrlTile: React.FC<UrlTileProps> = ({ icon, text, onUrlUpdate }) => {
 };
 
 interface FileTileProps {
-    icon: JSX.Element;
+    icon: React.ReactElement;
     text: string;
     onFileUpdate: (
         decoded: AudioBuffer,
@@ -374,7 +374,7 @@ const FileTile: React.FC<FileTileProps> = ({ icon, text, onFileUpdate }) => {
 };
 
 interface RecordTileProps {
-    icon: JSX.Element;
+    icon: React.ReactElement;
     text: string;
     setAudioData: (data: Blob) => void;
 }

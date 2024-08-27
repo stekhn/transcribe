@@ -18,11 +18,11 @@ export const Select: React.FC<SelectProps> = ({
 }) => {
     return (
         <div className='text-sm text-slate-500'>
-            <div className='flex items-center gap-1'>
+            <div className='flex items-center gap-2'>
                 {label && <label htmlFor={id}>{label}</label>}
                 {info && (
                     <Tooltip message={info}>
-                        <HelpIcon className='size-5 fill-slate-300 hover:fill-blue-500' />
+                        <HelpIcon className='size-5 fill-slate-300 dark:fill-slate-500 hover:fill-blue-500' />
                     </Tooltip>
                 )}
             </div>
