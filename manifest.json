@@ -4,8 +4,8 @@
     "start_url": "https://stekhn.github.io/transcribe/",
     "id": "/transcribe/",
     "display": "standalone",
-    "theme_color": "#3b82f6",
-    "background_color": "#3b82f6",
+    "theme_color": "#448AFF",
+    "background_color": "#448AFF",
     "icons": [
         {
             "src": "android-chrome-1024x1024.png",
