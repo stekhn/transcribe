@@ -32,7 +32,7 @@ export default function Modal({
                     leaveFrom='opacity-100'
                     leaveTo='opacity-0'
                 >
-                    <div className='fixed inset-0 bg-black bg-opacity-25' />
+                    <div className='fixed inset-0 bg-slate-950 bg-opacity-50' />
                 </Transition.Child>
 
                 <div className='fixed inset-0 overflow-y-auto'>
@@ -66,7 +66,7 @@ export default function Modal({
                                                 submitEnabled
                                                     ? "bg-blue-500"
                                                     : "bg-grey-300 dark:bg-grey-700"
-                                            } px-4 py-2 text-sm font-medium text-blue-100 ${
+                                            } px-4 py-2 text-sm font-medium text-white ${
                                                 submitEnabled
                                                     ? "hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-700 dark:focus:ring-slate-400 "
                                                     : ""

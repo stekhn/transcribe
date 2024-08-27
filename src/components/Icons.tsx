@@ -82,14 +82,31 @@ export function Clock(props: IconProps) {
     return (
         <svg
             xmlns='http://www.w3.org/2000/svg'
-            viewBox='0 0 24 24'
+            viewBox='0 0 16 16'
             fill='currentColor'
             className={props.className}
         >
             <path
                 fillRule='evenodd'
                 clipRule='evenodd'
-                d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 6a.75.75 0 0 0-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 0 0 0-1.5h-3.75V6Z'
+                d='M1 8a7 7 0 1 1 14 0A7 7 0 0 1 1 8Zm7.75-4.25a.75.75 0 0 0-1.5 0V8c0 .414.336.75.75.75h3.25a.75.75 0 0 0 0-1.5h-2.5v-3.5Z'
+            />
+        </svg>
+    );
+}
+
+export function Info(props: IconProps) {
+    return (
+        <svg
+            xmlns='http://www.w3.org/2000/svg'
+            viewBox='0 0 16 16'
+            fill='currentColor'
+            className={props.className}
+        >
+            <path
+                fillRule='evenodd'
+                clipRule='evenodd'
+                d='M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0Zm-6 3.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM7.293 5.293a1 1 0 1 1 .99 1.667c-.459.134-1.033.566-1.033 1.29v.25a.75.75 0 1 0 1.5 0v-.115a2.5 2.5 0 1 0-2.518-4.153.75.75 0 1 0 1.061 1.06Z'
             />
         </svg>
     );

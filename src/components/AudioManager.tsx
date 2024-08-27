@@ -5,10 +5,10 @@ import AudioPlayer from "./AudioPlayer";
 import Progress from "./Progress";
 import AudioRecorder from "./AudioRecorder";
 import { TranscribeButton } from "./TranscribeButton";
-import { Select, Option } from "./input/Select";
-import { AnchorIcon, FolderIcon, MicrophoneIcon } from "./input/Icons";
-import Modal from "./modal/Modal";
-import { UrlInput } from "./modal/UrlInput";
+import { Select, Option } from "./Select";
+import { AnchorIcon, FolderIcon, MicrophoneIcon } from "./Icons";
+import Modal from "./Modal";
+import { UrlInput } from "./UrlInput";
 import { Transcriber } from "../hooks/useTranscriber";
 import { titleCase } from "../utils/StringUtils";
 import { SAMPLING_RATE, DEFAULT_AUDIO_URL, LANGUAGES, MODELS } from "../config";
@@ -20,7 +20,7 @@ export enum AudioSource {
 }
 
 export function AudioManager(props: { transcriber: Transcriber }) {
-    const [progress, setProgress] = useState<number | undefined>(undefined);
+    const [progress, setProgress] = useState(0);
     const [audioData, setAudioData] = useState<
         | {
               buffer: AudioBuffer;
@@ -33,8 +33,6 @@ export function AudioManager(props: { transcriber: Transcriber }) {
     const [audioDownloadUrl, setAudioDownloadUrl] = useState<
         string | undefined
     >(undefined);
-
-    const isAudioLoading = progress !== undefined;
 
     const resetAudio = () => {
         setAudioData(undefined);
@@ -74,7 +72,6 @@ export function AudioManager(props: { transcriber: Transcriber }) {
             });
             const arrayBuffer = fileReader.result as ArrayBuffer;
             const decoded = await audioCTX.decodeAudioData(arrayBuffer);
-            setProgress(undefined);
             setAudioData({
                 buffer: decoded,
                 url: blobUrl,
@@ -110,8 +107,6 @@ export function AudioManager(props: { transcriber: Transcriber }) {
                 setAudioFromDownload(data, mimeType);
             } catch (error) {
                 console.log("Request failed or aborted", error);
-            } finally {
-                setProgress(undefined);
             }
         }
     };
@@ -131,8 +126,8 @@ export function AudioManager(props: { transcriber: Transcriber }) {
         <>
             <Settings transcriber={props.transcriber} />
             <div className='text-sm text-slate-500'>
-                <label>Add the audio source:</label>
-                <div className='flex flex-col min-[440px]:flex-row w-full gap-2 mt-1 mb-5'>
+                <label>Add the audio source</label>
+                <div className='flex flex-col min-[440px]:flex-row w-full gap-2 mt-2 mb-5'>
                     <UrlTile
                         icon={<AnchorIcon />}
                         text={"Link"}
@@ -168,14 +163,10 @@ export function AudioManager(props: { transcriber: Transcriber }) {
                     )}
                 </div>
             </div>
-            {
-                <AudioDataBar
-                    progress={isAudioLoading ? progress : +!!audioData}
-                />
-            }
+            {<AudioDataBar progress={progress} />}
             {audioData && (
                 <>
-                    <div className='flex flex-col sm:flex-row relative z-10 w-full gap-2'>
+                    <div className='flex flex-col sm:flex-row relative z-10 w-full gap-2 mt-5'>
                         <AudioPlayer
                             audioUrl={audioData.url}
                             mimeType={audioData.mimeType}
@@ -219,7 +210,8 @@ function Settings(props: { transcriber: Transcriber }) {
                 id='select-model'
                 defaultValue={props.transcriber.model}
                 setValue={props.transcriber.setModel}
-                label='Choose a transcription model:'
+                label='Choose a transcription model'
+                info='Bigger is better, smaller is faster'
             >
                 {Object.keys(MODELS).map((key) => (
                     <Option
@@ -232,7 +224,8 @@ function Settings(props: { transcriber: Transcriber }) {
                 id='select-language'
                 defaultValue={props.transcriber.language}
                 setValue={props.transcriber.setLanguage}
-                label='Select the source language:'
+                label='Select the source language'
+                info='English is best supported'
             >
                 {Object.keys(LANGUAGES).map((key) => (
                     <Option key={key} value={key}>
@@ -250,7 +243,7 @@ function AudioDataBar(props: { progress: number }) {
 
 function ProgressBar(props: { progress: string }) {
     return (
-        <div className='w-full bg-slate-200 rounded-full h-1 dark:bg-slate-900 mb-5'>
+        <div className='w-full bg-slate-200 rounded-full h-1 dark:bg-slate-900'>
             <div
                 className='bg-blue-500 h-1 rounded-full transition-all duration-100'
                 style={{ width: props.progress }}
@@ -425,7 +418,7 @@ function UrlModal(props: {
             title={"From URL"}
             content={
                 <>
-                    {"Enter the URL of the audio file you want to load."}
+                    {"Enter the URL of the audio file you want to load"}
                     <UrlInput onChange={onChange} value={url} />
                 </>
             }

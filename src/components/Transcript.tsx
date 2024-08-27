@@ -1,10 +1,10 @@
 import { useState } from "react";
 
-import { Switch } from "./input/Switch";
+import { Switch } from "./Switch";
 import { Transcriber } from "../hooks/useTranscriber";
 import { formatAudioTimestamp } from "../utils/AudioUtils";
 import { millisecondsToTime, secondsToSRT } from "../utils/StringUtils";
-import { Clock } from "./input/Icons";
+import { Clock } from "./Icons";
 
 export default function Transcript(props: { transcriber: Transcriber }) {
     const transcribedData = props.transcriber.output;
@@ -75,7 +75,7 @@ export default function Transcript(props: { transcriber: Transcriber }) {
             <div className='flex flex-row items-center justify-end min-[440px]:justify-between'>
                 {props.transcriber.executionTime && (
                     <div className='hidden min-[440px]:flex flex-row items-center text-sm text-slate-500'>
-                        <Clock className="size-6 fill-slate-300 mr-1" />
+                        <Clock className="size-5 fill-slate-300 mr-1" />
                         <span className='whitespace-nowrap'>
                             {millisecondsToTime(
                                 props.transcriber.executionTime,
