@@ -21,7 +21,7 @@ export const App: React.FC = () => {
                     Privacy-focused and free.{" "}
                     <InfoButton
                         icon={
-                            <InfoIcon className='size-5 sm:size-7 fill-slate-300 hover:fill-blue-500 dark:hover:stroke-slate-900' />
+                            <InfoIcon className='size-5 sm:size-7 fill-slate-300 hover:fill-blue-500' />
                         }
                         content={<InfoContent />}
                     />
