@@ -2,7 +2,7 @@ interface IconProps {
     className?: string;
 }
 
-export function AnchorIcon(props: IconProps) {
+export const AnchorIcon: React.FC<IconProps> = ({ className }) => {
     return (
         <svg
             xmlns='http://www.w3.org/2000/svg'
@@ -10,7 +10,7 @@ export function AnchorIcon(props: IconProps) {
             viewBox='0 0 24 24'
             strokeWidth='1.5'
             stroke='currentColor'
-            className={props.className}
+            className={className}
         >
             <path
                 strokeLinecap='round'
@@ -19,9 +19,9 @@ export function AnchorIcon(props: IconProps) {
             />
         </svg>
     );
-}
+};
 
-export function FolderIcon(props: IconProps) {
+export const FolderIcon: React.FC<IconProps> = ({ className }) => {
     return (
         <svg
             xmlns='http://www.w3.org/2000/svg'
@@ -29,7 +29,7 @@ export function FolderIcon(props: IconProps) {
             viewBox='0 0 24 24'
             strokeWidth='1.5'
             stroke='currentColor'
-            className={props.className}
+            className={className}
         >
             <path
                 strokeLinecap='round'
@@ -38,9 +38,9 @@ export function FolderIcon(props: IconProps) {
             />
         </svg>
     );
-}
+};
 
-export function MicrophoneIcon(props: IconProps) {
+export const MicrophoneIcon: React.FC<IconProps> = ({ className }) => {
     return (
         <svg
             xmlns='http://www.w3.org/2000/svg'
@@ -48,7 +48,7 @@ export function MicrophoneIcon(props: IconProps) {
             viewBox='0 0 24 24'
             strokeWidth={1.5}
             stroke='currentColor'
-            className={props.className}
+            className={className}
         >
             <path
                 strokeLinecap='round'
@@ -57,9 +57,9 @@ export function MicrophoneIcon(props: IconProps) {
             />
         </svg>
     );
-}
+};
 
-export function ChevronDownIcon(props: IconProps) {
+export const ChevronDownIcon: React.FC<IconProps> = ({ className }) => {
     return (
         <svg
             xmlns='http://www.w3.org/2000/svg'
@@ -67,7 +67,7 @@ export function ChevronDownIcon(props: IconProps) {
             viewBox='0 0 24 24'
             strokeWidth='1.5'
             stroke='currentColor'
-            className={props.className}
+            className={className}
         >
             <path
                 strokeLinecap='round'
@@ -76,15 +76,15 @@ export function ChevronDownIcon(props: IconProps) {
             />
         </svg>
     );
-}
+};
 
-export function Clock(props: IconProps) {
+export const Clock: React.FC<IconProps> = ({ className }) => {
     return (
         <svg
             xmlns='http://www.w3.org/2000/svg'
             viewBox='0 0 16 16'
             fill='currentColor'
-            className={props.className}
+            className={className}
         >
             <path
                 fillRule='evenodd'
@@ -93,15 +93,15 @@ export function Clock(props: IconProps) {
             />
         </svg>
     );
-}
+};
 
-export function Info(props: IconProps) {
+export const Info: React.FC<IconProps> = ({ className }) => {
     return (
         <svg
             xmlns='http://www.w3.org/2000/svg'
             viewBox='0 0 16 16'
             fill='currentColor'
-            className={props.className}
+            className={className}
         >
             <path
                 fillRule='evenodd'
@@ -110,4 +110,4 @@ export function Info(props: IconProps) {
             />
         </svg>
     );
-}
+};

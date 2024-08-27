@@ -1,11 +1,11 @@
-export function titleCase(str: string) {
+export const titleCase = (str: string) => {
     str = str.toLowerCase();
     return (str.match(/\w+.?/g) || [])
         .map((word) => {
             return word.charAt(0).toUpperCase() + word.slice(1);
         })
         .join("");
-}
+};
 
 export const secondsToSRT = (seconds: number): string => {
     const date = new Date(0);

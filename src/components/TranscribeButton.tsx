@@ -1,9 +1,10 @@
-interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface TranscribeButtonProps
+    extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     isModelLoading: boolean;
     isTranscribing: boolean;
 }
 
-export function TranscribeButton(props: Props): JSX.Element {
+export const TranscribeButton: React.FC<TranscribeButtonProps> = (props) => {
     const { isModelLoading, isTranscribing, onClick, ...buttonProps } = props;
     return (
         <button
@@ -25,9 +26,13 @@ export function TranscribeButton(props: Props): JSX.Element {
             )}
         </button>
     );
+};
+
+interface SpinnerProps {
+    text: string;
 }
 
-export function Spinner(props: { text: string }): JSX.Element {
+const Spinner: React.FC<SpinnerProps> = ({ text }) => {
     return (
         <div role='status'>
             <svg
@@ -47,7 +52,7 @@ export function Spinner(props: { text: string }): JSX.Element {
                     fill='currentColor'
                 />
             </svg>
-            {props.text}
+            {text}
         </div>
     );
-}
+};

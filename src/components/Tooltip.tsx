@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 
-interface Props {
+interface TooltipProps {
     message: string;
     children: React.ReactNode;
 }
 
-const Tooltip: React.FC<Props> = ({ message, children }) => {
+export const Tooltip: React.FC<TooltipProps> = ({ message, children }) => {
     const [isVisible, setIsVisible] = useState(false);
 
     return (
@@ -26,5 +26,3 @@ const Tooltip: React.FC<Props> = ({ message, children }) => {
         </div>
     );
 };
-
-export default Tooltip;

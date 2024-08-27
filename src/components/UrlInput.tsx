@@ -1,11 +1,6 @@
-import { DetailedHTMLProps, InputHTMLAttributes } from "react";
-
-export function UrlInput(
-    props: DetailedHTMLProps<
-        InputHTMLAttributes<HTMLInputElement>,
-        HTMLInputElement
-    >,
-) {
+export const UrlInput: React.FC<React.InputHTMLAttributes<HTMLInputElement>> = (
+    props,
+) => {
     return (
         <div>
             <input
@@ -17,4 +12,4 @@ export function UrlInput(
             />
         </div>
     );
-}
+};

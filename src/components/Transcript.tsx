@@ -6,8 +6,12 @@ import { formatAudioTimestamp } from "../utils/AudioUtils";
 import { millisecondsToTime, secondsToSRT } from "../utils/StringUtils";
 import { Clock } from "./Icons";
 
-export default function Transcript(props: { transcriber: Transcriber }) {
-    const transcribedData = props.transcriber.output;
+interface TranscriptProps {
+    transcriber: Transcriber;
+}
+
+export const Transcript: React.FC<TranscriptProps> = ({ transcriber }) => {
+    const transcribedData = transcriber.output;
     const [showTimestamps, setShowTimestamps] = useState(true);
 
     const saveBlob = (blob: Blob, filename: string) => {
@@ -61,25 +65,23 @@ export default function Transcript(props: { transcriber: Transcriber }) {
         label: string;
     }
 
-    const ExportButton = (props: ExportButtonProps) => (
+    const ExportButton: React.FC<ExportButtonProps> = ({ onClick, label }) => (
         <button
-            onClick={props.onClick}
+            onClick={onClick}
             className='inline-flex items-center text-white font-medium text-sm text-center bg-blue-500 hover:bg-blue-600 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-700 dark:focus:ring-slate-400 rounded-lg px-4 py-2'
         >
-            {props.label}
+            {label}
         </button>
     );
 
     return (
         <div className='w-full flex flex-col p-5'>
             <div className='flex flex-row items-center justify-end min-[440px]:justify-between'>
-                {props.transcriber.executionTime && (
+                {transcriber.executionTime && (
                     <div className='hidden min-[440px]:flex flex-row items-center text-sm text-slate-500'>
-                        <Clock className="size-5 fill-slate-300 mr-1" />
+                        <Clock className='size-5 fill-slate-300 mr-1' />
                         <span className='whitespace-nowrap'>
-                            {millisecondsToTime(
-                                props.transcriber.executionTime,
-                            )}
+                            {millisecondsToTime(transcriber.executionTime)}
                         </span>
                     </div>
                 )}
@@ -121,4 +123,4 @@ export default function Transcript(props: { transcriber: Transcriber }) {
             )}
         </div>
     );
-}
+};

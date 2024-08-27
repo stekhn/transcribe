@@ -1,8 +1,8 @@
 import { AudioManager } from "./components/AudioManager";
-import Transcript from "./components/Transcript";
+import { Transcript } from "./components/Transcript";
 import { useTranscriber } from "./hooks/useTranscriber";
 
-function App() {
+export const App: React.FC = () => {
     const transcriber = useTranscriber();
 
     return (
@@ -60,6 +60,4 @@ function App() {
             </footer>
         </div>
     );
-}
-
-export default App;
+};

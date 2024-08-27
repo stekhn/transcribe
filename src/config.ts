@@ -1,20 +1,21 @@
 export const SAMPLING_RATE = 16000;
-export const DEFAULT_AUDIO_URL = `https://huggingface.co/datasets/Xenova/transformers.js-docs/resolve/main/ted_60_16k.wav`;
+export const DEFAULT_AUDIO_URL =
+    "https://archive.org/download/Greatest_Speeches_of_the_20th_Century/AddresstotheWomenofAmerica.mp3";
 export const DEFAULT_SUBTASK = "transcribe";
 export const DEFAULT_QUANTIZED = false;
 export const DEFAULT_MULTILINGUAL = true;
 
-export const DEFAULT_MODEL = "Xenova/whisper-small";
+export const DEFAULT_MODEL = "onnx-community/whisper-base";
 
 export const MODELS: { [key: string]: number } = {
-    "onnx-community/whisper-small": 252,
-    "onnx-community/whisper-base": 101,
     "onnx-community/whisper-tiny": 65,
-    "onnx-community/whisper-small.en": 252,
-    "onnx-community/whisper-base.en": 101,
+    "onnx-community/whisper-base": 101,
+    "onnx-community/whisper-small": 252,
     "onnx-community/whisper-tiny.en": 44,
-    "distil-whisper/distil-medium.en": 426,
+    "onnx-community/whisper-base.en": 101,
+    "onnx-community/whisper-small.en": 252,
     "distil-whisper/distil-small.en": 196,
+    "distil-whisper/distil-medium.en": 426,
 };
 
 export const DEFAULT_LANGUAGE = "en";

@@ -1,7 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 
-export interface Props {
+interface ModalProps {
     show: boolean;
     onClose: () => void;
     onSubmit: () => void;
@@ -11,7 +11,7 @@ export interface Props {
     content: string | JSX.Element;
 }
 
-export default function Modal({
+export const Modal: React.FC<ModalProps> = ({
     show,
     onClose,
     onSubmit,
@@ -19,7 +19,7 @@ export default function Modal({
     content,
     submitText,
     submitEnabled = true,
-}: Props) {
+}) => {
     return (
         <Transition appear show={show} as={Fragment}>
             <Dialog as='div' className='relative z-10' onClose={onClose}>
@@ -91,4 +91,4 @@ export default function Modal({
             </Dialog>
         </Transition>
     );
-}
+};

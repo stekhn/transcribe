@@ -2,26 +2,15 @@ import { useState, useEffect, useRef } from "react";
 
 import { formatAudioTimestamp } from "../utils/AudioUtils";
 import { webmFixDuration } from "../utils/BlobFix";
+import { getMimeType } from "../utils/MimeTypes";
 
-function getMimeType() {
-    const types = [
-        "audio/webm",
-        "audio/mp4",
-        "audio/ogg",
-        "audio/wav",
-        "audio/aac",
-    ];
-    for (let i = 0; i < types.length; i++) {
-        if (MediaRecorder.isTypeSupported(types[i])) {
-            return types[i];
-        }
-    }
-    return undefined;
+interface AudioRecorderProps {
+    onRecordingComplete: (blob: Blob) => void;
 }
 
-export default function AudioRecorder(props: {
-    onRecordingComplete: (blob: Blob) => void;
-}) {
+export const AudioRecorder: React.FC<AudioRecorderProps> = ({
+    onRecordingComplete,
+}) => {
     const [recording, setRecording] = useState(false);
     const [duration, setDuration] = useState(0);
     const [recordedBlob, setRecordedBlob] = useState<Blob | null>(null);
@@ -67,7 +56,7 @@ export default function AudioRecorder(props: {
                     }
 
                     setRecordedBlob(blob);
-                    props.onRecordingComplete(blob);
+                    onRecordingComplete(blob);
 
                     chunksRef.current = [];
                 }
@@ -147,4 +136,4 @@ export default function AudioRecorder(props: {
             )}
         </div>
     );
-}
+};

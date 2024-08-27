@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-import AudioPlayer from "./AudioPlayer";
-import Progress from "./Progress";
-import AudioRecorder from "./AudioRecorder";
+import { AudioPlayer } from "./AudioPlayer";
+import { AudioRecorder } from "./AudioRecorder";
+import { Progress } from "./Progress";
 import { TranscribeButton } from "./TranscribeButton";
 import { Select, Option } from "./Select";
 import { AnchorIcon, FolderIcon, MicrophoneIcon } from "./Icons";
-import Modal from "./Modal";
+import { Modal } from "./Modal";
 import { UrlInput } from "./UrlInput";
 import { Transcriber } from "../hooks/useTranscriber";
 import { titleCase } from "../utils/StringUtils";
@@ -19,7 +19,11 @@ export enum AudioSource {
     RECORDING = "RECORDING",
 }
 
-export function AudioManager(props: { transcriber: Transcriber }) {
+interface AudiomanagerProps {
+    transcriber: Transcriber;
+}
+
+export const AudioManager: React.FC<AudiomanagerProps> = ({ transcriber }) => {
     const [progress, setProgress] = useState(0);
     const [audioData, setAudioData] = useState<
         | {
@@ -124,7 +128,7 @@ export function AudioManager(props: { transcriber: Transcriber }) {
 
     return (
         <>
-            <Settings transcriber={props.transcriber} />
+            <Settings transcriber={transcriber} />
             <div className='text-sm text-slate-500'>
                 <label>Add the audio source</label>
                 <div className='flex flex-col min-[440px]:flex-row w-full gap-2 mt-2 mb-5'>
@@ -132,7 +136,7 @@ export function AudioManager(props: { transcriber: Transcriber }) {
                         icon={<AnchorIcon />}
                         text={"Link"}
                         onUrlUpdate={(e) => {
-                            props.transcriber.onInputChange();
+                            transcriber.onInputChange();
                             setAudioDownloadUrl(e);
                         }}
                     />
@@ -140,7 +144,7 @@ export function AudioManager(props: { transcriber: Transcriber }) {
                         icon={<FolderIcon />}
                         text={"File"}
                         onFileUpdate={(decoded, blobUrl, mimeType) => {
-                            props.transcriber.onInputChange();
+                            transcriber.onInputChange();
                             setAudioData({
                                 buffer: decoded,
                                 url: blobUrl,
@@ -155,7 +159,7 @@ export function AudioManager(props: { transcriber: Transcriber }) {
                                 icon={<MicrophoneIcon />}
                                 text={"Record"}
                                 setAudioData={(e) => {
-                                    props.transcriber.onInputChange();
+                                    transcriber.onInputChange();
                                     setAudioFromRecording(e);
                                 }}
                             />
@@ -163,7 +167,7 @@ export function AudioManager(props: { transcriber: Transcriber }) {
                     )}
                 </div>
             </div>
-            {<AudioDataBar progress={progress} />}
+            {<AudioProgress progress={progress} />}
             {audioData && (
                 <>
                     <div className='flex flex-col sm:flex-row relative z-10 w-full gap-2 mt-5'>
@@ -173,18 +177,18 @@ export function AudioManager(props: { transcriber: Transcriber }) {
                         />
                         <TranscribeButton
                             onClick={() => {
-                                props.transcriber.start(audioData.buffer);
+                                transcriber.start(audioData.buffer);
                             }}
-                            isModelLoading={props.transcriber.isModelLoading}
-                            isTranscribing={props.transcriber.isBusy}
+                            isModelLoading={transcriber.isModelLoading}
+                            isTranscribing={transcriber.isBusy}
                         />
                     </div>
-                    {props.transcriber.progressItems.length > 0 && (
+                    {transcriber.progressItems.length > 0 && (
                         <div className='relative z-10 w-full text-sm mt-5'>
                             <label className='text-slate-500 block mb-2'>
                                 Loading Whisper model:
                             </label>
-                            {props.transcriber.progressItems.map((data) => (
+                            {transcriber.progressItems.map((data) => (
                                 <div key={data.file}>
                                     <Progress
                                         text={data.file}
@@ -194,22 +198,24 @@ export function AudioManager(props: { transcriber: Transcriber }) {
                             ))}
                         </div>
                     )}
-                    {props.transcriber.error && (
-                        <Error error={props.transcriber.error} />
-                    )}
+                    {transcriber.error && <Error error={transcriber.error} />}
                 </>
             )}
         </>
     );
+};
+
+interface SettingsProp {
+    transcriber: Transcriber;
 }
 
-function Settings(props: { transcriber: Transcriber }) {
+const Settings: React.FC<SettingsProp> = ({ transcriber }) => {
     return (
         <>
             <Select
                 id='select-model'
-                defaultValue={props.transcriber.model}
-                setValue={props.transcriber.setModel}
+                defaultValue={transcriber.model}
+                setValue={transcriber.setModel}
                 label='Choose a transcription model'
                 info='Bigger is better, smaller is faster'
             >
@@ -222,8 +228,8 @@ function Settings(props: { transcriber: Transcriber }) {
             </Select>
             <Select
                 id='select-language'
-                defaultValue={props.transcriber.language}
-                setValue={props.transcriber.setLanguage}
+                defaultValue={transcriber.language}
+                setValue={transcriber.setLanguage}
                 label='Select the source language'
                 info='English is best supported'
             >
@@ -235,58 +241,66 @@ function Settings(props: { transcriber: Transcriber }) {
             </Select>
         </>
     );
+};
+
+interface AudioProgressProps {
+    progress: number;
 }
 
-function AudioDataBar(props: { progress: number }) {
-    return <ProgressBar progress={`${Math.round(props.progress * 100)}%`} />;
-}
-
-function ProgressBar(props: { progress: string }) {
+const AudioProgress: React.FC<AudioProgressProps> = ({ progress }) => {
     return (
         <div className='w-full bg-slate-200 rounded-full h-1 dark:bg-slate-900'>
             <div
                 className='bg-blue-500 h-1 rounded-full transition-all duration-100'
-                style={{ width: props.progress }}
+                style={{ width: `${Math.round(progress * 100)}%` }}
             ></div>
         </div>
     );
+};
+
+interface ErrorProps {
+    error: { name: string; message: string };
 }
 
-function Error(props: { error: { name: string; message: string } }) {
+const Error: React.FC<ErrorProps> = ({ error }) => {
     return (
         <div className='rounded-lg text-sm text-red-500 bg-red-50 dark:bg-red-950 p-2.5 px-4 mt-5'>
             <p>
-                {props.error.name}: {props.error.message}
+                {error.name}: {error.message}
             </p>
         </div>
     );
+};
+
+interface TileProps {
+    icon: JSX.Element;
+    text: string;
+    onClick: () => void;
 }
 
-function Tile(props: {
-    icon: JSX.Element;
-    text?: string;
-    onClick?: () => void;
-}) {
+const Tile: React.FC<TileProps> = ({ icon, text, onClick }) => {
     return (
         <button
-            onClick={props.onClick}
+            onClick={onClick}
             className='flex flex-1 items-center justify-center rounded-lg ring-1 ring-slate-200 dark:ring-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-700 dark:focus:ring-slate-400 p-2'
         >
-            <div className='w-7 h-7'>{props.icon}</div>
-            {props.text && (
+            <div className='w-7 h-7'>{icon}</div>
+            {text && (
                 <div className='ml-2 break-text text-center text-md w-30'>
-                    {props.text}
+                    {text}
                 </div>
             )}
         </button>
     );
-}
+};
 
-function UrlTile(props: {
+interface UrlTileProps {
     icon: JSX.Element;
     text: string;
     onUrlUpdate: (url: string) => void;
-}) {
+}
+
+const UrlTile: React.FC<UrlTileProps> = ({ icon, text, onUrlUpdate }) => {
     const [showModal, setShowModal] = useState(false);
 
     const onClick = () => {
@@ -298,19 +312,19 @@ function UrlTile(props: {
     };
 
     const onSubmit = (url: string) => {
-        props.onUrlUpdate(url);
+        onUrlUpdate(url);
         onClose();
     };
 
     return (
         <>
-            <Tile icon={props.icon} text={props.text} onClick={onClick} />
+            <Tile icon={icon} text={text} onClick={onClick} />
             <UrlModal show={showModal} onSubmit={onSubmit} onClose={onClose} />
         </>
     );
-}
+};
 
-function FileTile(props: {
+interface FileTileProps {
     icon: JSX.Element;
     text: string;
     onFileUpdate: (
@@ -318,9 +332,9 @@ function FileTile(props: {
         blobUrl: string,
         mimeType: string,
     ) => void;
-}) {
-    // const audioPlayer = useRef<HTMLAudioElement>(null);
+}
 
+const FileTile: React.FC<FileTileProps> = ({ icon, text, onFileUpdate }) => {
     // Create hidden input element
     let elem = document.createElement("input");
     elem.type = "file";
@@ -344,7 +358,7 @@ function FileTile(props: {
 
             const decoded = await audioCTX.decodeAudioData(arrayBuffer);
 
-            props.onFileUpdate(decoded, urlObj, mimeType);
+            onFileUpdate(decoded, urlObj, mimeType);
         });
         reader.readAsArrayBuffer(files[0]);
 
@@ -354,20 +368,22 @@ function FileTile(props: {
 
     return (
         <>
-            <Tile
-                icon={props.icon}
-                text={props.text}
-                onClick={() => elem.click()}
-            />
+            <Tile icon={icon} text={text} onClick={() => elem.click()} />
         </>
     );
-}
+};
 
-function RecordTile(props: {
+interface RecordTileProps {
     icon: JSX.Element;
     text: string;
     setAudioData: (data: Blob) => void;
-}) {
+}
+
+const RecordTile: React.FC<RecordTileProps> = ({
+    icon,
+    text,
+    setAudioData,
+}) => {
     const [showModal, setShowModal] = useState(false);
 
     const onClick = () => {
@@ -380,14 +396,14 @@ function RecordTile(props: {
 
     const onSubmit = (data: Blob | undefined) => {
         if (data) {
-            props.setAudioData(data);
+            setAudioData(data);
             onClose();
         }
     };
 
     return (
         <>
-            <Tile icon={props.icon} text={props.text} onClick={onClick} />
+            <Tile icon={icon} text={text} onClick={onClick} />
             <RecordModal
                 show={showModal}
                 onSubmit={onSubmit}
@@ -395,64 +411,70 @@ function RecordTile(props: {
             />
         </>
     );
-}
+};
 
-function UrlModal(props: {
+interface UrlModalProps {
     show: boolean;
     onSubmit: (url: string) => void;
     onClose: () => void;
-}) {
+}
+
+const UrlModal: React.FC<UrlModalProps> = ({ show, onSubmit, onClose }) => {
     const [url, setUrl] = useState(DEFAULT_AUDIO_URL);
 
-    const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setUrl(event.target.value);
     };
 
-    const onSubmit = () => {
-        props.onSubmit(url);
-    };
+    const handleSubmit = () => onSubmit(url);
 
     return (
         <Modal
-            show={props.show}
+            show={show}
             title={"From URL"}
             content={
                 <>
                     {"Enter the URL of the audio file you want to load"}
-                    <UrlInput onChange={onChange} value={url} />
+                    <UrlInput onChange={handleChange} value={url} />
                 </>
             }
-            onClose={props.onClose}
+            onClose={onClose}
             submitText={"Load"}
-            onSubmit={onSubmit}
+            onSubmit={handleSubmit}
         />
     );
-}
+};
 
-function RecordModal(props: {
+interface RecordModalProps {
     show: boolean;
     onSubmit: (data: Blob | undefined) => void;
     onClose: () => void;
-}) {
+}
+
+const RecordModal: React.FC<RecordModalProps> = ({
+    show,
+    onSubmit,
+    onClose,
+}) => {
     const [audioBlob, setAudioBlob] = useState<Blob>();
 
     const onRecordingComplete = (blob: Blob) => {
         setAudioBlob(blob);
     };
 
-    const onSubmit = () => {
-        props.onSubmit(audioBlob);
+    const handleSubmit = () => {
+        onSubmit(audioBlob);
         setAudioBlob(undefined);
     };
 
-    const onClose = () => {
-        props.onClose();
+    const handleClose = () => {
+        onClose();
         setAudioBlob(undefined);
     };
 
     return (
         <Modal
-            show={props.show}
+            show={show}
             title={"From Recording"}
             content={
                 <>
@@ -460,10 +482,10 @@ function RecordModal(props: {
                     <AudioRecorder onRecordingComplete={onRecordingComplete} />
                 </>
             }
-            onClose={onClose}
+            onClose={handleClose}
             submitText={"Load"}
             submitEnabled={audioBlob !== undefined}
-            onSubmit={onSubmit}
+            onSubmit={handleSubmit}
         />
     );
-}
+};
