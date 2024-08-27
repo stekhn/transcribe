@@ -12,17 +12,15 @@ export const App: React.FC = () => {
             <aside className='absolute top-2 right-2'>
                 <InfoButton />
             </aside>
-            <header className='container m-5 w-full'>
+            <header className='container pb-2 sm:p-5 w-full'>
                 <div className='flex justify-center items-center gap-2 sm:gap-3 mb-2 sm:mb-4'>
-                    <Logo className='size-9 sm:size-14' />
+                    <Logo className='size-10 sm:size-14' />
                     <h1 className='text-3xl sm:text-5xl font-extrabold tracking-tight text-center '>
                         Transcribe
                     </h1>
                 </div>
                 <h2 className='text-l sm:text-xl font-semibold tracking-tight text-center'>
-                    Use Whisper speech-to-text models directly in your browser.
-                    <br />
-                    Privacy-focused and free.
+                    Use Whisper speech-to-text models directly in your browser. Privacy-focused and free.
                 </h2>
             </header>
 

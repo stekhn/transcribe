@@ -1,8 +1,12 @@
 # Transcribe
 
-Use Whisper speech-to-text models directly in your browser. Privacy-focused and free. This web application is based on [Whisper Web](https://github.com/xenova/whisper-web/), built with [Transformers.js](https://github.com/xenova/transformers.js), using [ONNX](https://onnx.ai/) models from [Hugging Face](https://huggingface.co/models?sort=downloads&search=onnx+whisper).
+This prototype demonstrates the potential of local AI models for speech-to-text transcription, offering a cost-effective and privacy-friendly solution. Running directly in the browser, it eliminates the need for complicated setups or expensive services. However, transcription can be slow when using larger models.
+
+Transcribe is based on [Whisper Web](https://github.com/xenova/whisper-web/), built with [Transformers.js](https://github.com/xenova/transformers.js), using [ONNX Whisper](https://onnx.ai/) models from [Hugging Face](https://huggingface.co/models?sort=downloads&search=onnx+whisper). [Whisper](https://github.com/openai/whisper) is a open-source speech recognition model developed by OpenAI.
 
 **Live Demo**: <https://stekhn.github.io/transcribe/>
+
+![Transcribe preview image](./public/preview.jpg)
 
 ## Usage
 

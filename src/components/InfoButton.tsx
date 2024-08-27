@@ -89,8 +89,7 @@ const InfoContent: React.FC = () => {
                 >
                     Whisper
                 </a>{" "}
-                is a open-source speech recognition model developed
-                by OpenAI.
+                is a open-source speech recognition model developed by OpenAI.
             </p>
             <p className='mb-3'>
                 If you'd like to support this project, consider donating to{" "}
@@ -102,7 +101,7 @@ const InfoContent: React.FC = () => {
                 >
                     Joshua Lochner (xenova)
                 </a>
-                , the creator of Transformers.js and many cool browser-based AI
+                , the creator of Transformers.js and many cool, browser-based AI
                 demos.
             </p>
             <p>
