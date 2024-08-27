@@ -1,4 +1,5 @@
 import { AudioManager } from "./components/AudioManager";
+import { Logo } from "./components/Icons";
 import { Transcript } from "./components/Transcript";
 import { useTranscriber } from "./hooks/useTranscriber";
 
@@ -8,10 +9,13 @@ export const App: React.FC = () => {
     return (
         <div className='flex flex-col items-center min-h-full bg-slate-50 p-5 dark:bg-slate-900 text-slate-900 dark:text-slate-100'>
             <header className='m-5'>
-                <h1 className='text-3xl sm:text-5xl font-extrabold tracking-tight text-center '>
-                    Transcribe
-                </h1>
-                <h2 className='text-xl font-semibold tracking-tight text-center mt-2'>
+                <div className='flex justify-center items-center gap-2 sm:gap-3 mb-2 sm:mb-4'>
+                    <Logo className='size-9 sm:size-14' />
+                    <h1 className='text-3xl sm:text-5xl font-extrabold tracking-tight text-center '>
+                        Transcribe
+                    </h1>
+                </div>
+                <h2 className='text-l sm:text-xl font-semibold tracking-tight text-center'>
                     Use Whisper speech-to-text models directly in your browser.
                     <br />
                     Privacy-focused and free.
