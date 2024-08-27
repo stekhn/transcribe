@@ -1,5 +1,6 @@
-import { AudioManager } from "./components/AudioManager";
 import { Logo } from "./components/Icons";
+import { InfoButton } from "./components/InfoButton";
+import { AudioManager } from "./components/AudioManager";
 import { Transcript } from "./components/Transcript";
 import { useTranscriber } from "./hooks/useTranscriber";
 
@@ -7,8 +8,11 @@ export const App: React.FC = () => {
     const transcriber = useTranscriber();
 
     return (
-        <div className='flex flex-col items-center min-h-full bg-slate-50 p-5 dark:bg-slate-900 text-slate-900 dark:text-slate-100'>
-            <header className='m-5'>
+        <main className='relative flex flex-col items-center bg-slate-50 p-5 dark:bg-slate-900 text-slate-900 dark:text-slate-100'>
+            <aside className='absolute top-2 right-2'>
+                <InfoButton />
+            </aside>
+            <header className='container m-5 w-full'>
                 <div className='flex justify-center items-center gap-2 sm:gap-3 mb-2 sm:mb-4'>
                     <Logo className='size-9 sm:size-14' />
                     <h1 className='text-3xl sm:text-5xl font-extrabold tracking-tight text-center '>
@@ -32,36 +36,6 @@ export const App: React.FC = () => {
                     <Transcript transcriber={transcriber} />
                 </section>
             )}
-
-            <div className='flex flex-col flex-auto items-center'>&nbsp;</div>
-
-            <footer className='text-center text-sm text-slate-500 mt-5'>
-                Based on{" "}
-                <a
-                    className='underline'
-                    href='https://github.com/xenova/whisper-web/'
-                    target='_blank'
-                >
-                    Whisper Web
-                </a>
-                , made with{" "}
-                <a
-                    className='underline'
-                    href='https://github.com/xenova/transformers.js'
-                    target='_blank'
-                >
-                    Transformers.js
-                </a>
-                .<br /> Check out the code on{" "}
-                <a
-                    className='underline'
-                    href='https://github.com/stekhn/transcribe/'
-                    target='_blank'
-                >
-                    Github
-                </a>
-                .
-            </footer>
-        </div>
+        </main>
     );
 };

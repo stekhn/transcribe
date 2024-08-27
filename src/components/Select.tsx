@@ -1,5 +1,5 @@
 import { Tooltip } from "./Tooltip";
-import { ChevronDownIcon, Info } from "./Icons";
+import { ChevronDownIcon, HelpIcon } from "./Icons";
 
 interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
     setValue: React.Dispatch<any>;
@@ -22,7 +22,7 @@ export const Select: React.FC<SelectProps> = ({
                 {label && <label htmlFor={id}>{label}</label>}
                 {info && (
                     <Tooltip message={info}>
-                        <Info className='size-5 fill-slate-300 hover:fill-blue-500' />
+                        <HelpIcon className='size-5 fill-slate-300 hover:fill-blue-500' />
                     </Tooltip>
                 )}
             </div>
