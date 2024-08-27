@@ -129,7 +129,16 @@ export const HelpIcon: React.FC<IconProps> = ({ className }) => {
     );
 };
 
-export const Logo: React.FC<IconProps> = ({ className }) => {
+interface LogoProps extends IconProps {
+    foregroundClassName?: string;
+    backgroundClassName?: string;
+}
+
+export const Logo: React.FC<LogoProps> = ({
+    className,
+    foregroundClassName,
+    backgroundClassName,
+}) => {
     return (
         <svg
             xmlns='http://www.w3.org/2000/svg'
@@ -140,14 +149,15 @@ export const Logo: React.FC<IconProps> = ({ className }) => {
             strokeMiterlimit='2'
             className={className}
         >
-            <path d='m0 0h32v32h-32z' fill='none' />
             <path
                 d='m30.036 10.325v14.884c0 3.748-3.043 6.791-6.792 6.791h-16.452c-3.749 0-6.792-3.043-6.792-6.791v-15.933c0-3.748 3.043-6.791 6.792-6.791h14.425l.155-.155c1.083-1.416 2.789-2.33 4.707-2.33 3.268 0 5.921 2.653 5.921 5.922 0 1.746-.759 3.318-1.964 4.403z'
                 fill='#3b82f6'
+                className={foregroundClassName}
             />
             <path
                 d='m29.259 2.755c-1.806-1.805-4.734-1.805-6.539 0l-10.618 10.618c-.201.201-.336.456-.392.733l-1.128 5.64c-.095.47.053.955.392 1.294s.824.487 1.294.392l5.64-1.128c.277-.056.532-.191.733-.392l10.618-10.618c1.805-1.805 1.805-4.733 0-6.539zm-4.511 2.026c.685-.685 1.797-.685 2.485 0 .685.688.685 1.8 0 2.485l-10.312 10.312-3.107.622.622-3.107zm-20.493 5.275c0-1.847 1.496-3.343 3.343-3.343h5.673c.792 0 1.434-.642 1.434-1.434 0-.791-.642-1.434-1.434-1.434h-5.673c-3.43 0-6.211 2.781-6.211 6.211v14.332c0 3.431 2.781 6.211 6.211 6.211h14.332c3.43 0 6.211-2.78 6.211-6.211v-5.673c0-.791-.643-1.434-1.434-1.434-.792 0-1.434.642-1.434 1.434v5.673c0 1.847-1.496 3.343-3.343 3.343h-14.332c-1.847 0-3.343-1.496-3.343-3.343z'
-                fill='#f1f5f9'
+                fill='#ffffff'
+                className={backgroundClassName}
             />
         </svg>
     );

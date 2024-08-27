@@ -18,7 +18,7 @@ export const Select: React.FC<SelectProps> = ({
 }) => {
     return (
         <div className='text-sm text-slate-500'>
-            <div className='flex items-center gap-1.5'>
+            <div className='flex items-center gap-1'>
                 {label && <label htmlFor={id}>{label}</label>}
                 {info && (
                     <Tooltip message={info}>

@@ -11,7 +11,11 @@ export const App: React.FC = () => {
         <main className='relative flex flex-col items-center text-slate-900 dark:text-slate-100 p-5'>
             <header className='container p-5 w-full'>
                 <div className='flex justify-center items-center gap-2 sm:gap-3 mb-2 sm:mb-4'>
-                    <Logo className='size-10 sm:size-14' />
+                    <Logo
+                        className='size-10 sm:size-14'
+                        foregroundClassName='fill-blue-500'
+                        backgroundClassName='fill-white dark:fill-slate-100'
+                    />
                     <h1 className='text-3xl sm:text-5xl font-extrabold tracking-tight text-center '>
                         Transcribe
                     </h1>
@@ -21,7 +25,7 @@ export const App: React.FC = () => {
                     Privacy-focused and free.{" "}
                     <InfoButton
                         icon={
-                            <InfoIcon className='size-5 sm:size-7 fill-slate-300 hover:fill-blue-500' />
+                            <InfoIcon className='size-6 sm:size-7 fill-slate-300 dark:fill-slate-500 hover:fill-blue-500' />
                         }
                         content={<InfoContent />}
                     />
