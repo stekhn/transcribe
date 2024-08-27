@@ -10,10 +10,10 @@ export const DEFAULT_MODEL = "onnx-community/whisper-base";
 export const MODELS: { [key: string]: number } = {
     "onnx-community/whisper-tiny": 65,
     "onnx-community/whisper-base": 101,
-    "onnx-community/whisper-small": 252,
-    "onnx-community/whisper-tiny.en": 44,
-    "onnx-community/whisper-base.en": 101,
-    "onnx-community/whisper-small.en": 252,
+    "onnx-community/whisper-small": 273,
+    // "onnx-community/whisper-tiny.en": 65,
+    // "onnx-community/whisper-base.en": 101,
+    // "onnx-community/whisper-small.en": 273,
     "distil-whisper/distil-small.en": 196,
     "distil-whisper/distil-medium.en": 426,
 };
