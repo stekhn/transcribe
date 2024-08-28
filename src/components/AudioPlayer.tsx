@@ -12,7 +12,6 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
     mimeType,
 }) => {
     const {
-        currentAudio,
         audioRef,
         setDuration,
         duration,
@@ -24,6 +23,16 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
     } = useAudioPlayer({ audioUrl, mimeType });
 
     const playAnimationRef = useRef<number | null>(null);
+
+    const onLoadedMetadata = () => {
+        const seconds = audioRef.current?.duration;
+        if (seconds !== undefined) {
+            setDuration(seconds);
+            if (progressBarRef.current) {
+                progressBarRef.current.max = seconds.toString();
+            }
+        }
+    };
 
     const updateProgress = useCallback(() => {
         if (audioRef.current && progressBarRef.current && duration) {
@@ -68,33 +77,24 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
         };
     }, [isPlaying, startAnimation, updateProgress, audioRef]);
 
-    const onLoadedMetadata = () => {
-        const seconds = audioRef.current?.duration;
-        if (seconds !== undefined) {
-            setDuration(seconds);
-            if (progressBarRef.current) {
-                progressBarRef.current.max = seconds.toString();
-            }
-        }
-    };
-
     useEffect(() => {
-        const currentAudioRef = audioRef.current;
+        if (audioRef.current) {
+            audioRef.current.src = audioUrl;
+            audioRef.current.load();
+            setDuration(0);
+            setTimeProgress(0);
+        }
 
         return () => {
-            if (currentAudioRef) {
-                currentAudioRef.onended = null;
+            if (audioRef.current) {
+                audioRef.current.onended = null;
             }
         };
-    }, [audioRef]);
+    }, [audioRef, audioUrl]);
 
     return (
         <div className='flex grow gap-3 justify-between items-center h-11 rounded-lg ring-1 ring-slate-200 dark:ring-slate-700 bg-white dark:bg-slate-900 p-2'>
-            <audio
-                src={currentAudio.audioUrl}
-                ref={audioRef}
-                onLoadedMetadata={onLoadedMetadata}
-            />
+            <audio ref={audioRef} onLoadedMetadata={onLoadedMetadata} />
             <button
                 className='flex items-center justify-center grow-0 shrink-0 size-7 basis-7 rounded-full hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-700 dark:focus:ring-slate-400'
                 onClick={() => setIsPlaying((prev) => !prev)}
@@ -109,7 +109,7 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
             <ProgressBar
                 progressBarRef={progressBarRef}
                 audioRef={audioRef}
-                timeProgress={timeProgress} // Pass timeProgress as a prop
+                timeProgress={timeProgress}
                 duration={duration}
                 setTimeProgress={setTimeProgress}
             />
@@ -139,8 +139,6 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
             audioRef.current.currentTime = newTime;
 
             setTimeProgress(newTime);
-
-            console.log(newTime, duration);
 
             progressBarRef.current.style.setProperty(
                 "--range-progress",

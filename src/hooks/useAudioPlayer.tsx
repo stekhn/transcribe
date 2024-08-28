@@ -6,8 +6,6 @@ export interface Audio {
 }
 
 interface UseAudioPlayer {
-    currentAudio: Audio;
-    setCurrentAudio: React.Dispatch<React.SetStateAction<Audio>>;
     timeProgress: number;
     setTimeProgress: React.Dispatch<React.SetStateAction<number>>;
     duration: number;
@@ -19,7 +17,6 @@ interface UseAudioPlayer {
 }
 
 export const useAudioPlayer = (initialAudio: Audio): UseAudioPlayer => {
-    const [currentAudio, setCurrentAudio] = useState<Audio>(initialAudio);
     const [timeProgress, setTimeProgress] = useState<number>(0);
     const [duration, setDuration] = useState<number>(0);
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -28,8 +25,6 @@ export const useAudioPlayer = (initialAudio: Audio): UseAudioPlayer => {
     const progressBarRef = useRef<HTMLInputElement>(null);
 
     return {
-        currentAudio,
-        setCurrentAudio,
         timeProgress,
         setTimeProgress,
         duration,
