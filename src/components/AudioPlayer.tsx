@@ -140,6 +140,8 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
 
             setTimeProgress(newTime);
 
+            console.log(newTime, duration);
+
             progressBarRef.current.style.setProperty(
                 "--range-progress",
                 `${(newTime / duration) * 100}%`,
@@ -166,9 +168,9 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
                 {formatTime(timeProgress)} / {formatTime(duration)}
             </div>
             <input
-                className='bg-slate-500'
                 ref={progressBarRef}
                 type='range'
+                step={0.1}
                 defaultValue='0'
                 onChange={handleProgressChange}
             />

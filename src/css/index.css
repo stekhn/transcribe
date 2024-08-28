@@ -7,6 +7,12 @@ html {
     scrollbar-gutter: stable;
 }
 
+@media (prefers-color-scheme: dark) {
+    html {
+        background: #0f172a;
+    }
+}
+
 html,
 body,
 #root {
@@ -15,33 +21,4 @@ body,
 
 .container {
     max-width: 41rem;
-}
-
-@media (prefers-color-scheme: light) {
-    audio::-webkit-media-controls-panel {
-        background-color: #ffffff;
-    }
-
-    @-moz-document url-prefix() {
-        .firefox-hack audio {
-            padding: 0.1rem;
-        }
-    }
-}
-
-@media (prefers-color-scheme: dark) {
-    html {
-        background: #0f172a;
-    }
-
-    audio::-webkit-media-controls-panel {
-        background-color: #0f172a;
-    }
-
-    @-moz-document url-prefix() {
-        .firefox-hack audio {
-            padding: 0.1rem;
-            filter: none;
-        }
-    }
 }

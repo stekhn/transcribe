@@ -23,6 +23,12 @@ input[type="range"]::-webkit-slider-runnable-track {
     height: 4px;
 }
 
+@media (prefers-color-scheme: dark) {
+    input[type="range"]::-webkit-slider-runnable-track {
+        background: #334155;
+    }
+}
+
 /* played progress length */
 input[type="range"]::before {
     content: "";
@@ -36,6 +42,12 @@ input[type="range"]::before {
     left: 0;
 }
 
+@media (prefers-color-scheme: dark) {
+    input[type="range"]::before {
+        background: #f1f5f9;
+    }
+}
+
 /* slider thumb */
 input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none; /* Override default look */
@@ -47,9 +59,21 @@ input[type="range"]::-webkit-slider-thumb {
     width: 12px;
 }
 
+@media (prefers-color-scheme: dark) {
+    input[type="range"]::-webkit-slider-thumb {
+        background-color: #e2e8f0;
+    }
+}
+
 input[type="range"]:focus::-webkit-slider-thumb {
     outline: 2px solid #1d4ed8;
     outline-offset: 0.125rem;
+}
+
+@media (prefers-color-scheme: dark) {
+    input[type="range"]:focus::-webkit-slider-thumb {
+        outline: 2px solid #9ca3af;
+    }
 }
 
 /*** Firefox styles ***/
@@ -61,12 +85,24 @@ input[type="range"]::-moz-range-track {
     height: 4px;
 }
 
+@media (prefers-color-scheme: dark) {
+    input[type="range"]::-moz-range-track {
+        background-color: #334155;
+    }
+}
+
 /* played progress length */
 input[type="range"]::-moz-range-progress {
     background: #0f172a;
     border-bottom-left-radius: 2px;
     border-top-left-radius: 2px;
     height: 4px;
+}
+
+@media (prefers-color-scheme: dark) {
+    input[type="range"]::-moz-range-progress {
+        background: #e2e8f0;
+    }
 }
 
 /* slider thumb */
@@ -78,7 +114,19 @@ input[type="range"]::-moz-range-thumb {
     width: 12px;
 }
 
+@media (prefers-color-scheme: dark) {
+    input[type="range"]::-moz-range-thumb {
+        background-color: #e2e8f0;
+    }
+}
+
 input[type="range"]:focus::-moz-range-thumb {
-    outline: 3px solid #0f172a;
+    outline: 2px solid #1d4ed8;
     outline-offset: 0.125rem;
+}
+
+@media (prefers-color-scheme: dark) {
+    input[type="range"]:focus::-moz-range-thumb {
+        outline: 2px solid #9ca3af;
+    }
 }
