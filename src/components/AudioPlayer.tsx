@@ -3,14 +3,11 @@ import { useAudioPlayer } from "../hooks/useAudioPlayer";
 import { PauseIcon, PlayIcon, SpeakerLoudIcon, SpeakerMuteIcon } from "./Icons";
 
 interface AudioPlayerProps {
-    audioUrl: string;
-    mimeType: string;
+    src: string;
+    type: string;
 }
 
-export const AudioPlayer: React.FC<AudioPlayerProps> = ({
-    audioUrl,
-    mimeType,
-}) => {
+export const AudioPlayer: React.FC<AudioPlayerProps> = ({ src, type }) => {
     const {
         audioRef,
         setDuration,
@@ -20,7 +17,7 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
         progressBarRef,
         isPlaying,
         setIsPlaying,
-    } = useAudioPlayer({ audioUrl, mimeType });
+    } = useAudioPlayer({ src, type });
 
     const playAnimationRef = useRef<number | null>(null);
 
@@ -79,7 +76,7 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
 
     useEffect(() => {
         if (audioRef.current) {
-            audioRef.current.src = audioUrl;
+            audioRef.current.src = src;
             audioRef.current.load();
             setDuration(0);
             setTimeProgress(0);
@@ -90,7 +87,7 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
                 audioRef.current.onended = null;
             }
         };
-    }, [audioRef, audioUrl]);
+    }, [audioRef, src]);
 
     return (
         <div className='flex grow gap-3 justify-between items-center h-11 rounded-lg ring-1 ring-slate-200 dark:ring-slate-700 bg-white dark:bg-slate-900 p-2'>

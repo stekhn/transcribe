@@ -172,8 +172,8 @@ export const AudioManager: React.FC<AudiomanagerProps> = ({ transcriber }) => {
                 <>
                     <div className='flex flex-col sm:flex-row relative z-10 w-full gap-2 mt-5'>
                         <AudioPlayer
-                            audioUrl={audioData.url}
-                            mimeType={audioData.mimeType}
+                            src={audioData.url}
+                            type={audioData.mimeType}
                         />
                         <TranscribeButton
                             onClick={() => {

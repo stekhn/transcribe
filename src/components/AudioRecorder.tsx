@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { formatAudioTimestamp } from "../utils/AudioUtils";
 import { webmFixDuration } from "../utils/BlobFix";
 import { getMimeType } from "../utils/MimeTypes";
+import { AudioPlayer } from "./AudioPlayer";
 
 interface AudioRecorderProps {
     onRecordingComplete: (blob: Blob) => void;
@@ -18,8 +19,6 @@ export const AudioRecorder: React.FC<AudioRecorderProps> = ({
     const streamRef = useRef<MediaStream | null>(null);
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
     const chunksRef = useRef<Blob[]>([]);
-
-    const audioRef = useRef<HTMLAudioElement | null>(null);
 
     const startRecording = async () => {
         // Reset recording (if any)
@@ -126,12 +125,10 @@ export const AudioRecorder: React.FC<AudioRecorderProps> = ({
 
             {recordedBlob && (
                 <div className='flex-auto w-full ring-1 ring-slate-200 dark:ring-slate-700 bg-white dark:bg-slate-900 rounded-lg'>
-                    <audio ref={audioRef} controls className='w-full h-11'>
-                        <source
-                            src={URL.createObjectURL(recordedBlob)}
-                            type={recordedBlob.type}
-                        />
-                    </audio>
+                    <AudioPlayer
+                        src={URL.createObjectURL(recordedBlob)}
+                        type={recordedBlob.type}
+                    />
                 </div>
             )}
         </div>

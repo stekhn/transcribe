@@ -1,8 +1,8 @@
 import { useState, RefObject, useRef } from "react";
 
 export interface Audio {
-    audioUrl: string;
-    mimeType: string;
+    src: string;
+    type: string;
 }
 
 interface UseAudioPlayer {
