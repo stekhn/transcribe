@@ -1,149 +1,81 @@
-import React, { useEffect, useCallback, useState, useRef } from "react";
+import React from "react";
 import { useAudioPlayer } from "../hooks/useAudioPlayer";
 import { PauseIcon, PlayIcon, SpeakerLoudIcon, SpeakerMuteIcon } from "./Icons";
 
 interface AudioPlayerProps {
     src: string;
-    type: string;
+    type?: string;
 }
 
 export const AudioPlayer: React.FC<AudioPlayerProps> = ({ src, type }) => {
     const {
-        audioRef,
-        setDuration,
-        duration,
-        timeProgress,
-        setTimeProgress,
-        progressBarRef,
+        currentTime,
+        totalTime,
         isPlaying,
-        setIsPlaying,
+        togglePlaying,
+        isMuted,
+        toggleMuted,
+        audioRef,
+        progressBarRef,
+        handleUpdate,
     } = useAudioPlayer({ src, type });
-
-    const playAnimationRef = useRef<number | null>(null);
-
-    const onLoadedMetadata = () => {
-        const seconds = audioRef.current?.duration;
-        if (seconds !== undefined) {
-            setDuration(seconds);
-            if (progressBarRef.current) {
-                progressBarRef.current.max = seconds.toString();
-            }
-        }
-    };
-
-    const updateProgress = useCallback(() => {
-        if (audioRef.current && progressBarRef.current && duration) {
-            const currentTime = audioRef.current.currentTime;
-            setTimeProgress(currentTime);
-
-            progressBarRef.current.value = currentTime.toString();
-            progressBarRef.current.style.setProperty(
-                "--range-progress",
-                `${(currentTime / duration) * 100}%`,
-            );
-        }
-    }, [duration, setTimeProgress, audioRef, progressBarRef]);
-
-    const startAnimation = useCallback(() => {
-        if (audioRef.current && progressBarRef.current && duration) {
-            const animate = () => {
-                updateProgress();
-                playAnimationRef.current = requestAnimationFrame(animate);
-            };
-            playAnimationRef.current = requestAnimationFrame(animate);
-        }
-    }, [updateProgress, duration, audioRef, progressBarRef]);
-
-    useEffect(() => {
-        if (isPlaying) {
-            audioRef.current?.play();
-            startAnimation();
-        } else {
-            audioRef.current?.pause();
-            if (playAnimationRef.current !== null) {
-                cancelAnimationFrame(playAnimationRef.current);
-                playAnimationRef.current = null;
-            }
-            updateProgress();
-        }
-
-        return () => {
-            if (playAnimationRef.current !== null) {
-                cancelAnimationFrame(playAnimationRef.current);
-            }
-        };
-    }, [isPlaying, startAnimation, updateProgress, audioRef]);
-
-    useEffect(() => {
-        if (audioRef.current) {
-            audioRef.current.src = src;
-            audioRef.current.load();
-            setDuration(0);
-            setTimeProgress(0);
-        }
-
-        return () => {
-            if (audioRef.current) {
-                audioRef.current.onended = null;
-            }
-        };
-    }, [audioRef, src]);
 
     return (
         <div className='flex grow gap-3 justify-between items-center h-11 rounded-lg ring-1 ring-slate-200 dark:ring-slate-700 bg-white dark:bg-slate-900 p-2'>
-            <audio ref={audioRef} onLoadedMetadata={onLoadedMetadata} />
-            <button
-                className='flex items-center justify-center grow-0 shrink-0 size-7 basis-7 rounded-full hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-700 dark:focus:ring-slate-400'
-                onClick={() => setIsPlaying((prev) => !prev)}
-            >
-                {isPlaying ? (
-                    <PauseIcon className='size-4 fill-slate-900 dark:fill-slate-100' />
-                ) : (
-                    <PlayIcon className='size-4 fill-slate-900 dark:fill-slate-100' />
-                )}
-            </button>
-
+            <audio ref={audioRef}>
+                <source src={src} type={type} />
+            </audio>
+            <PlayControl
+                isPlaying={isPlaying}
+                togglePlayPause={togglePlaying}
+            />
             <ProgressBar
                 progressBarRef={progressBarRef}
-                audioRef={audioRef}
-                timeProgress={timeProgress}
-                duration={duration}
-                setTimeProgress={setTimeProgress}
+                currentTime={currentTime}
+                totalTime={totalTime}
+                handleUpdate={handleUpdate}
             />
-            <VolumeControl audioRef={audioRef} />
+            <VolumeControl isMuted={isMuted} toggleMute={toggleMuted} />
         </div>
+    );
+};
+
+interface PlayControlProps {
+    isPlaying: boolean;
+    togglePlayPause: () => void;
+}
+
+const PlayControl: React.FC<PlayControlProps> = ({
+    isPlaying,
+    togglePlayPause,
+}) => {
+    return (
+        <button
+            className='flex items-center justify-center grow-0 shrink-0 size-7 basis-7 rounded-full hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-700 dark:focus:ring-slate-400'
+            onClick={togglePlayPause}
+        >
+            {isPlaying ? (
+                <PauseIcon className='size-4 fill-slate-900 dark:fill-slate-100' />
+            ) : (
+                <PlayIcon className='size-4 fill-slate-900 dark:fill-slate-100' />
+            )}
+        </button>
     );
 };
 
 interface ProgressBarProps {
     progressBarRef: React.RefObject<HTMLInputElement>;
-    audioRef: React.RefObject<HTMLAudioElement>;
-    timeProgress: number;
-    duration: number;
-    setTimeProgress: React.Dispatch<React.SetStateAction<number>>;
+    currentTime: number;
+    totalTime: number;
+    handleUpdate: (value: string) => void;
 }
 
 const ProgressBar: React.FC<ProgressBarProps> = ({
     progressBarRef,
-    audioRef,
-    timeProgress,
-    duration,
-    setTimeProgress,
+    currentTime,
+    totalTime,
+    handleUpdate,
 }) => {
-    const handleProgressChange = () => {
-        if (audioRef.current && progressBarRef.current) {
-            const newTime = Number(progressBarRef.current.value);
-            audioRef.current.currentTime = newTime;
-
-            setTimeProgress(newTime);
-
-            progressBarRef.current.style.setProperty(
-                "--range-progress",
-                `${(newTime / duration) * 100}%`,
-            );
-        }
-    };
-
     const formatTime = (time: number | undefined): string => {
         if (typeof time === "number" && !isNaN(time)) {
             const minutes = Math.floor(time / 60);
@@ -157,43 +89,42 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
         return "00:00";
     };
 
+    const handleInput = (e: React.ChangeEvent<HTMLInputElement>) =>
+        handleUpdate(e.target.value);
+
     return (
         <div className='flex items-center justify-center gap-4 w-full'>
             <div className='text-sm text-slate-900 dark:text-slate-100 whitespace-nowrap hidden min-[440px]:block tabular-nums'>
-                {formatTime(timeProgress)} / {formatTime(duration)}
+                {formatTime(currentTime)} / {formatTime(totalTime)}
             </div>
             <input
                 ref={progressBarRef}
                 type='range'
                 step={0.1}
                 defaultValue='0'
-                onChange={handleProgressChange}
+                onInput={handleInput}
             />
         </div>
     );
 };
 
 interface VolumeControlProps {
-    audioRef: React.RefObject<HTMLAudioElement>;
+    isMuted: boolean;
+    toggleMute: () => void;
 }
 
-const VolumeControl: React.FC<VolumeControlProps> = ({ audioRef }) => {
-    const [muteVolume, setMuteVolume] = useState(false);
-
-    useEffect(() => {
-        if (audioRef.current) {
-            audioRef.current.muted = muteVolume;
-        }
-    }, [audioRef, muteVolume]);
-
+const VolumeControl: React.FC<VolumeControlProps> = ({
+    isMuted,
+    toggleMute,
+}) => {
     return (
         <div>
             <div className='flex items-center mr-1'>
                 <button
                     className='flex items-center justify-center grow-0 shrink-0 size-7 basis-7 rounded-full hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-700 dark:focus:ring-slate-400'
-                    onClick={() => setMuteVolume((prev) => !prev)}
+                    onClick={toggleMute}
                 >
-                    {muteVolume ? (
+                    {isMuted ? (
                         <SpeakerMuteIcon className='size-5 fill-slate-900 dark:fill-slate-100' />
                     ) : (
                         <SpeakerLoudIcon className='size-5 fill-slate-900 dark:fill-slate-100' />
