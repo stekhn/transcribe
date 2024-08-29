@@ -8,8 +8,8 @@ interface SwitchProps {
 
 export const Switch: React.FC<SwitchProps> = ({ checked, onChange, label }) => {
     return (
-        <div className='flex flex-row items-center text-sm text-slate-500'>
-            {label && <label className='mr-2'>{label}</label>}
+        <div className='flex flex-row items-center text-sm text-slate-500 gap-2'>
+            {label && <label>{label}</label>}
             <HeadlessSwitch
                 checked={checked}
                 onChange={onChange}

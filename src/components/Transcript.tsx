@@ -78,8 +78,8 @@ export const Transcript: React.FC<TranscriptProps> = ({ transcriber }) => {
         <div className='w-full flex flex-col p-5'>
             <div className='flex flex-row items-center justify-end min-[440px]:justify-between'>
                 {transcriber.executionTime && (
-                    <div className='hidden min-[440px]:flex flex-row items-center text-sm text-slate-500'>
-                        <ClockIcon className='size-5 fill-slate-300 dark:fill-slate-500 mr-2' />
+                    <div className='hidden min-[440px]:flex flex-row items-center gap-2 text-sm text-slate-500'>
+                        <ClockIcon className='size-5 fill-slate-300 dark:fill-slate-500' />
                         <span className='whitespace-nowrap'>
                             {millisecondsToTime(transcriber.executionTime)}
                         </span>
