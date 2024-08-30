@@ -1,8 +1,10 @@
+import { useEffect } from "react";
 import { Tooltip } from "./Tooltip";
 import { ChevronDownIcon, HelpIcon } from "./Icons";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 
 interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
+    id: string;
     setValue: React.Dispatch<any>;
     label?: string;
     info?: string;
@@ -18,16 +20,17 @@ export const Select: React.FC<SelectProps> = ({
     children,
     ...props
 }) => {
-    const [storedValue, setStoredValue] = useLocalStorage(
-        id || "",
-        defaultValue,
-    );
+    const [storedValue, setStoredValue] = useLocalStorage(id, defaultValue);
 
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const newValue = e.target.value;
         setStoredValue(newValue);
         setValue(newValue);
     };
+
+    useEffect(() => {
+        setValue(storedValue);
+    }, []);
 
     return (
         <div className='text-sm text-slate-500'>

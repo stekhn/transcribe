@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { Switch } from "./Switch";
 import { Transcriber } from "../hooks/useTranscriber";
@@ -94,9 +94,10 @@ export const Transcript: React.FC<TranscriptProps> = ({ transcriber }) => {
                     </div>
                 )}
                 <Switch
+                    id='switch-timestamps'
                     className='ml-auto flex-row-reverse'
                     checked={showTimestamps}
-                    onChange={setShowTimestamps}
+                    setChecked={setShowTimestamps}
                     label='Show timestamps'
                 />
             </div>
@@ -116,7 +117,14 @@ export const Transcript: React.FC<TranscriptProps> = ({ transcriber }) => {
                         ))
                     ) : (
                         <div className='w-full ring-1 ring-slate-200 dark:ring-slate-700 bg-white dark:bg-slate-900 rounded-lg p-2 px-3 mb-2 last:mb-0'>
-                            {transcribedData.text}
+                            {transcribedData.text ? (
+                                transcribedData.text
+                            ) : (
+                                <div className='text-sm'>
+                                    Transcription in progress. Enable timestamps
+                                    to see the progress in real-time.
+                                </div>
+                            )}
                         </div>
                     )}
                 </div>

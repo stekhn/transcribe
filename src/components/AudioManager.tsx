@@ -245,10 +245,11 @@ const Settings: React.FC<SettingsProp> = ({ transcriber }) => {
             </Select>
             {hasWebGPU && (
                 <Switch
+                    id='switch-webgpu'
                     className='mt-2 mb-4 flex-row-reverse justify-between'
                     checked={transcriber.webGPU}
-                    onChange={transcriber.setWebGPU}
-                    label='WebGPU support (experimental)'
+                    setChecked={transcriber.setWebGPU}
+                    label='Enable WebGPU support (experimental)'
                     info='Fast, but potentially unstable'
                     showLine={true}
                 />

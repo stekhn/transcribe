@@ -1,12 +1,12 @@
 import { useState } from "react";
 
 export const useLocalStorage = <T>(
-    key: string,
+    key: string | boolean,
     initialValue: T,
 ): [T, React.Dispatch<React.SetStateAction<T>>] => {
     const [storedValue, setStoredValue] = useState<T>(() => {
         try {
-            const item = window.localStorage.getItem(key);
+            const item = window.localStorage.getItem(key.toString());
             return item ? JSON.parse(item) : initialValue;
         } catch (error) {
             console.error("Error reading from localStorage:", error);
@@ -19,7 +19,10 @@ export const useLocalStorage = <T>(
             const valueToStore =
                 value instanceof Function ? value(storedValue) : value;
             setStoredValue(valueToStore);
-            window.localStorage.setItem(key, JSON.stringify(valueToStore));
+            window.localStorage.setItem(
+                key.toString(),
+                JSON.stringify(valueToStore),
+            );
         } catch (error) {
             console.error("Error setting localStorage:", error);
         }
