@@ -94,7 +94,7 @@ export const Transcript: React.FC<TranscriptProps> = ({ transcriber }) => {
                     </div>
                 )}
                 <Switch
-                    className='ml-auto'
+                    className='ml-auto flex-row-reverse'
                     checked={showTimestamps}
                     onChange={setShowTimestamps}
                     label='Show timestamps'

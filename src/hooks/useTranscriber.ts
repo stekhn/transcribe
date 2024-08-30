@@ -3,6 +3,7 @@ import { useWorker } from "./useWorker";
 import {
     DEFAULT_MODEL,
     DEFAULT_SUBTASK,
+    DEFAULT_WEBGPU,
     DEFAULT_MULTILINGUAL,
     DEFAULT_LANGUAGE,
 } from "../config";
@@ -25,10 +26,10 @@ interface TranscriberUpdateData {
 }
 
 export interface TranscriberData {
-    isBusy: boolean;
-    tps?: number;
     text: string;
     chunks: { text: string; timestamp: [number, number | null] }[];
+    isBusy: boolean;
+    tps?: number;
 }
 
 export interface Transcriber {
@@ -40,12 +41,14 @@ export interface Transcriber {
     output?: TranscriberData;
     model: string;
     setModel: (model: string) => void;
-    multilingual: boolean;
-    setMultilingual: (model: boolean) => void;
     subtask: string;
     setSubtask: (subtask: string) => void;
+    multilingual: boolean;
+    setMultilingual: (model: boolean) => void;
     language?: string;
     setLanguage: (language: string) => void;
+    webGPU: boolean;
+    setWebGPU: (webGPU: boolean) => void;
     executionTime?: number;
     error?: { name: string; message: string } | undefined;
 }
@@ -122,6 +125,7 @@ export function useTranscriber(): Transcriber {
     const [multilingual, setMultilingual] =
         useState<boolean>(DEFAULT_MULTILINGUAL);
     const [language, setLanguage] = useState<string>(DEFAULT_LANGUAGE);
+    const [webGPU, setWebGPU] = useState<boolean>(DEFAULT_WEBGPU);
 
     const onInputChange = useCallback(() => {
         setTranscript(undefined);
@@ -156,10 +160,11 @@ export function useTranscriber(): Transcriber {
                     subtask: multilingual ? subtask : null,
                     language:
                         multilingual && language !== "auto" ? language : null,
+                    device: webGPU ? "webgpu" : "wasm",
                 });
             }
         },
-        [webWorker, model, multilingual, subtask, language],
+        [webWorker, model, subtask, multilingual, language, webGPU],
     );
 
     const transcriber = useMemo(() => {
@@ -172,12 +177,14 @@ export function useTranscriber(): Transcriber {
             output: transcript,
             model,
             setModel,
-            multilingual,
-            setMultilingual,
             subtask,
             setSubtask,
             language,
+            multilingual,
+            setMultilingual,
             setLanguage,
+            webGPU,
+            setWebGPU,
             executionTime,
             error,
         };
@@ -188,9 +195,10 @@ export function useTranscriber(): Transcriber {
         postRequest,
         transcript,
         model,
-        multilingual,
         subtask,
+        multilingual,
         language,
+        webGPU,
         executionTime,
         error,
     ]);

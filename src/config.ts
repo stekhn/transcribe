@@ -2,7 +2,7 @@ export const SAMPLING_RATE = 16000;
 export const DEFAULT_AUDIO_URL =
     "https://archive.org/download/Greatest_Speeches_of_the_20th_Century/AddresstotheWomenofAmerica.mp3";
 export const DEFAULT_SUBTASK = "transcribe";
-export const DEFAULT_QUANTIZED = false;
+export const DEFAULT_WEBGPU = false;
 export const DEFAULT_MULTILINGUAL = true;
 
 export const DEFAULT_MODEL = "onnx-community/whisper-base";

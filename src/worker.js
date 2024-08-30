@@ -6,21 +6,27 @@ import { pipeline, WhisperTextStreamer } from "@huggingface/transformers";
 class PipelineFactory {
     static task = null;
     static model = null;
+    static device = null;
     static instance = null;
 
     constructor(tokenizer, model) {
         this.tokenizer = tokenizer;
         this.model = model;
+        this.device = device;
     }
 
     static async getInstance(progress_callback = null) {
         if (this.instance === null) {
+            console.log(this.task);
+            console.log(this.model);
+            console.log(this.device);
+
             this.instance = pipeline(this.task, this.model, {
                 dtype: {
                     encoder_model: "fp32",
                     decoder_model_merged: "q4", // or 'fp32' ('fp16' is broken)
                 },
-                device: "webgpu",
+                device: this.device,
                 progress_callback,
             });
         }
@@ -61,16 +67,19 @@ self.addEventListener("message", async (event) => {
 class AutomaticSpeechRecognitionPipelineFactory extends PipelineFactory {
     static task = "automatic-speech-recognition";
     static model = null;
+    static device = null;
 }
 
-const transcribe = async ({ audio, model, subtask, language }) => {
+const transcribe = async ({ audio, model, subtask, language, device }) => {
     const isDistilWhisper = /^distil-whisper\//.test(model);
     const isEnglish = /\.en$/.test(model);
 
     const p = AutomaticSpeechRecognitionPipelineFactory;
-    if (p.model !== model) {
-        // Invalidate model if different
+
+    // Invalidate instance if model or device has changed
+    if (p.model !== model || p.device !== device) {
         p.model = model;
+        p.device = device;
 
         if (p.instance !== null) {
             (await p.getInstance()).dispose();
@@ -101,6 +110,7 @@ const transcribe = async ({ audio, model, subtask, language }) => {
     let start_time;
     let num_tokens = 0;
     let tps;
+
     const streamer = new WhisperTextStreamer(transcriber.tokenizer, {
         time_precision,
         on_chunk_start: (x) => {

@@ -1,9 +1,12 @@
 import { Switch as HeadlessSwitch } from "@headlessui/react";
+import { Tooltip } from "./Tooltip";
+import { HelpIcon } from "./Icons";
 
 interface SwitchProps {
     checked: boolean;
     onChange: (e: any) => void;
     label?: string;
+    info?: string;
     className?: string;
 }
 
@@ -11,13 +14,13 @@ export const Switch: React.FC<SwitchProps> = ({
     checked,
     onChange,
     label,
+    info,
     className,
 }) => {
     return (
         <div
             className={`flex flex-row items-center text-sm text-slate-500 gap-2 ${className}`}
         >
-            {label && <label>{label}</label>}
             <HeadlessSwitch
                 checked={checked}
                 onChange={onChange}
@@ -31,6 +34,14 @@ export const Switch: React.FC<SwitchProps> = ({
                     } inline-block w-4 h-4 transform bg-white dark:bg-slate-900 rounded-full transition-transform duration-300`}
                 />
             </HeadlessSwitch>
+            <div className={`flex items-center gap-1`}>
+                {label && <label>{label}</label>}
+                {info && (
+                    <Tooltip message={info}>
+                        <HelpIcon className='size-5 fill-slate-300 dark:fill-slate-500 hover:fill-blue-500' />
+                    </Tooltip>
+                )}
+            </div>
         </div>
     );
 };

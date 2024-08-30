@@ -12,6 +12,7 @@ import { UrlInput } from "./UrlInput";
 import { Transcriber } from "../hooks/useTranscriber";
 import { titleCase } from "../utils/StringUtils";
 import { SAMPLING_RATE, DEFAULT_AUDIO_URL, LANGUAGES, MODELS } from "../config";
+import { Switch } from "./Switch";
 
 export enum AudioSource {
     URL = "URL",
@@ -210,6 +211,9 @@ interface SettingsProp {
 }
 
 const Settings: React.FC<SettingsProp> = ({ transcriber }) => {
+    // @ts-ignore
+    const hasWebGPU = !!navigator.gpu;
+
     return (
         <>
             <Select
@@ -239,6 +243,15 @@ const Settings: React.FC<SettingsProp> = ({ transcriber }) => {
                     </Option>
                 ))}
             </Select>
+            {hasWebGPU && (
+                <Switch
+                    className='mt-2 mb-4'
+                    checked={transcriber.webGPU}
+                    onChange={transcriber.setWebGPU}
+                    label='WebGPU support (experimental)'
+                    info='Fast, but potentially unstable'
+                />
+            )}
         </>
     );
 };
