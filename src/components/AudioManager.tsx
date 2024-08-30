@@ -8,11 +8,11 @@ import { TranscribeButton } from "./TranscribeButton";
 import { Select, Option } from "./Select";
 import { AnchorIcon, FolderIcon, MicrophoneIcon } from "./Icons";
 import { Modal } from "./Modal";
+import { Switch } from "./Switch";
 import { UrlInput } from "./UrlInput";
 import { Transcriber } from "../hooks/useTranscriber";
 import { titleCase } from "../utils/StringUtils";
 import { SAMPLING_RATE, DEFAULT_AUDIO_URL, LANGUAGES, MODELS } from "../config";
-import { Switch } from "./Switch";
 
 export enum AudioSource {
     URL = "URL",
@@ -245,11 +245,12 @@ const Settings: React.FC<SettingsProp> = ({ transcriber }) => {
             </Select>
             {hasWebGPU && (
                 <Switch
-                    className='mt-2 mb-4'
+                    className='mt-2 mb-4 flex-row-reverse justify-between'
                     checked={transcriber.webGPU}
                     onChange={transcriber.setWebGPU}
                     label='WebGPU support (experimental)'
                     info='Fast, but potentially unstable'
+                    showLine={true}
                 />
             )}
         </>

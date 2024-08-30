@@ -17,10 +17,6 @@ class PipelineFactory {
 
     static async getInstance(progress_callback = null) {
         if (this.instance === null) {
-            console.log(this.task);
-            console.log(this.model);
-            console.log(this.device);
-
             this.instance = pipeline(this.task, this.model, {
                 dtype: {
                     encoder_model: "fp32",
