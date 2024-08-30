@@ -3,7 +3,6 @@ import { useWorker } from "./useWorker";
 import {
     DEFAULT_MODEL,
     DEFAULT_SUBTASK,
-    DEFAULT_QUANTIZED,
     DEFAULT_MULTILINGUAL,
     DEFAULT_LANGUAGE,
 } from "../config";
@@ -18,22 +17,16 @@ interface ProgressItem {
 }
 
 interface TranscriberUpdateData {
-    data: [
-        string,
-        { chunks: { text: string; timestamp: [number, number | null] }[] },
-    ];
-    text: string;
-}
-
-interface TranscriberCompleteData {
     data: {
         text: string;
         chunks: { text: string; timestamp: [number, number | null] }[];
+        tps: number;
     };
 }
 
 export interface TranscriberData {
     isBusy: boolean;
+    tps?: number;
     text: string;
     chunks: { text: string; timestamp: [number, number | null] }[];
 }
@@ -49,8 +42,6 @@ export interface Transcriber {
     setModel: (model: string) => void;
     multilingual: boolean;
     setMultilingual: (model: boolean) => void;
-    quantized: boolean;
-    setQuantized: (model: boolean) => void;
     subtask: string;
     setSubtask: (subtask: string) => void;
     language?: string;
@@ -86,25 +77,16 @@ export function useTranscriber(): Transcriber {
                 );
                 break;
             case "update":
-                // Received partial update
-                // eslint-disable-next-line no-case-declarations
+            case "complete":
+                const busy = message.status === "update";
                 const updateMessage = message as TranscriberUpdateData;
                 setTranscript({
-                    isBusy: true,
-                    text: updateMessage.data[0],
-                    chunks: updateMessage.data[1].chunks,
+                    isBusy: busy,
+                    text: updateMessage.data.text,
+                    tps: updateMessage.data.tps,
+                    chunks: updateMessage.data.chunks,
                 });
-                break;
-            case "complete":
-                // Received complete transcript
-                // eslint-disable-next-line no-case-declarations
-                const completeMessage = message as TranscriberCompleteData;
-                setTranscript({
-                    isBusy: false,
-                    text: completeMessage.data.text,
-                    chunks: completeMessage.data.chunks,
-                });
-                setIsBusy(false);
+                setIsBusy(busy);
                 break;
             case "execution-time":
                 setExecutionTime(message.data);
@@ -128,6 +110,7 @@ export function useTranscriber(): Transcriber {
                     prev.filter((item) => item.file !== message.file),
                 );
                 break;
+
             default:
                 // initiate/download/done
                 break;
@@ -136,7 +119,6 @@ export function useTranscriber(): Transcriber {
 
     const [model, setModel] = useState<string>(DEFAULT_MODEL);
     const [subtask, setSubtask] = useState<string>(DEFAULT_SUBTASK);
-    const [quantized, setQuantized] = useState<boolean>(DEFAULT_QUANTIZED);
     const [multilingual, setMultilingual] =
         useState<boolean>(DEFAULT_MULTILINGUAL);
     const [language, setLanguage] = useState<string>(DEFAULT_LANGUAGE);
@@ -171,17 +153,16 @@ export function useTranscriber(): Transcriber {
                     audio,
                     model,
                     multilingual,
-                    quantized,
                     subtask: multilingual ? subtask : null,
                     language:
                         multilingual && language !== "auto" ? language : null,
                 });
             }
         },
-        [webWorker, model, multilingual, quantized, subtask, language],
+        [webWorker, model, multilingual, subtask, language],
     );
 
-    const transcriber: Transcriber = useMemo(() => {
+    const transcriber = useMemo(() => {
         return {
             onInputChange,
             isBusy,
@@ -193,8 +174,6 @@ export function useTranscriber(): Transcriber {
             setModel,
             multilingual,
             setMultilingual,
-            quantized,
-            setQuantized,
             subtask,
             setSubtask,
             language,
@@ -203,7 +182,6 @@ export function useTranscriber(): Transcriber {
             error,
         };
     }, [
-        onInputChange,
         isBusy,
         isModelLoading,
         progressItems,
@@ -211,7 +189,6 @@ export function useTranscriber(): Transcriber {
         transcript,
         model,
         multilingual,
-        quantized,
         subtask,
         language,
         executionTime,
