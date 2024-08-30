@@ -15,7 +15,7 @@ export const TranscribeButton: React.FC<TranscribeButtonProps> = (props) => {
                 }
             }}
             disabled={isTranscribing}
-            className='text-white text-center h11 bg-blue-500 hover:bg-blue-600 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-700 dark:focus:ring-slate-400 font-medium rounded-lg text-sm p2 text-center whitespace-nowrap h-10 sm:h-auto sm:basis-48'
+            className='text-white text-center h11 bg-blue-500 hover:bg-blue-600 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-700 dark:focus:ring-slate-400 font-medium rounded-lg text-sm p2 text-center whitespace-nowrap h-10 sm:basis-48'
         >
             {isModelLoading ? (
                 <Spinner text={"Loading model..."} />

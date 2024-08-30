@@ -1,6 +1,7 @@
 import React from "react";
-import { useAudioPlayer } from "../hooks/useAudioPlayer";
 import { PauseIcon, PlayIcon, SpeakerLoudIcon, SpeakerMuteIcon } from "./Icons";
+import { useAudioPlayer } from "../hooks/useAudioPlayer";
+import { secondsToTimecode } from "../utils/StringUtils";
 
 interface AudioPlayerProps {
     src: string;
@@ -21,7 +22,7 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({ src, type }) => {
     } = useAudioPlayer({ src, type });
 
     return (
-        <div className='flex grow gap-3 justify-between items-center h-11 rounded-lg ring-1 ring-slate-200 dark:ring-slate-700 bg-white dark:bg-slate-900 p-2'>
+        <div className='flex grow gap-2 justify-between items-center h-10 rounded-lg ring-1 ring-slate-200 dark:ring-slate-700 bg-white dark:bg-slate-900 p-2'>
             <audio ref={audioRef}>
                 <source src={src} type={type} />
             </audio>
@@ -76,26 +77,16 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
     totalTime,
     handleUpdate,
 }) => {
-    const formatTime = (time: number | undefined): string => {
-        if (typeof time === "number" && !isNaN(time)) {
-            const minutes = Math.floor(time / 60);
-            const seconds = Math.floor(time % 60);
-
-            const formatMinutes = minutes.toString().padStart(2, "0");
-            const formatSeconds = seconds.toString().padStart(2, "0");
-
-            return `${formatMinutes}:${formatSeconds}`;
-        }
-        return "00:00";
-    };
-
     const handleInput = (e: React.ChangeEvent<HTMLInputElement>) =>
         handleUpdate(e.target.value);
 
     return (
         <div className='flex items-center justify-center gap-4 w-full'>
-            <div className='text-sm text-slate-900 dark:text-slate-100 whitespace-nowrap hidden min-[440px]:block tabular-nums'>
-                {formatTime(currentTime)} / {formatTime(totalTime)}
+            <div className='text-sm text-slate-900 dark:text-slate-100 whitespace-nowrap tabular-nums hidden min-[320px]:inline'>
+                <span className='hidden min-[380px]:inline'>
+                    {secondsToTimecode(currentTime)}&nbsp;/
+                </span>
+                <span>&nbsp;{secondsToTimecode(totalTime)}</span>
             </div>
             <input
                 ref={progressBarRef}
@@ -119,7 +110,7 @@ const VolumeControl: React.FC<VolumeControlProps> = ({
 }) => {
     return (
         <div>
-            <div className='flex items-center mr-1'>
+            <div className='flex items-center mx-1'>
                 <button
                     className='flex items-center justify-center grow-0 shrink-0 size-7 basis-7 rounded-full hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-700 dark:focus:ring-slate-400'
                     onClick={toggleMute}

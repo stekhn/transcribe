@@ -34,3 +34,16 @@ export const millisecondsToTime = (ms: number): string => {
         return `${seconds.toFixed(0)} seconds`;
     }
 };
+
+export const secondsToTimecode = (s: number): string => {
+    if (typeof s === "number" && !isNaN(s)) {
+        const minutes = Math.floor(s / 60);
+        const seconds = Math.floor(s % 60);
+
+        const formatMinutes = minutes.toString().padStart(2, "0");
+        const formatSeconds = seconds.toString().padStart(2, "0");
+
+        return `${formatMinutes}:${formatSeconds}`;
+    }
+    return "00:00";
+};
