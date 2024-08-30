@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Switch } from "./Switch";
 import { Transcriber } from "../hooks/useTranscriber";
 import { formatAudioTimestamp } from "../utils/AudioUtils";
 import { millisecondsToTime, secondsToSRT } from "../utils/StringUtils";
-import { ClockIcon } from "./Icons";
+import { ClockIcon, StopIcon } from "./Icons";
 
 interface TranscriptProps {
     transcriber: Transcriber;
@@ -77,11 +77,19 @@ export const Transcript: React.FC<TranscriptProps> = ({ transcriber }) => {
     return (
         <div className='w-full flex flex-col p-5'>
             <div className='flex flex-row items-center justify-between gap-2 flex-wrap'>
-                {transcriber.executionTime && (
+                {!transcribedData?.isBusy && !!transcriber.executionTime && (
                     <div className='flex flex-row items-center gap-1.5 text-sm text-slate-500 mr-auto'>
                         <ClockIcon className='size-5 fill-slate-300 dark:fill-slate-500' />
                         <span className='whitespace-nowrap'>
                             {millisecondsToTime(transcriber.executionTime)}
+                        </span>
+                    </div>
+                )}
+                {transcribedData?.isBusy && (
+                    <div className='flex flex-row items-center gap-1.5 text-sm text-slate-500 mr-auto'>
+                        <StopIcon className='size-5 fill-slate-300 dark:fill-slate-500' />
+                        <span className='whitespace-nowrap tabular-nums'>
+                            {transcribedData.tps?.toFixed(1)} it/s
                         </span>
                     </div>
                 )}
@@ -108,9 +116,7 @@ export const Transcript: React.FC<TranscriptProps> = ({ transcriber }) => {
                         ))
                     ) : (
                         <div className='w-full ring-1 ring-slate-200 dark:ring-slate-700 bg-white dark:bg-slate-900 rounded-lg p-2 px-3 mb-2 last:mb-0'>
-                            {transcribedData.chunks.map((chunk, i) => (
-                                <span key={i}>{chunk.text}</span>
-                            ))}
+                            {transcribedData.text}
                         </div>
                     )}
                 </div>
