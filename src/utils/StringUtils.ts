@@ -23,15 +23,19 @@ export const millisecondsToTime = (ms: number): string => {
     const msInMinute = msInSecond * 60;
     const msInHour = msInMinute * 60;
 
+    const pluralize = (value: number, unit: string): string => {
+        return `${value} ${unit}${value !== 1 ? "s" : ""}`;
+    };
+
     if (ms >= msInHour) {
-        const hours = ms / msInHour;
-        return `${hours.toFixed(0)} hours`;
+        const hours = Math.floor(ms / msInHour);
+        return pluralize(hours, "hour");
     } else if (ms >= msInMinute) {
-        const minutes = ms / msInMinute;
-        return `${minutes.toFixed(0)} minutes`;
+        const minutes = Math.floor(ms / msInMinute);
+        return pluralize(minutes, "minute");
     } else {
-        const seconds = ms / msInSecond;
-        return `${seconds.toFixed(0)} seconds`;
+        const seconds = Math.floor(ms / msInSecond);
+        return pluralize(seconds, "second");
     }
 };
 
