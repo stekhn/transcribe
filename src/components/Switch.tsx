@@ -51,7 +51,7 @@ export const Switch: React.FC<SwitchProps> = ({
                 <span
                     className={`${
                         checked ? "translate-x-3.5" : "translate-x-0.5"
-                    } inline-block w-4 h-4 transform bg-white dark:bg-slate-900 rounded-full transition-transform duration-300`}
+                    } inline-block w-4 h-4 transform bg-white dark:bg-slate-100 rounded-full transition-transform duration-300`}
                 />
             </HeadlessSwitch>
             {showLine && (

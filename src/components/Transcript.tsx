@@ -164,7 +164,7 @@ export const Transcript: React.FC<TranscriptProps> = ({ transcriber }) => {
                             onClick={exportTXT}
                             className='flex-1'
                         >
-                            <DownloadIcon className='size-5 fill-slate-100 dark:fill-slate-900' />{" "}
+                            <DownloadIcon className='size-5 fill-slate-100' />{" "}
                             TXT
                         </Button>
                         <Button
@@ -172,7 +172,7 @@ export const Transcript: React.FC<TranscriptProps> = ({ transcriber }) => {
                             onClick={exportSRT}
                             className='flex-1'
                         >
-                            <DownloadIcon className='size-5 fill-slate-100 dark:fill-slate-900' />{" "}
+                            <DownloadIcon className='size-5 fill-slate-100' />{" "}
                             SRT
                         </Button>
                         <Button
@@ -180,7 +180,7 @@ export const Transcript: React.FC<TranscriptProps> = ({ transcriber }) => {
                             onClick={exportJSON}
                             className='flex-1'
                         >
-                            <DownloadIcon className='size-5 fill-slate-100 dark:fill-slate-900' />{" "}
+                            <DownloadIcon className='size-5 fill-slate-100' />{" "}
                             JSON
                         </Button>
                     </div>
