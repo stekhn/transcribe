@@ -4,7 +4,7 @@ import { Switch } from "./Switch";
 import { Transcriber } from "../hooks/useTranscriber";
 import { formatAudioTimestamp } from "../utils/AudioUtils";
 import { millisecondsToTime, secondsToSRT } from "../utils/StringUtils";
-import { ClockIcon, StopIcon } from "./Icons";
+import { ClipboardIcon, ClockIcon, StopIcon } from "./Icons";
 
 interface TranscriptProps {
     transcriber: Transcriber;
@@ -14,6 +14,32 @@ export const Transcript: React.FC<TranscriptProps> = ({ transcriber }) => {
     const transcribedData = transcriber.output;
     const [showTimestamps, setShowTimestamps] = useState(true);
 
+    const formatText = (showTimestamps: boolean) => {
+        if (showTimestamps) {
+            return transcribedData?.chunks
+                .map(
+                    (chunk) =>
+                        `${formatAudioTimestamp(
+                            chunk.timestamp[0],
+                        )}\t${chunk.text.trim()}`,
+                )
+                .join("\n");
+        } else {
+            return transcribedData?.text.trim();
+        }
+    };
+
+    const copyToClipboard = async () => {
+        if (navigator.clipboard && transcribedData?.text) {
+            try {
+                const text = formatText(showTimestamps);
+                await navigator.clipboard.writeText(text || "");
+            } catch (error) {
+                console.error("Failed to copy:", error);
+            }
+        }
+    };
+
     const saveBlob = (blob: Blob, filename: string) => {
         const url = URL.createObjectURL(blob);
         const link = document.createElement("a");
@@ -21,6 +47,12 @@ export const Transcript: React.FC<TranscriptProps> = ({ transcriber }) => {
         link.download = filename;
         link.click();
         URL.revokeObjectURL(url);
+    };
+
+    const exportTXT = () => {
+        const text = formatText(showTimestamps);
+        const blob = new Blob([text || ""], { type: "text/plain" });
+        saveBlob(blob, "transcript.txt");
     };
 
     const exportSRT = () => {
@@ -38,17 +70,6 @@ export const Transcript: React.FC<TranscriptProps> = ({ transcriber }) => {
         saveBlob(blob, "transcript.srt");
     };
 
-    const exportTXT = () => {
-        const chunks = transcribedData?.chunks ?? [];
-        const text = chunks
-            .map((chunk) => chunk.text)
-            .join("")
-            .trim();
-
-        const blob = new Blob([text], { type: "text/plain" });
-        saveBlob(blob, "transcript.txt");
-    };
-
     const exportJSON = () => {
         let jsonData = JSON.stringify(transcribedData?.chunks ?? [], null, 2);
 
@@ -61,16 +82,44 @@ export const Transcript: React.FC<TranscriptProps> = ({ transcriber }) => {
     };
 
     interface ExportButtonProps {
-        onClick: (e: any) => void;
         label: string;
+        ariaLabel?: string;
+        onClick: (e: any) => void;
+        className?: string;
     }
 
-    const ExportButton: React.FC<ExportButtonProps> = ({ onClick, label }) => (
+    const ExportButton: React.FC<ExportButtonProps> = ({
+        label,
+        onClick,
+        className,
+    }) => (
         <button
             onClick={onClick}
-            className='inline-flex items-center text-white font-medium text-sm text-center bg-blue-500 hover:bg-blue-600 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-700 dark:focus:ring-slate-400 rounded-lg px-4 py-2'
+            className={`inline-flex items-center text-white font-medium text-sm text-center rounded-lg bg-blue-500 hover:bg-blue-600 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-700 dark:focus:ring-slate-400 px-4 py-2 ${className}`}
         >
             {label}
+        </button>
+    );
+
+    interface FunctionButtonProps {
+        icon: React.ReactElement;
+        ariaLabel?: string;
+        onClick: (e: any) => void;
+        className?: string;
+    }
+
+    const FunctionButton: React.FC<FunctionButtonProps> = ({
+        icon,
+        ariaLabel,
+        onClick,
+        className,
+    }) => (
+        <button
+            onClick={onClick}
+            aria-label={ariaLabel}
+            className={`inline-flex justify-center rounded-lg text-sm font-medium bg-slate-200 dark:bg-slate-700 transition-colors duration-300 dark:text-slate-100 hover:bg-slate-300 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-700 dark:focus:ring-slate-400 p-2 ${className}`}
+        >
+            {icon}
         </button>
     );
 
@@ -118,7 +167,7 @@ export const Transcript: React.FC<TranscriptProps> = ({ transcriber }) => {
                     ) : (
                         <div className='w-full ring-1 ring-slate-200 dark:ring-slate-700 bg-white dark:bg-slate-900 rounded-lg p-2 px-3 mb-2 last:mb-0'>
                             {transcribedData.text ? (
-                                transcribedData.text
+                                transcribedData.text.trim()
                             ) : (
                                 <div className='text-sm'>
                                     Transcription in progress. Enable timestamps
@@ -131,9 +180,17 @@ export const Transcript: React.FC<TranscriptProps> = ({ transcriber }) => {
             )}
             {transcribedData && !transcribedData.isBusy && (
                 <div className='flex flex-row flex-wrap items-center justify-center sm:justify-end gap-2'>
-                    <ExportButton onClick={exportTXT} label='Export TXT' />
-                    <ExportButton onClick={exportSRT} label='Export SRT' />
-                    <ExportButton onClick={exportJSON} label='Export JSON' />
+                    <ExportButton label='TXT' onClick={exportTXT} />
+                    <ExportButton label='SRT' onClick={exportSRT} />
+                    <ExportButton label='JSON' onClick={exportJSON} />
+                    <FunctionButton
+                        className='ml-auto'
+                        icon={
+                            <ClipboardIcon className='size-5 fill-slate-900 dark:fill-slate-100' />
+                        }
+                        ariaLabel='Copy to clipboard'
+                        onClick={copyToClipboard}
+                    />
                 </div>
             )}
         </div>
