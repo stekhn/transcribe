@@ -53,6 +53,7 @@ const PlayControl: React.FC<PlayControlProps> = ({
     return (
         <button
             className='flex items-center justify-center grow-0 shrink-0 size-7 basis-7 rounded-full hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-700 dark:focus:ring-slate-400'
+            aria-label='Play/Pause audio'
             onClick={togglePlayPause}
         >
             {isPlaying ? (
@@ -113,6 +114,7 @@ const VolumeControl: React.FC<VolumeControlProps> = ({
             <div className='flex items-center mx-1'>
                 <button
                     className='flex items-center justify-center grow-0 shrink-0 size-7 basis-7 rounded-full hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-700 dark:focus:ring-slate-400'
+                    aria-label='Mute/Unmute audio'
                     onClick={toggleMute}
                 >
                     {isMuted ? (

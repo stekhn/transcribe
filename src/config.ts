@@ -18,7 +18,7 @@ export const MODELS: { [key: string]: number } = {
     "distil-whisper/distil-medium.en": 426,
 };
 
-export const DEFAULT_LANGUAGE = "english";
+export const DEFAULT_LANGUAGE = "en";
 
 export const LANGUAGES: { [key: string]: string } = {
     sq: "albanian",

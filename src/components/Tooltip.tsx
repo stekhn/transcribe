@@ -12,6 +12,7 @@ export const Tooltip: React.FC<TooltipProps> = ({ message, children }) => {
         <div className='relative'>
             <button
                 className='rounded-full align-bottom focus:outline-none focus:ring-2 focus:ring-blue-700 dark:focus:ring-slate-400'
+                aria-label='Settings info'
                 onMouseEnter={() => setIsVisible(true)}
                 onMouseLeave={() => setIsVisible(false)}
             >

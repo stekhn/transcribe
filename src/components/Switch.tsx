@@ -1,7 +1,4 @@
-import {
-    Switch as HeadlessSwitch,
-    SwitchProps as HeadlessSwitchProps,
-} from "@headlessui/react";
+import { Switch as HeadlessSwitch } from "@headlessui/react";
 import { Tooltip } from "./Tooltip";
 import { HelpIcon } from "./Icons";
 import { useLocalStorage } from "../hooks/useLocalStorage";
@@ -29,7 +26,6 @@ export const Switch: React.FC<SwitchProps> = ({
     const [storedValue, setStoredValue] = useLocalStorage(id, checked);
 
     const handleChange = (isChecked: boolean) => {
-        console.log(isChecked);
         const newValue = isChecked;
         setStoredValue(newValue);
         setChecked(newValue);
@@ -44,11 +40,12 @@ export const Switch: React.FC<SwitchProps> = ({
             className={`flex flex-row items-center text-sm text-slate-500 gap-2 ${className}`}
         >
             <HeadlessSwitch
-                checked={checked}
-                onChange={handleChange}
+                id={id}
                 className={`${
                     checked ? "bg-blue-500" : "bg-slate-200 dark:bg-slate-700"
                 } relative inline-flex items-center shrink-0 grow-0 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-700 dark:focus:ring-slate-400 transition-colors duration-300 h-5 w-8`}
+                checked={checked}
+                onChange={handleChange}
             >
                 <span
                     className={`${
@@ -62,7 +59,7 @@ export const Switch: React.FC<SwitchProps> = ({
                 </div>
             )}
             <div className={`flex items-center gap-1`}>
-                {label && <label>{label}</label>}
+                {label && <label htmlFor={id}>{label}</label>}
                 {info && (
                     <Tooltip message={info}>
                         <HelpIcon className='size-5 fill-slate-300 dark:fill-slate-500 hover:fill-blue-500' />

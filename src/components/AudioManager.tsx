@@ -136,6 +136,7 @@ export const AudioManager: React.FC<AudiomanagerProps> = ({ transcriber }) => {
                     <UrlTile
                         icon={<AnchorIcon />}
                         text={"Link"}
+                        ariaLabel='Enter audio URL'
                         onUrlUpdate={(e) => {
                             transcriber.onInputChange();
                             setAudioDownloadUrl(e);
@@ -144,6 +145,7 @@ export const AudioManager: React.FC<AudiomanagerProps> = ({ transcriber }) => {
                     <FileTile
                         icon={<FolderIcon />}
                         text={"File"}
+                        ariaLabel='Upload audio file'
                         onFileUpdate={(decoded, blobUrl, mimeType) => {
                             transcriber.onInputChange();
                             setAudioData({
@@ -159,6 +161,7 @@ export const AudioManager: React.FC<AudiomanagerProps> = ({ transcriber }) => {
                             <RecordTile
                                 icon={<MicrophoneIcon />}
                                 text={"Record"}
+                                ariaLabel='Record audio'
                                 setAudioData={(e) => {
                                     transcriber.onInputChange();
                                     setAudioFromRecording(e);
@@ -290,14 +293,16 @@ const Error: React.FC<ErrorProps> = ({ error }) => {
 interface TileProps {
     icon: React.ReactElement;
     text: string;
+    ariaLabel?: string;
     onClick: () => void;
 }
 
-const Tile: React.FC<TileProps> = ({ icon, text, onClick }) => {
+const Tile: React.FC<TileProps> = ({ icon, text, ariaLabel, onClick }) => {
     return (
         <button
-            onClick={onClick}
             className='flex flex-1 items-center justify-center rounded-lg ring-1 ring-slate-200 dark:ring-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-700 dark:focus:ring-slate-400 h-10 basis-10 p-2'
+            onClick={onClick}
+            aria-label={ariaLabel}
         >
             <div className='w-7 h-7'>{icon}</div>
             {text && (
@@ -312,10 +317,16 @@ const Tile: React.FC<TileProps> = ({ icon, text, onClick }) => {
 interface UrlTileProps {
     icon: React.ReactElement;
     text: string;
+    ariaLabel?: string;
     onUrlUpdate: (url: string) => void;
 }
 
-const UrlTile: React.FC<UrlTileProps> = ({ icon, text, onUrlUpdate }) => {
+const UrlTile: React.FC<UrlTileProps> = ({
+    icon,
+    text,
+    ariaLabel,
+    onUrlUpdate,
+}) => {
     const [showModal, setShowModal] = useState(false);
 
     const onClick = () => {
@@ -333,7 +344,12 @@ const UrlTile: React.FC<UrlTileProps> = ({ icon, text, onUrlUpdate }) => {
 
     return (
         <>
-            <Tile icon={icon} text={text} onClick={onClick} />
+            <Tile
+                icon={icon}
+                text={text}
+                ariaLabel={ariaLabel}
+                onClick={onClick}
+            />
             <UrlModal show={showModal} onSubmit={onSubmit} onClose={onClose} />
         </>
     );
@@ -342,6 +358,7 @@ const UrlTile: React.FC<UrlTileProps> = ({ icon, text, onUrlUpdate }) => {
 interface FileTileProps {
     icon: React.ReactElement;
     text: string;
+    ariaLabel?: string;
     onFileUpdate: (
         decoded: AudioBuffer,
         blobUrl: string,
@@ -349,7 +366,12 @@ interface FileTileProps {
     ) => void;
 }
 
-const FileTile: React.FC<FileTileProps> = ({ icon, text, onFileUpdate }) => {
+const FileTile: React.FC<FileTileProps> = ({
+    icon,
+    text,
+    ariaLabel,
+    onFileUpdate,
+}) => {
     // Create hidden input element
     let elem = document.createElement("input");
     elem.type = "file";
@@ -383,7 +405,12 @@ const FileTile: React.FC<FileTileProps> = ({ icon, text, onFileUpdate }) => {
 
     return (
         <>
-            <Tile icon={icon} text={text} onClick={() => elem.click()} />
+            <Tile
+                icon={icon}
+                text={text}
+                ariaLabel={ariaLabel}
+                onClick={() => elem.click()}
+            />
         </>
     );
 };
@@ -391,12 +418,14 @@ const FileTile: React.FC<FileTileProps> = ({ icon, text, onFileUpdate }) => {
 interface RecordTileProps {
     icon: React.ReactElement;
     text: string;
+    ariaLabel?: string;
     setAudioData: (data: Blob) => void;
 }
 
 const RecordTile: React.FC<RecordTileProps> = ({
     icon,
     text,
+    ariaLabel,
     setAudioData,
 }) => {
     const [showModal, setShowModal] = useState(false);
@@ -418,7 +447,12 @@ const RecordTile: React.FC<RecordTileProps> = ({
 
     return (
         <>
-            <Tile icon={icon} text={text} onClick={onClick} />
+            <Tile
+                icon={icon}
+                text={text}
+                ariaLabel={ariaLabel}
+                onClick={onClick}
+            />
             <RecordModal
                 show={showModal}
                 onSubmit={onSubmit}

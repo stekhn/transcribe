@@ -21,6 +21,7 @@ export const InfoButton: React.FC<InfoButtonProps> = ({ icon, content }) => {
         <>
             <button
                 className='rounded-full align-bottom focus:outline-none focus:ring-2 focus:ring-blue-700 dark:focus:ring-slate-400'
+                aria-label="App info"
                 onClick={handleClick}
             >
                 {icon}
