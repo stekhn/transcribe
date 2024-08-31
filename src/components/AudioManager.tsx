@@ -4,7 +4,7 @@ import axios from "axios";
 import { AudioPlayer } from "./AudioPlayer";
 import { AudioRecorder } from "./AudioRecorder";
 import { Progress } from "./Progress";
-import { TranscribeButton } from "./TranscribeButton";
+import { ButtonTranscribe } from "./ButtonTranscribe";
 import { Select, Option } from "./Select";
 import { AnchorIcon, FolderIcon, MicrophoneIcon } from "./Icons";
 import { Modal } from "./Modal";
@@ -179,7 +179,7 @@ export const AudioManager: React.FC<AudiomanagerProps> = ({ transcriber }) => {
                             src={audioData.url}
                             type={audioData.mimeType}
                         />
-                        <TranscribeButton
+                        <ButtonTranscribe
                             onClick={() => {
                                 transcriber.start(audioData.buffer);
                             }}

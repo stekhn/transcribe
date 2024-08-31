@@ -1,12 +1,15 @@
 import { useState } from "react";
+
 import { Modal } from "./Modal";
 
-interface InfoButtonProps {
+// @ts-ignore
+interface ButtonInfoProps
+    extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     icon: React.ReactNode;
-    content: React.ReactNode;
+    content?: React.ReactNode;
 }
 
-export const InfoButton: React.FC<InfoButtonProps> = ({ icon, content }) => {
+export const ButtonInfo: React.FC<ButtonInfoProps> = ({ icon, content }) => {
     const [showModal, setShowModal] = useState(false);
 
     const handleClick = () => {
@@ -21,7 +24,7 @@ export const InfoButton: React.FC<InfoButtonProps> = ({ icon, content }) => {
         <>
             <button
                 className='rounded-full align-bottom focus:outline-none focus:ring-2 focus:ring-blue-700 dark:focus:ring-slate-400'
-                aria-label="App info"
+                aria-label='App info'
                 onClick={handleClick}
             >
                 {icon}

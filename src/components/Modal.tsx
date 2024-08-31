@@ -1,5 +1,7 @@
-import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
+import { Dialog, Transition } from "@headlessui/react";
+
+import { Button } from "./Button";
 
 interface ModalProps {
     show: boolean;
@@ -53,32 +55,24 @@ export const Modal: React.FC<ModalProps> = ({
                                 >
                                     {title}
                                 </Dialog.Title>
-                                <div className='mt-2 text-sm text-slate-500'>
+                                <div className='mt-4 text-sm text-slate-500'>
                                     {content}
                                 </div>
 
                                 <div className='mt-4 flex flex-row-reverse'>
                                     {submitText && (
-                                        <button
-                                            type='button'
-                                            disabled={!submitEnabled}
-                                            className={`inline-flex ml-2 justify-center rounded-lg px-4 py-2 text-sm font-medium  ${
-                                                submitEnabled
-                                                    ? "text-white bg-blue-500 transition-colors duration-300 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-700 dark:focus:ring-slate-400"
-                                                    : "text-slate-300 ring-1 ring-slate-200 dark:ring-slate-700 dark:text-slate-500"
-                                            }`}
+                                        <Button
+                                            isBlue={true}
+                                            submitEnabled={submitEnabled}
                                             onClick={onSubmit}
+                                            className='ml-2'
                                         >
                                             {submitText}
-                                        </button>
+                                        </Button>
                                     )}
-                                    <button
-                                        type='button'
-                                        className='inline-flex justify-center rounded-lg text-sm font-medium bg-slate-200 dark:bg-slate-700 transition-colors duration-300 dark:text-slate-100 hover:bg-slate-300 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-700 dark:focus:ring-slate-400 px-4 py-2'
-                                        onClick={onClose}
-                                    >
+                                    <Button onClick={onClose} isBlue={false}>
                                         Close
-                                    </button>
+                                    </Button>
                                 </div>
                             </Dialog.Panel>
                         </Transition.Child>

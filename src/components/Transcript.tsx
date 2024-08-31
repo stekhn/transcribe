@@ -1,10 +1,11 @@
 import { useState } from "react";
 
 import { Switch } from "./Switch";
-import { Transcriber } from "../hooks/useTranscriber";
-import { formatAudioTimestamp } from "../utils/AudioUtils";
-import { millisecondsToTime, secondsToSRT } from "../utils/StringUtils";
+import { Button } from "./Button";
 import { ClipboardIcon, ClockIcon, StopIcon } from "./Icons";
+import { millisecondsToTime, secondsToSRT } from "../utils/StringUtils";
+import { formatAudioTimestamp } from "../utils/AudioUtils";
+import { Transcriber } from "../hooks/useTranscriber";
 
 interface TranscriptProps {
     transcriber: Transcriber;
@@ -81,48 +82,6 @@ export const Transcript: React.FC<TranscriptProps> = ({ transcriber }) => {
         saveBlob(blob, "transcript.json");
     };
 
-    interface ExportButtonProps {
-        label: string;
-        ariaLabel?: string;
-        onClick: (e: any) => void;
-        className?: string;
-    }
-
-    const ExportButton: React.FC<ExportButtonProps> = ({
-        label,
-        onClick,
-        className,
-    }) => (
-        <button
-            onClick={onClick}
-            className={`inline-flex items-center text-white font-medium text-sm text-center rounded-lg bg-blue-500 hover:bg-blue-600 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-700 dark:focus:ring-slate-400 px-4 py-2 ${className}`}
-        >
-            {label}
-        </button>
-    );
-
-    interface FunctionButtonProps {
-        icon: React.ReactElement;
-        ariaLabel?: string;
-        onClick: (e: any) => void;
-        className?: string;
-    }
-
-    const FunctionButton: React.FC<FunctionButtonProps> = ({
-        icon,
-        ariaLabel,
-        onClick,
-        className,
-    }) => (
-        <button
-            onClick={onClick}
-            aria-label={ariaLabel}
-            className={`inline-flex justify-center rounded-lg text-sm font-medium bg-slate-200 dark:bg-slate-700 transition-colors duration-300 dark:text-slate-100 hover:bg-slate-300 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-700 dark:focus:ring-slate-400 p-2 ${className}`}
-        >
-            {icon}
-        </button>
-    );
-
     return (
         <div className='w-full flex flex-col p-5'>
             <div className='flex flex-row items-center justify-between gap-2 flex-wrap'>
@@ -180,17 +139,23 @@ export const Transcript: React.FC<TranscriptProps> = ({ transcriber }) => {
             )}
             {transcribedData && !transcribedData.isBusy && (
                 <div className='flex flex-row flex-wrap items-center justify-center sm:justify-end gap-2'>
-                    <ExportButton label='TXT' onClick={exportTXT} />
-                    <ExportButton label='SRT' onClick={exportSRT} />
-                    <ExportButton label='JSON' onClick={exportJSON} />
-                    <FunctionButton
+                    <Button onClick={exportTXT} isBlue={true}>
+                        TXT
+                    </Button>
+                    <Button onClick={exportSRT} isBlue={true}>
+                        SRT
+                    </Button>
+                    <Button onClick={exportJSON} isBlue={true}>
+                        JSON
+                    </Button>
+                    <Button
                         className='ml-auto'
-                        icon={
-                            <ClipboardIcon className='size-5 fill-slate-900 dark:fill-slate-100' />
-                        }
-                        ariaLabel='Copy to clipboard'
+                        isBlue={false}
+                        aria-label='Copy to clipboard'
                         onClick={copyToClipboard}
-                    />
+                    >
+                        <ClipboardIcon className='size-5 fill-slate-900 dark:fill-slate-100' />
+                    </Button>
                 </div>
             )}
         </div>

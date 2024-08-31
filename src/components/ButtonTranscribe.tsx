@@ -1,14 +1,20 @@
-interface TranscribeButtonProps
-    extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+import React from "react";
+
+import { Button, ButtonProps } from "./Button";
+
+interface ButtonTranscribeProps extends ButtonProps {
     isModelLoading: boolean;
     isTranscribing: boolean;
 }
 
-export const TranscribeButton: React.FC<TranscribeButtonProps> = (props) => {
-    const { isModelLoading, isTranscribing, onClick, ...buttonProps } = props;
+export const ButtonTranscribe: React.FC<ButtonTranscribeProps> = ({
+    isModelLoading,
+    isTranscribing,
+    onClick,
+}) => {
     return (
-        <button
-            className='text-white text-center h11 bg-blue-500 hover:bg-blue-600 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-700 dark:focus:ring-slate-400 font-medium rounded-lg text-sm p2 text-center whitespace-nowrap h-10 sm:basis-48'
+        <Button
+            className='h11 h-10 sm:basis-48'
             aria-label='Start transcription'
             disabled={isTranscribing}
             onClick={(event) => {
@@ -16,16 +22,15 @@ export const TranscribeButton: React.FC<TranscribeButtonProps> = (props) => {
                     onClick(event);
                 }
             }}
-            {...buttonProps}
         >
             {isModelLoading ? (
-                <Spinner text={"Loading model..."} />
+                <Spinner text='Loading model...' />
             ) : isTranscribing ? (
-                <Spinner text={"Transcribing..."} />
+                <Spinner text='Transcribing...' />
             ) : (
                 "Transcribe"
             )}
-        </button>
+        </Button>
     );
 };
 
@@ -39,7 +44,7 @@ const Spinner: React.FC<SpinnerProps> = ({ text }) => {
             <svg
                 aria-hidden='true'
                 role='status'
-                className='inline w-4 h-4 mr-3 text-white animate-spin'
+                className='inline w-4 h-4 mr-2 text-white animate-spin'
                 viewBox='0 0 100 101'
                 fill='none'
                 xmlns='http://www.w3.org/2000/svg'

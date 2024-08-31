@@ -1,8 +1,9 @@
+import { useEffect } from "react";
 import { Switch as HeadlessSwitch } from "@headlessui/react";
+
 import { Tooltip } from "./Tooltip";
 import { HelpIcon } from "./Icons";
 import { useLocalStorage } from "../hooks/useLocalStorage";
-import { useEffect } from "react";
 
 interface SwitchProps {
     id: string;
