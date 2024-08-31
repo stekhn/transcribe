@@ -2,7 +2,13 @@ import { useState } from "react";
 
 import { Switch } from "./Switch";
 import { Button } from "./Button";
-import { ClipboardIcon, ClockIcon, StopIcon } from "./Icons";
+import {
+    ClipboardIcon,
+    ClockIcon,
+    DownloadIcon,
+    ShareIcon,
+    StopIcon,
+} from "./Icons";
 import { millisecondsToTime, secondsToSRT } from "../utils/StringUtils";
 import { formatAudioTimestamp } from "../utils/AudioUtils";
 import { Transcriber } from "../hooks/useTranscriber";
@@ -37,6 +43,19 @@ export const Transcript: React.FC<TranscriptProps> = ({ transcriber }) => {
                 await navigator.clipboard.writeText(text || "");
             } catch (error) {
                 console.error("Failed to copy:", error);
+            }
+        }
+    };
+
+    const shareText = async () => {
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    title: "Share Text",
+                    text: formatText(showTimestamps),
+                });
+            } catch (error) {
+                console.error("Failed to share text:", error);
             }
         }
     };
@@ -138,24 +157,55 @@ export const Transcript: React.FC<TranscriptProps> = ({ transcriber }) => {
                 </div>
             )}
             {transcribedData && !transcribedData.isBusy && (
-                <div className='flex flex-row flex-wrap items-center justify-center sm:justify-end gap-2'>
-                    <Button onClick={exportTXT} isBlue={true}>
-                        TXT
-                    </Button>
-                    <Button onClick={exportSRT} isBlue={true}>
-                        SRT
-                    </Button>
-                    <Button onClick={exportJSON} isBlue={true}>
-                        JSON
-                    </Button>
-                    <Button
-                        className='ml-auto'
-                        isBlue={false}
-                        aria-label='Copy to clipboard'
-                        onClick={copyToClipboard}
-                    >
-                        <ClipboardIcon className='size-5 fill-slate-900 dark:fill-slate-100' />
-                    </Button>
+                <div className='flex flex-col-reverse sm:flex-row flex-wrap items-center justify-between gap-4'>
+                    <div className='flex flex-col min-[380px]:flex-row gap-2 w-full sm:w-auto'>
+                        <Button
+                            aria-label='Download text as text file'
+                            onClick={exportTXT}
+                            className='flex-1'
+                        >
+                            <DownloadIcon className='size-5 fill-slate-100 dark:fill-slate-900' />{" "}
+                            TXT
+                        </Button>
+                        <Button
+                            aria-label='Download text as SRT file'
+                            onClick={exportSRT}
+                            className='flex-1'
+                        >
+                            <DownloadIcon className='size-5 fill-slate-100 dark:fill-slate-900' />{" "}
+                            SRT
+                        </Button>
+                        <Button
+                            aria-label='Download text as JSON file'
+                            onClick={exportJSON}
+                            className='flex-1'
+                        >
+                            <DownloadIcon className='size-5 fill-slate-100 dark:fill-slate-900' />{" "}
+                            JSON
+                        </Button>
+                    </div>
+                    <div className='flex flex-row gap-2 w-full sm:w-auto'>
+                        {!!navigator.clipboard && (
+                            <Button
+                                isBlue={false}
+                                aria-label='Copy to clipboard'
+                                onClick={copyToClipboard}
+                                className='flex-1'
+                            >
+                                <ClipboardIcon className='size-5 fill-slate-900 dark:fill-slate-100' />
+                            </Button>
+                        )}
+                        {!!navigator.share && (
+                            <Button
+                                isBlue={false}
+                                aria-label='Share text'
+                                onClick={shareText}
+                                className='flex-1'
+                            >
+                                <ShareIcon className='size-5 fill-slate-900 dark:fill-slate-100' />
+                            </Button>
+                        )}
+                    </div>
                 </div>
             )}
         </div>
