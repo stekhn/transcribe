@@ -55,5 +55,31 @@
             "form_factor": "narrow",
             "label": "Transcribe App"
         }
-    ]
+    ],
+    "protocol_handlers": [
+        {
+            "protocol": "web+audio",
+            "url": "/transcribe/?url=%s"
+        }
+    ],
+    "share_target": {
+        "action": "/transcribe/",
+        "method": "POST",
+        "enctype": "multipart/form-data",
+        "params": {
+            "files": [
+                {
+                    "name": "audio_files",
+                    "accept": [
+                        "audio/*",
+                        ".mp3",
+                        ".wav",
+                        ".ogg",
+                        ".flac",
+                        ".m4a"
+                    ]
+                }
+            ]
+        }
+    }
 }

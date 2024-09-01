@@ -165,7 +165,7 @@ export const Transcript: React.FC<TranscriptProps> = ({ transcriber }) => {
                             className='flex-1'
                         >
                             <DownloadIcon className='size-5 fill-slate-100' />{" "}
-                            TXT
+                            Text
                         </Button>
                         <Button
                             aria-label='Download text as SRT file'

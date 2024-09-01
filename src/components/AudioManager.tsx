@@ -10,8 +10,10 @@ import { AnchorIcon, FolderIcon, MicrophoneIcon } from "./Icons";
 import { Modal } from "./Modal";
 import { Switch } from "./Switch";
 import { UrlInput } from "./UrlInput";
-import { Transcriber } from "../hooks/useTranscriber";
 import { titleCase } from "../utils/StringUtils";
+import { Transcriber } from "../hooks/useTranscriber";
+import { useProtocolHandler } from "../hooks/useProtocolHandler";
+import { useAudioFileReceiver } from "../hooks/useAudioFileReceiver";
 import { SAMPLING_RATE, DEFAULT_AUDIO_URL, LANGUAGES, MODELS } from "../config";
 
 export enum AudioSource {
@@ -115,6 +117,18 @@ export const AudioManager: React.FC<AudiomanagerProps> = ({ transcriber }) => {
             }
         }
     };
+
+    // Handle requests to http://localhost:5173/transcribe/?url=
+    useProtocolHandler("web+transcribe", (url: URL) => {
+        const incomingUrl = url.toString();
+        setAudioDownloadUrl(incomingUrl);
+    });
+
+    useAudioFileReceiver(async (file) => {
+        const arrayBuffer = await file.arrayBuffer();
+        const mimeType = file.type;
+        await setAudioFromDownload(arrayBuffer, mimeType);
+    });
 
     // When URL changes, download audio
     useEffect(() => {
