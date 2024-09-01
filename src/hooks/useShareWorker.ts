@@ -9,7 +9,12 @@ export const useShareWorker = (handleFile: AudioFileHandler) => {
         const registerServiceWorker = async () => {
             try {
                 // Register the service worker
-                await navigator.serviceWorker.register("/service-worker.js");
+                await navigator.serviceWorker.register(
+                    "/transcribe/service-worker.js",
+                    {
+                        scope: "/transcribe/",
+                    },
+                );
                 setIsRegistered(true);
             } catch (error) {
                 console.error("ServiceWorker registration failed: ", error);
