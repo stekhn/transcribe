@@ -9,9 +9,7 @@ export const useShareWorker = (handleFile: AudioFileHandler) => {
         const registerServiceWorker = async () => {
             try {
                 // Register the service worker
-                await navigator.serviceWorker.register(
-                    new URL("../service-worker.js", import.meta.url),
-                );
+                await navigator.serviceWorker.register("/service-worker.js");
                 setIsRegistered(true);
             } catch (error) {
                 console.error("ServiceWorker registration failed: ", error);
