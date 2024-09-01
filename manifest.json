@@ -1,27 +1,41 @@
 {
     "name": "Transcribe – Free and Secure",
     "short_name": "Transcribe",
-    "start_url": "https://stekhn.github.io/transcribe/",
+    "description": "Convert audio to text using Whisper speech-to-text models, all processed locally on your device for maximum privacy and data security.",
+    "start_url": "/transcribe/",
     "id": "/transcribe/",
+    "display_override": ["fullscreen", "minimal-ui"],
     "display": "standalone",
-    "theme_color": "#448AFF",
-    "background_color": "#448AFF",
+    "theme_color": "#3b82f6",
+    "background_color": "#3b82f6",
     "icons": [
         {
-            "src": "android-chrome-1024x1024.png",
-            "sizes": "1024x1024",
+            "src": "icon-any.svg",
+            "sizes": "any",
+            "type": "image/svg+xml",
+            "purpose": "any"
+        },
+        {
+            "src": "icon-any.png",
+            "sizes": "any",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "icon-192-maskable.png",
+            "sizes": "192x192",
             "type": "image/png",
             "purpose": "maskable"
         },
         {
-            "src": "android-chrome-512x512.png",
+            "src": "icon-512-maskable.png",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "maskable"
         },
         {
-            "src": "android-chrome-192x192.png",
-            "sizes": "192x192",
+            "src": "icon-1024-maskable.png",
+            "sizes": "1024x1024",
             "type": "image/png",
             "purpose": "maskable"
         }
@@ -41,5 +55,31 @@
             "form_factor": "narrow",
             "label": "Transcribe App"
         }
-    ]
+    ],
+    "protocol_handlers": [
+        {
+            "protocol": "web+audio",
+            "url": "/transcribe/?url=%s"
+        }
+    ],
+    "share_target": {
+        "action": "/transcribe/",
+        "method": "POST",
+        "enctype": "multipart/form-data",
+        "params": {
+            "files": [
+                {
+                    "name": "audio_files",
+                    "accept": [
+                        "audio/*",
+                        ".mp3",
+                        ".wav",
+                        ".ogg",
+                        ".flac",
+                        ".m4a"
+                    ]
+                }
+            ]
+        }
+    }
 }
