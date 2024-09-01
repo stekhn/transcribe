@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from "react";
-import { useWorker } from "./useWorker";
+import { useWorker } from "./useTranscriptionWorker";
 import {
     DEFAULT_MODEL,
     DEFAULT_SUBTASK,

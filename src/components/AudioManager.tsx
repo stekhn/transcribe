@@ -13,7 +13,7 @@ import { UrlInput } from "./UrlInput";
 import { titleCase } from "../utils/StringUtils";
 import { Transcriber } from "../hooks/useTranscriber";
 import { useProtocolHandler } from "../hooks/useProtocolHandler";
-import { useAudioFileReceiver } from "../hooks/useAudioFileReceiver";
+import { useShareWorker } from "../hooks/useShareWorker";
 import { SAMPLING_RATE, DEFAULT_AUDIO_URL, LANGUAGES, MODELS } from "../config";
 
 export enum AudioSource {
@@ -124,10 +124,8 @@ export const AudioManager: React.FC<AudiomanagerProps> = ({ transcriber }) => {
         setAudioDownloadUrl(incomingUrl);
     });
 
-    useAudioFileReceiver(async (file) => {
-        const arrayBuffer = await file.arrayBuffer();
-        const mimeType = file.type;
-        await setAudioFromDownload(arrayBuffer, mimeType);
+    useShareWorker((file, mimeType) => {
+        setAudioFromDownload(file, mimeType);
     });
 
     // When URL changes, download audio
