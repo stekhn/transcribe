@@ -22,7 +22,6 @@ export const useShareWorker = (handleFile: AudioFileHandler) => {
             registerServiceWorker();
 
             navigator.serviceWorker.addEventListener("message", (event) => {
-                console.log(event.data.type);
                 if (event.data && event.data.type === "AUDIO_FILE_RECEIVED") {
                     const { file, mimeType } = event.data;
                     handleFile(file, mimeType);
