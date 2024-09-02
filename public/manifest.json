@@ -1,5 +1,5 @@
 {
-    "name": "Transcribe – Free and Secure",
+    "name": "Transcribe",
     "short_name": "Transcribe",
     "description": "Convert audio to text using Whisper speech-to-text models, all processed locally on your device for maximum privacy and data security.",
     "lang": "en",
@@ -8,6 +8,7 @@
     "display_override": ["fullscreen", "minimal-ui"],
     "display": "standalone",
     "theme_color": "#3b82f6",
+    "background_color": "#3b82f6",
     "icons": [
         {
             "src": "icon-any.svg",
@@ -69,7 +70,7 @@
         "params": {
             "files": [
                 {
-                    "name": "audio_files",
+                    "name": "audio_file",
                     "accept": ["audio/*"]
                 }
             ]
