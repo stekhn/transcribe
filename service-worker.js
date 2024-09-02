@@ -1,48 +1,50 @@
-self.addEventListener("fetch", (event) => {
+self.addEventListener("fetch", async (event) => {
     const url = new URL(event.request.url);
 
+    // Check if the request is a POST request to the share target endpoint
     if (
         url.pathname === "/transcribe/" &&
         url.searchParams.has("share-target") &&
         event.request.method === "POST"
     ) {
-        event.respondWith(
-            (async () => {
-                try {
-                    const formData = await event.request.formData();
-
-                    // Immediately respond to the request with a redirect
-                    event.respondWith(Response.redirect("/?share-target"));
-
-                    const audioFile = formData.get("file");
-                    if (audioFile && audioFile.type.startsWith("audio/")) {
-                        const arrayBuffer = await audioFile.arrayBuffer();
-                        const clients = await self.clients.matchAll();
-
-                        for (const client of clients) {
-                            client.postMessage({
-                                type: "AUDIO_FILE_RECEIVED",
-                                file: arrayBuffer,
-                                mimeType: audioFile.type,
-                            });
-                        }
-
-                        return new Response("Audio file received", {
-                            status: 200,
-                        });
-                    } else {
-                        return new Response(
-                            "No audio file received or invalid file type",
-                            { status: 400 },
-                        );
-                    }
-                } catch (error) {
-                    console.error("Error handling fetch event:", error);
-                    return new Response("Error handling audio file", {
-                        status: 500,
-                    });
-                }
-            })(),
-        );
+        event.respondWith(handleShareTargetRequest(event.request));
     }
 });
+
+async function handleShareTargetRequest(request) {
+    try {
+        const formData = await request.formData();
+        const audioFile = formData.get("audio_file");
+
+        if (!audioFile) {
+            return new Response(
+                JSON.stringify({ error: "No audio file received" }),
+                {
+                    status: 400,
+                    headers: { "Content-Type": "application/json" },
+                },
+            );
+        }
+
+        const arrayBuffer = await audioFile.arrayBuffer();
+
+        const message = {
+            type: "AUDIO_FILE_RECEIVED",
+            file: arrayBuffer,
+            mimeType: audioFile.type,
+        };
+
+        return new Response(JSON.stringify(message), {
+            status: 200,
+            headers: { "Content-Type": "application/json" },
+        });
+    } catch (error) {
+        return new Response(
+            JSON.stringify({ error: "Failed to process the audio file" }),
+            {
+                status: 500,
+                headers: { "Content-Type": "application/json" },
+            },
+        );
+    }
+}
