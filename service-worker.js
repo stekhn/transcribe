@@ -8,6 +8,7 @@ self.addEventListener("fetch", async (event) => {
         event.request.method === "POST"
     ) {
         event.respondWith(handleShareTargetRequest(event.request));
+        event.preventDefault();
     }
 });
 
@@ -34,10 +35,12 @@ async function handleShareTargetRequest(request) {
             mimeType: audioFile.type,
         };
 
-        return new Response(JSON.stringify(message), {
-            status: 200,
-            headers: { "Content-Type": "application/json" },
+        const clients = await self.clients.matchAll({ type: "window" });
+        clients.forEach((client) => {
+            client.postMessage(message);
         });
+
+        return new Response(null, { status: 204 }); // 204 No Content
     } catch (error) {
         return new Response(
             JSON.stringify({ error: "Failed to process the audio file" }),
