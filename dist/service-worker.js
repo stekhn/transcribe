@@ -8,7 +8,6 @@ self.addEventListener("fetch", async (event) => {
         event.request.method === "POST"
     ) {
         event.respondWith(handleShareTargetRequest(event.request));
-        event.respondWith(Response.redirect("/?share-target"));
     }
 });
 
@@ -35,13 +34,18 @@ async function handleShareTargetRequest(request) {
             mimeType: audioFile.type,
         };
 
+        // Send message to all clients
         const clients = await self.clients.matchAll({ type: "window" });
         clients.forEach((client) => {
             client.postMessage(message);
         });
 
-        console.log("Service worker received audio file");
+        // Redirect the user to a GET endpoint after the file is processed
+        return Response.redirect("/?share-target", 303);
     } catch (error) {
-        console.log("Service worker failed to process the audio file");
+        return new Response(
+            JSON.stringify({ error: "Failed to process the audio file" }),
+            { status: 500, headers: { "Content-Type": "application/json" } },
+        );
     }
 }
