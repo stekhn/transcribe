@@ -41,7 +41,7 @@ async function handleShareTargetRequest(request) {
         });
 
         // Redirect the user to a GET endpoint after the file is processed
-        return Response.redirect("/?share-target", 303);
+        return Response.redirect("/transcribe/?share-target", 303);
     } catch (error) {
         return new Response(
             JSON.stringify({ error: "Failed to process the audio file" }),
