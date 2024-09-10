@@ -8,7 +8,7 @@ self.addEventListener("fetch", async (event) => {
         event.request.method === "POST"
     ) {
         event.respondWith(handleShareTargetRequest(event.request));
-        event.preventDefault();
+        event.respondWith(Response.redirect("/?share-target"));
     }
 });
 
@@ -40,14 +40,8 @@ async function handleShareTargetRequest(request) {
             client.postMessage(message);
         });
 
-        return new Response(null, { status: 204 }); // 204 No Content
+        console.log("Service worker received audio file");
     } catch (error) {
-        return new Response(
-            JSON.stringify({ error: "Failed to process the audio file" }),
-            {
-                status: 500,
-                headers: { "Content-Type": "application/json" },
-            },
-        );
+        console.log("Service worker failed to process the audio file");
     }
 }
