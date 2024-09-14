@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Switch as HeadlessSwitch } from "@headlessui/react";
 
 import { Tooltip } from "./Tooltip";
@@ -7,8 +6,9 @@ import { useLocalStorage } from "../hooks/useLocalStorage";
 
 interface SwitchProps {
     id: string;
-    checked: boolean;
-    setChecked: (checked: boolean) => void;
+    onChange: (isChecked: boolean) => void;
+    defaultChecked?: boolean;
+    overrideStoredValue?: boolean;
     label?: string;
     info?: string;
     showLine?: boolean;
@@ -17,24 +17,21 @@ interface SwitchProps {
 
 export const Switch: React.FC<SwitchProps> = ({
     id,
-    checked,
-    setChecked,
+    onChange,
+    defaultChecked = false,
+    overrideStoredValue = false,
     label,
     info,
     showLine = false,
     className,
 }) => {
-    const [storedValue, setStoredValue] = useLocalStorage(id, checked);
+    const [storedValue, setStoredValue] = useLocalStorage(id, defaultChecked);
+    const isChecked = overrideStoredValue ? defaultChecked : storedValue;
 
     const handleChange = (isChecked: boolean) => {
-        const newValue = isChecked;
-        setStoredValue(newValue);
-        setChecked(newValue);
+        setStoredValue(isChecked);
+        onChange(isChecked);
     };
-
-    useEffect(() => {
-        setChecked(storedValue);
-    }, []);
 
     return (
         <div
@@ -43,14 +40,14 @@ export const Switch: React.FC<SwitchProps> = ({
             <HeadlessSwitch
                 id={id}
                 className={`${
-                    checked ? "bg-blue-500" : "bg-slate-200 dark:bg-slate-700"
+                    isChecked ? "bg-blue-500" : "bg-slate-200 dark:bg-slate-700"
                 } relative inline-flex items-center shrink-0 grow-0 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-700 dark:focus:ring-slate-400 transition-colors duration-300 h-5 w-8`}
-                checked={checked}
+                checked={isChecked}
                 onChange={handleChange}
             >
                 <span
                     className={`${
-                        checked ? "translate-x-3.5" : "translate-x-0.5"
+                        isChecked ? "translate-x-3.5" : "translate-x-0.5"
                     } inline-block w-4 h-4 transform bg-white dark:bg-slate-100 rounded-full transition-transform duration-300`}
                 />
             </HeadlessSwitch>
@@ -59,7 +56,7 @@ export const Switch: React.FC<SwitchProps> = ({
                     <hr className='w-11/12 border-1 border-slate-200 dark:border-slate-700' />
                 </div>
             )}
-            <div className={`flex items-center gap-1`}>
+            <div className='flex items-center gap-1'>
                 {label && <label htmlFor={id}>{label}</label>}
                 {info && (
                     <Tooltip message={info}>

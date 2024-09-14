@@ -11,9 +11,10 @@ import { Modal } from "./Modal";
 import { Switch } from "./Switch";
 import { UrlInput } from "./UrlInput";
 import { titleCase } from "../utils/StringUtils";
-import { Transcriber } from "../hooks/useTranscriber";
 import { useProtocolHandler } from "../hooks/useProtocolHandler";
+import { useNotificationPermission } from "../hooks/useNotificationPermission";
 import { useShareWorker } from "../hooks/useShareWorker";
+import { Transcriber } from "../hooks/useTranscriber";
 import { SAMPLING_RATE, DEFAULT_AUDIO_URL, LANGUAGES, MODELS } from "../config";
 
 export enum AudioSource {
@@ -229,6 +230,9 @@ interface SettingsProp {
 const Settings: React.FC<SettingsProp> = ({ transcriber }) => {
     // @ts-ignore
     const hasWebGPU = !!navigator.gpu;
+    const hasNotification = "Notification" in window;
+    const { notificationsEnabled, toggleNotifications } =
+        useNotificationPermission();
 
     return (
         <>
@@ -263,10 +267,21 @@ const Settings: React.FC<SettingsProp> = ({ transcriber }) => {
                 <Switch
                     id='switch-webgpu'
                     className='mt-2 mb-4 flex-row-reverse justify-between'
-                    checked={transcriber.webGPU}
-                    setChecked={transcriber.setWebGPU}
+                    onChange={transcriber.setWebGPU}
                     label='Enable WebGPU support (experimental)'
                     info='Fast, but potentially unstable'
+                    showLine={true}
+                />
+            )}
+            {hasNotification && (
+                <Switch
+                    id='switch-notification'
+                    className='mt-2 mb-4 flex-row-reverse justify-between'
+                    defaultChecked={notificationsEnabled}
+                    onChange={toggleNotifications}
+                    overrideStoredValue={true}
+                    label='Turn on notifications'
+                    info='Alert when the transcription is done'
                     showLine={true}
                 />
             )}

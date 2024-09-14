@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 export const useLocalStorage = <T>(
-    key: string | boolean,
+    key: string | number | boolean,
     initialValue: T,
 ): [T, React.Dispatch<React.SetStateAction<T>>] => {
     const [storedValue, setStoredValue] = useState<T>(() => {
@@ -24,7 +24,7 @@ export const useLocalStorage = <T>(
                 JSON.stringify(valueToStore),
             );
         } catch (error) {
-            console.error("Error setting localStorage:", error);
+            console.error("Error writing to localStorage:", error);
         }
     };
 

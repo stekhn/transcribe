@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Switch } from "./Switch";
 import { Button } from "./Button";
@@ -11,6 +11,7 @@ import {
 } from "./Icons";
 import { millisecondsToTime, secondsToSRT } from "../utils/StringUtils";
 import { formatAudioTimestamp } from "../utils/AudioUtils";
+import { useNotification } from "../hooks/useNotification";
 import { Transcriber } from "../hooks/useTranscriber";
 
 interface TranscriptProps {
@@ -101,6 +102,16 @@ export const Transcript: React.FC<TranscriptProps> = ({ transcriber }) => {
         saveBlob(blob, "transcript.json");
     };
 
+    useNotification({
+        isTriggered: !transcribedData?.isBusy && !!transcriber.executionTime,
+        title: "Transcribe",
+        options: {
+            body: `Transcription done in ${millisecondsToTime(
+                transcriber.executionTime ?? 0,
+            )}. Click to see the results.`,
+        },
+    });
+
     return (
         <div className='w-full flex flex-col p-5'>
             <div className='flex flex-row items-center justify-between gap-2 flex-wrap'>
@@ -108,7 +119,7 @@ export const Transcript: React.FC<TranscriptProps> = ({ transcriber }) => {
                     <div className='flex flex-row items-center gap-1.5 text-sm text-slate-500 mr-auto'>
                         <ClockIcon className='size-5 fill-slate-300 dark:fill-slate-500' />
                         <span className='whitespace-nowrap'>
-                            {millisecondsToTime(transcriber.executionTime)}
+                            {millisecondsToTime(transcriber.executionTime ?? 0)}
                         </span>
                     </div>
                 )}
@@ -123,8 +134,7 @@ export const Transcript: React.FC<TranscriptProps> = ({ transcriber }) => {
                 <Switch
                     id='switch-timestamps'
                     className='ml-auto flex-row-reverse'
-                    checked={showTimestamps}
-                    setChecked={setShowTimestamps}
+                    onChange={setShowTimestamps}
                     label='Show timestamps'
                 />
             </div>
