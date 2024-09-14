@@ -124,6 +124,7 @@ export const AudioManager: React.FC<AudiomanagerProps> = ({ transcriber }) => {
         setAudioDownloadUrl(incomingUrl);
     });
 
+    // Handle requests to http://localhost:5173/transcribe/?share-target
     useShareWorker((file, mimeType) => {
         setAudioFromDownload(file, mimeType);
     });
