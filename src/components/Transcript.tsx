@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { Switch } from "./Switch";
 import { Button } from "./Button";
@@ -134,6 +134,7 @@ export const Transcript: React.FC<TranscriptProps> = ({ transcriber }) => {
                 <Switch
                     id='switch-timestamps'
                     className='ml-auto flex-row-reverse'
+                    defaultChecked={showTimestamps}
                     onChange={setShowTimestamps}
                     label='Show timestamps'
                 />

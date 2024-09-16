@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Switch as HeadlessSwitch } from "@headlessui/react";
 
 import { Tooltip } from "./Tooltip";
@@ -32,6 +33,10 @@ export const Switch: React.FC<SwitchProps> = ({
         setStoredValue(isChecked);
         onChange(isChecked);
     };
+
+    useEffect(() => {
+        onChange(storedValue);
+    }, []);
 
     return (
         <div

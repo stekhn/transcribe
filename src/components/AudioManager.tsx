@@ -222,14 +222,14 @@ export const AudioManager: React.FC<AudiomanagerProps> = ({ transcriber }) => {
         </>
     );
 };
-
+1;
 interface SettingsProp {
     transcriber: Transcriber;
 }
 
 const Settings: React.FC<SettingsProp> = ({ transcriber }) => {
     // @ts-ignore
-    const hasWebGPU = !!navigator.gpu;
+    const hasWebGpu = !!navigator.gpu;
     const hasNotification = "Notification" in window;
     const { notificationsEnabled, toggleNotifications } =
         useNotificationPermission();
@@ -263,10 +263,11 @@ const Settings: React.FC<SettingsProp> = ({ transcriber }) => {
                     </Option>
                 ))}
             </Select>
-            {hasWebGPU && (
+            {hasWebGpu && (
                 <Switch
                     id='switch-webgpu'
                     className='mt-2 mb-4 flex-row-reverse justify-between'
+                    defaultChecked={false}
                     onChange={transcriber.setWebGPU}
                     label='Enable WebGPU support (experimental)'
                     info='Fast, but potentially unstable'
