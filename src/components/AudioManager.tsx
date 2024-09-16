@@ -1,21 +1,26 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 
 import { AudioPlayer } from "./AudioPlayer";
-import { AudioRecorder } from "./AudioRecorder";
-import { Progress } from "./Progress";
+import { ModelProgress } from "./ModelProgress";
 import { ButtonTranscribe } from "./ButtonTranscribe";
-import { Select, Option } from "./Select";
-import { AnchorIcon, FolderIcon, MicrophoneIcon } from "./Icons";
-import { Modal } from "./Modal";
-import { Switch } from "./Switch";
-import { UrlInput } from "./UrlInput";
-import { titleCase } from "../utils/StringUtils";
 import { useProtocolHandler } from "../hooks/useProtocolHandler";
-import { useNotificationPermission } from "../hooks/useNotificationPermission";
 import { useShareWorker } from "../hooks/useShareWorker";
 import { Transcriber } from "../hooks/useTranscriber";
-import { SAMPLING_RATE, DEFAULT_AUDIO_URL, LANGUAGES, MODELS } from "../config";
+
+import { Settings } from "./Settings";
+import { AudioProgress } from "./AudioProgress";
+import { ErrorMessage } from "./ErrorMessage";
+
+import { UrlTile } from "./AudioInput";
+import { FileTile } from "./AudioInput";
+import { RecordTile } from "./AudioInput";
+
+import {
+    setAudioFromDownload,
+    setAudioFromRecording,
+    downloadAudioFromUrl,
+} from "../utils/audioUtils";
+import { AnchorIcon, FolderIcon, MicrophoneIcon } from "./Icons";
 
 export enum AudioSource {
     URL = "URL",
@@ -23,11 +28,11 @@ export enum AudioSource {
     RECORDING = "RECORDING",
 }
 
-interface AudiomanagerProps {
+interface AudioManagerProps {
     transcriber: Transcriber;
 }
 
-export const AudioManager: React.FC<AudiomanagerProps> = ({ transcriber }) => {
+export const AudioManager: React.FC<AudioManagerProps> = ({ transcriber }) => {
     const [progress, setProgress] = useState(0);
     const [audioData, setAudioData] = useState<
         | {
@@ -41,85 +46,56 @@ export const AudioManager: React.FC<AudiomanagerProps> = ({ transcriber }) => {
     const [audioDownloadUrl, setAudioDownloadUrl] = useState<
         string | undefined
     >(undefined);
+    const [error, setError] = useState<{
+        name: string;
+        message: string;
+    } | null>(null);
 
-    const resetAudio = () => {
-        setAudioData(undefined);
-        setAudioDownloadUrl(undefined);
-    };
-
-    const setAudioFromDownload = async (
+    const handleSetAudioFromDownload = async (
         data: ArrayBuffer,
         mimeType: string,
     ) => {
-        const audioCTX = new AudioContext({
-            sampleRate: SAMPLING_RATE,
-        });
-        const blobUrl = URL.createObjectURL(
-            new Blob([data], { type: "audio/*" }),
-        );
-        const decoded = await audioCTX.decodeAudioData(data);
-        setAudioData({
-            buffer: decoded,
-            url: blobUrl,
-            source: AudioSource.URL,
-            mimeType: mimeType,
-        });
-    };
-
-    const setAudioFromRecording = async (data: Blob) => {
-        resetAudio();
-        setProgress(0);
-        const blobUrl = URL.createObjectURL(data);
-        const fileReader = new FileReader();
-        fileReader.onprogress = (event) => {
-            setProgress(event.loaded / event.total || 0);
-        };
-        fileReader.onloadend = async () => {
-            const audioCTX = new AudioContext({
-                sampleRate: SAMPLING_RATE,
+        try {
+            await setAudioFromDownload(data, mimeType, setAudioData);
+        } catch (err) {
+            setError({
+                name: "Decoding Error",
+                message: "Failed to decode audio data.",
             });
-            const arrayBuffer = fileReader.result as ArrayBuffer;
-            const decoded = await audioCTX.decodeAudioData(arrayBuffer);
-            setAudioData({
-                buffer: decoded,
-                url: blobUrl,
-                source: AudioSource.RECORDING,
-                mimeType: data.type,
-            });
-        };
-        fileReader.readAsArrayBuffer(data);
-    };
-
-    const downloadAudioFromUrl = async (
-        requestAbortController: AbortController,
-    ) => {
-        if (audioDownloadUrl) {
-            try {
-                setAudioData(undefined);
-                setProgress(0);
-                const { data, headers } = (await axios.get(audioDownloadUrl, {
-                    signal: requestAbortController.signal,
-                    responseType: "arraybuffer",
-                    onDownloadProgress(progressEvent) {
-                        setProgress(progressEvent.progress || 0);
-                    },
-                })) as {
-                    data: ArrayBuffer;
-                    headers: { "content-type": string };
-                };
-
-                let mimeType = headers["content-type"];
-                if (!mimeType || mimeType === "audio/wave") {
-                    mimeType = "audio/wav";
-                }
-                setAudioFromDownload(data, mimeType);
-            } catch (error) {
-                console.log("Request failed or aborted", error);
-            }
         }
     };
 
-    // Handle requests to http://localhost:5173/transcribe/?url=
+    const handleSetAudioFromRecording = async (data: Blob) => {
+        try {
+            await setAudioFromRecording(data, setProgress, setAudioData);
+        } catch (err) {
+            setError({
+                name: "Recording Error",
+                message: "Failed to process recorded audio.",
+            });
+        }
+    };
+
+    const handleDownloadAudio = async (
+        requestAbortController: AbortController,
+    ) => {
+        try {
+            await downloadAudioFromUrl(
+                audioDownloadUrl,
+                requestAbortController,
+                setAudioData,
+                setProgress,
+                handleSetAudioFromDownload,
+            );
+        } catch (err) {
+            setError({
+                name: "Download Error",
+                message: "Failed to download audio.",
+            });
+        }
+    };
+
+    // Handle protocol and share worker
     useProtocolHandler("web+transcribe", (url: URL) => {
         const incomingUrl = url.toString();
         setAudioDownloadUrl(incomingUrl);
@@ -127,14 +103,14 @@ export const AudioManager: React.FC<AudiomanagerProps> = ({ transcriber }) => {
 
     // Handle requests to http://localhost:5173/transcribe/?share-target
     useShareWorker((file, mimeType) => {
-        setAudioFromDownload(file, mimeType);
+        setAudioFromDownload(file, mimeType, setAudioData);
     });
 
     // When URL changes, download audio
     useEffect(() => {
         if (audioDownloadUrl) {
             const requestAbortController = new AbortController();
-            downloadAudioFromUrl(requestAbortController);
+            handleDownloadAudio(requestAbortController);
             return () => {
                 requestAbortController.abort();
             };
@@ -151,9 +127,9 @@ export const AudioManager: React.FC<AudiomanagerProps> = ({ transcriber }) => {
                         icon={<AnchorIcon />}
                         text={"Link"}
                         ariaLabel='Enter audio URL'
-                        onUrlUpdate={(e) => {
+                        onUrlUpdate={(url) => {
                             transcriber.onInputChange();
-                            setAudioDownloadUrl(e);
+                            setAudioDownloadUrl(url);
                         }}
                     />
                     <FileTile
@@ -171,21 +147,19 @@ export const AudioManager: React.FC<AudiomanagerProps> = ({ transcriber }) => {
                         }}
                     />
                     {navigator.mediaDevices && (
-                        <>
-                            <RecordTile
-                                icon={<MicrophoneIcon />}
-                                text={"Record"}
-                                ariaLabel='Record audio'
-                                setAudioData={(e) => {
-                                    transcriber.onInputChange();
-                                    setAudioFromRecording(e);
-                                }}
-                            />
-                        </>
+                        <RecordTile
+                            icon={<MicrophoneIcon />}
+                            text={"Record"}
+                            ariaLabel='Record audio'
+                            setAudioData={(blob) => {
+                                transcriber.onInputChange();
+                                handleSetAudioFromRecording(blob);
+                            }}
+                        />
                     )}
                 </div>
             </div>
-            {<AudioProgress progress={progress} />}
+            <AudioProgress progress={progress} />
             {audioData && (
                 <>
                     <div className='flex flex-col sm:flex-row relative z-10 w-full gap-2 mt-5'>
@@ -208,7 +182,7 @@ export const AudioManager: React.FC<AudiomanagerProps> = ({ transcriber }) => {
                             </label>
                             {transcriber.progressItems.map((data) => (
                                 <div key={data.file}>
-                                    <Progress
+                                    <ModelProgress
                                         text={data.file}
                                         percentage={data.progress}
                                     />
@@ -216,354 +190,12 @@ export const AudioManager: React.FC<AudiomanagerProps> = ({ transcriber }) => {
                             ))}
                         </div>
                     )}
-                    {transcriber.error && <Error error={transcriber.error} />}
+                    {error && <ErrorMessage error={error} />}
+                    {transcriber.error && (
+                        <ErrorMessage error={transcriber.error} />
+                    )}
                 </>
             )}
         </>
-    );
-};
-1;
-interface SettingsProp {
-    transcriber: Transcriber;
-}
-
-const Settings: React.FC<SettingsProp> = ({ transcriber }) => {
-    // @ts-ignore
-    const hasWebGpu = !!navigator.gpu;
-    const hasNotification = "Notification" in window;
-    const { notificationsEnabled, toggleNotifications } =
-        useNotificationPermission();
-
-    return (
-        <>
-            <Select
-                id='select-model'
-                defaultValue={transcriber.model}
-                setValue={transcriber.setModel}
-                label='Choose a transcription model'
-                info='Bigger is better, smaller is faster'
-            >
-                {Object.keys(MODELS).map((key) => (
-                    <Option
-                        key={key}
-                        value={key}
-                    >{`${key} (${MODELS[key]} MB)`}</Option>
-                ))}
-            </Select>
-            <Select
-                id='select-language'
-                defaultValue={transcriber.language}
-                setValue={transcriber.setLanguage}
-                label='Select the source language'
-                info='English is best supported'
-            >
-                {Object.keys(LANGUAGES).map((key) => (
-                    <Option key={key} value={key}>
-                        {titleCase(LANGUAGES[key])}
-                    </Option>
-                ))}
-            </Select>
-            {hasWebGpu && (
-                <Switch
-                    id='switch-webgpu'
-                    className='mt-2 mb-4 flex-row-reverse justify-between'
-                    defaultChecked={false}
-                    onChange={transcriber.setWebGPU}
-                    label='Enable WebGPU support (experimental)'
-                    info='Fast, but potentially unstable'
-                    showLine={true}
-                />
-            )}
-            {hasNotification && (
-                <Switch
-                    id='switch-notification'
-                    className='mt-2 mb-4 flex-row-reverse justify-between'
-                    defaultChecked={notificationsEnabled}
-                    onChange={toggleNotifications}
-                    overrideStoredValue={true}
-                    label='Turn on notifications'
-                    info='Alert when the transcription is done'
-                    showLine={true}
-                />
-            )}
-        </>
-    );
-};
-
-interface AudioProgressProps {
-    progress: number;
-}
-
-const AudioProgress: React.FC<AudioProgressProps> = ({ progress }) => {
-    return (
-        <div className='w-full bg-slate-200 rounded-full h-1 dark:bg-slate-900'>
-            <div
-                className='bg-blue-500 h-1 rounded-full transition-all duration-100'
-                style={{ width: `${Math.round(progress * 100)}%` }}
-            ></div>
-        </div>
-    );
-};
-
-interface ErrorProps {
-    error: { name: string; message: string };
-}
-
-const Error: React.FC<ErrorProps> = ({ error }) => {
-    return (
-        <div className='rounded-lg text-sm text-red-500 bg-red-50 dark:bg-red-950 p-2.5 px-4 mt-5'>
-            <p>
-                {error.name}: {error.message}
-            </p>
-        </div>
-    );
-};
-
-interface TileProps {
-    icon: React.ReactElement;
-    text: string;
-    ariaLabel?: string;
-    onClick: () => void;
-}
-
-const Tile: React.FC<TileProps> = ({ icon, text, ariaLabel, onClick }) => {
-    return (
-        <button
-            className='flex flex-1 items-center justify-center rounded-lg ring-1 ring-slate-200 dark:ring-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-700 dark:focus:ring-slate-400 h-10 basis-10 p-2'
-            onClick={onClick}
-            aria-label={ariaLabel}
-        >
-            <div className='w-7 h-7'>{icon}</div>
-            {text && (
-                <div className='ml-2 break-text text-center text-md w-30'>
-                    {text}
-                </div>
-            )}
-        </button>
-    );
-};
-
-interface UrlTileProps {
-    icon: React.ReactElement;
-    text: string;
-    ariaLabel?: string;
-    onUrlUpdate: (url: string) => void;
-}
-
-const UrlTile: React.FC<UrlTileProps> = ({
-    icon,
-    text,
-    ariaLabel,
-    onUrlUpdate,
-}) => {
-    const [showModal, setShowModal] = useState(false);
-
-    const onClick = () => {
-        setShowModal(true);
-    };
-
-    const onClose = () => {
-        setShowModal(false);
-    };
-
-    const onSubmit = (url: string) => {
-        onUrlUpdate(url);
-        onClose();
-    };
-
-    return (
-        <>
-            <Tile
-                icon={icon}
-                text={text}
-                ariaLabel={ariaLabel}
-                onClick={onClick}
-            />
-            <UrlModal show={showModal} onSubmit={onSubmit} onClose={onClose} />
-        </>
-    );
-};
-
-interface FileTileProps {
-    icon: React.ReactElement;
-    text: string;
-    ariaLabel?: string;
-    onFileUpdate: (
-        decoded: AudioBuffer,
-        blobUrl: string,
-        mimeType: string,
-    ) => void;
-}
-
-const FileTile: React.FC<FileTileProps> = ({
-    icon,
-    text,
-    ariaLabel,
-    onFileUpdate,
-}) => {
-    // Create hidden input element
-    let elem = document.createElement("input");
-    elem.type = "file";
-    elem.oninput = (event) => {
-        // Make sure we have files to use
-        let files = (event.target as HTMLInputElement).files;
-        if (!files) return;
-
-        // Create a blob that we can use as an src for our audio element
-        const urlObj = URL.createObjectURL(files[0]);
-        const mimeType = files[0].type;
-
-        const reader = new FileReader();
-        reader.addEventListener("load", async (e) => {
-            const arrayBuffer = e.target?.result as ArrayBuffer; // Get the ArrayBuffer
-            if (!arrayBuffer) return;
-
-            const audioCTX = new AudioContext({
-                sampleRate: SAMPLING_RATE,
-            });
-
-            const decoded = await audioCTX.decodeAudioData(arrayBuffer);
-
-            onFileUpdate(decoded, urlObj, mimeType);
-        });
-        reader.readAsArrayBuffer(files[0]);
-
-        // Reset files
-        elem.value = "";
-    };
-
-    return (
-        <>
-            <Tile
-                icon={icon}
-                text={text}
-                ariaLabel={ariaLabel}
-                onClick={() => elem.click()}
-            />
-        </>
-    );
-};
-
-interface RecordTileProps {
-    icon: React.ReactElement;
-    text: string;
-    ariaLabel?: string;
-    setAudioData: (data: Blob) => void;
-}
-
-const RecordTile: React.FC<RecordTileProps> = ({
-    icon,
-    text,
-    ariaLabel,
-    setAudioData,
-}) => {
-    const [showModal, setShowModal] = useState(false);
-
-    const onClick = () => {
-        setShowModal(true);
-    };
-
-    const onClose = () => {
-        setShowModal(false);
-    };
-
-    const onSubmit = (data: Blob | undefined) => {
-        if (data) {
-            setAudioData(data);
-            onClose();
-        }
-    };
-
-    return (
-        <>
-            <Tile
-                icon={icon}
-                text={text}
-                ariaLabel={ariaLabel}
-                onClick={onClick}
-            />
-            <RecordModal
-                show={showModal}
-                onSubmit={onSubmit}
-                onClose={onClose}
-            />
-        </>
-    );
-};
-
-interface UrlModalProps {
-    show: boolean;
-    onSubmit: (url: string) => void;
-    onClose: () => void;
-}
-
-const UrlModal: React.FC<UrlModalProps> = ({ show, onSubmit, onClose }) => {
-    const [url, setUrl] = useState(DEFAULT_AUDIO_URL);
-
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setUrl(event.target.value);
-    };
-
-    const handleSubmit = () => onSubmit(url);
-
-    return (
-        <Modal
-            show={show}
-            title={"From URL"}
-            content={
-                <>
-                    {"Enter the URL of the audio file you want to load"}
-                    <UrlInput onChange={handleChange} value={url} />
-                </>
-            }
-            onClose={onClose}
-            submitText={"Load"}
-            onSubmit={handleSubmit}
-        />
-    );
-};
-
-interface RecordModalProps {
-    show: boolean;
-    onSubmit: (data: Blob | undefined) => void;
-    onClose: () => void;
-}
-
-const RecordModal: React.FC<RecordModalProps> = ({
-    show,
-    onSubmit,
-    onClose,
-}) => {
-    const [audioBlob, setAudioBlob] = useState<Blob>();
-
-    const onRecordingComplete = (blob: Blob) => {
-        setAudioBlob(blob);
-    };
-
-    const handleSubmit = () => {
-        onSubmit(audioBlob);
-        setAudioBlob(undefined);
-    };
-
-    const handleClose = () => {
-        onClose();
-        setAudioBlob(undefined);
-    };
-
-    return (
-        <Modal
-            show={show}
-            title={"From Recording"}
-            content={
-                <>
-                    {"Record audio using your microphone"}
-                    <AudioRecorder onRecordingComplete={onRecordingComplete} />
-                </>
-            }
-            onClose={handleClose}
-            submitText={"Load"}
-            submitEnabled={audioBlob !== undefined}
-            onSubmit={handleSubmit}
-        />
     );
 };

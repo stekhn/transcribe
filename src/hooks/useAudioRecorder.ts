@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useMemo } from "react";
-import { webmFixDuration } from "../utils/BlobFix";
-import { getMimeType } from "../utils/MimeTypes";
+import { webmFixDuration } from "../utils/blobFix";
+import { getMimeType } from "../utils/mimeTypes";
 
 export const useAudioRecorder = (onRecordingComplete: (blob: Blob) => void) => {
     const [recording, setRecording] = useState(false);

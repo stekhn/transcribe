@@ -9,8 +9,11 @@ import {
     ShareIcon,
     StopIcon,
 } from "./Icons";
-import { millisecondsToTime, secondsToSRT } from "../utils/StringUtils";
-import { formatAudioTimestamp } from "../utils/AudioUtils";
+import {
+    millisecondsToTime,
+    secondsToSRT,
+    formatAudioTimestamp,
+} from "../utils/stringUtils";
 import { useNotification } from "../hooks/useNotification";
 import { Transcriber } from "../hooks/useTranscriber";
 

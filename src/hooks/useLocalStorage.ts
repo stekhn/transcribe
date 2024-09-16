@@ -26,8 +26,6 @@ export const useLocalStorage: UseLocalStorage = (
     });
 
     useEffect(() => {
-        console.log(key, storedValue);
-
         try {
             if (storedValue !== undefined) {
                 window.localStorage.setItem(key, JSON.stringify(storedValue));

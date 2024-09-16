@@ -3,7 +3,7 @@ import clsx from "clsx";
 
 import { AudioPlayer } from "./AudioPlayer";
 import { Button } from "./Button";
-import { formatAudioTimestamp } from "../utils/AudioUtils";
+import { formatAudioTimestamp } from "../utils/stringUtils";
 import { useAudioRecorder } from "../hooks/useAudioRecorder";
 
 interface AudioRecorderProps {
@@ -26,11 +26,11 @@ export const AudioRecorder: React.FC<AudioRecorderProps> = ({
 
     return (
         <div className='flex flex-col justify-center'>
-            <form tabIndex={0}>
+            <form className='w-full mt-2 mb-4' tabIndex={0}>
                 <Button
                     type='button'
                     onClick={handleToggleRecording}
-                    className={clsx("h-11 px-4 py-2 mt-2 mb-4", {
+                    className={clsx("w-full h-11 px-4 py-2", {
                         "bg-red-500 hover:bg-red-600": recording,
                         "bg-blue-500 hover:bg-blue-600 transition-colors duration-300":
                             !recording,
