@@ -5,8 +5,8 @@
     "lang": "en",
     "start_url": "/transcribe/",
     "id": "/transcribe/",
-    "display_override": ["fullscreen", "minimal-ui"],
     "display": "standalone",
+    "orientation": "portrait-primary",
     "theme_color": "#3b82f6",
     "background_color": "#3b82f6",
     "icons": [
