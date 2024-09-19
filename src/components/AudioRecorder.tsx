@@ -3,7 +3,7 @@ import clsx from "clsx";
 
 import { AudioPlayer } from "./AudioPlayer";
 import { Button } from "./Button";
-import { formatAudioTimestamp } from "../utils/stringUtils";
+import { formatAudioTimestamp } from "../utils/string";
 import { useAudioRecorder } from "../hooks/useAudioRecorder";
 
 interface AudioRecorderProps {

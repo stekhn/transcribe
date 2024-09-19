@@ -2,12 +2,12 @@ import React from "react";
 
 import { Button, ButtonProps } from "./Button";
 
-interface ButtonTranscribeProps extends ButtonProps {
+interface TranscribeButtonProps extends ButtonProps {
     isModelLoading: boolean;
     isTranscribing: boolean;
 }
 
-export const ButtonTranscribe: React.FC<ButtonTranscribeProps> = ({
+export const TranscribeButton: React.FC<TranscribeButtonProps> = ({
     isModelLoading,
     isTranscribing,
     onClick,

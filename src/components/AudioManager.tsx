@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { AudioPlayer } from "./AudioPlayer";
 import { ModelProgress } from "./ModelProgress";
-import { ButtonTranscribe } from "./ButtonTranscribe";
+import { TranscribeButton } from "./ButtonTranscribe";
 import { useProtocolHandler } from "../hooks/useProtocolHandler";
 import { useShareWorker } from "../hooks/useShareWorker";
 import { Transcriber } from "../hooks/useTranscriber";
@@ -19,7 +19,7 @@ import {
     setAudioFromDownload,
     setAudioFromRecording,
     downloadAudioFromUrl,
-} from "../utils/audioUtils";
+} from "../utils/audio";
 import { AnchorIcon, FolderIcon, MicrophoneIcon } from "./Icons";
 
 export enum AudioSource {
@@ -167,7 +167,7 @@ export const AudioManager: React.FC<AudioManagerProps> = ({ transcriber }) => {
                             src={audioData.url}
                             type={audioData.mimeType}
                         />
-                        <ButtonTranscribe
+                        <TranscribeButton
                             onClick={() => {
                                 transcriber.start(audioData.buffer);
                             }}

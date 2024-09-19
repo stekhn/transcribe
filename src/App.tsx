@@ -1,5 +1,5 @@
 import { Logo, InfoIcon } from "./components/Icons";
-import { ButtonInfo } from "./components/ButtonInfo";
+import { InfoButton } from "./components/InfoButton";
 import { AudioManager } from "./components/AudioManager";
 import { Transcript } from "./components/Transcript";
 import { useTranscriber } from "./hooks/useTranscriber";
@@ -23,7 +23,7 @@ export const App: React.FC = () => {
                 <h2 className='text-l sm:text-xl font-semibold tracking-tight text-center'>
                     Use Whisper speech-to-text models directly in your browser.
                     Privacy-focused and free.{" "}
-                    <ButtonInfo
+                    <InfoButton
                         icon={
                             <InfoIcon className='size-6 sm:size-7 fill-slate-300 dark:fill-slate-500 hover:fill-blue-500' />
                         }

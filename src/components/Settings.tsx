@@ -2,7 +2,7 @@ import React from "react";
 
 import { Select, Option } from "./Select";
 import { Switch } from "./Switch";
-import { titleCase } from "../utils/stringUtils";
+import { titleCase } from "../utils/string";
 import { MODELS, LANGUAGES } from "../config";
 import { useNotificationPermission } from "../hooks/useNotificationPermission";
 import { Transcriber } from "../hooks/useTranscriber";

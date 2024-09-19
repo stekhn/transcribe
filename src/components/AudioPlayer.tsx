@@ -1,7 +1,7 @@
 import React from "react";
 
 import { PauseIcon, PlayIcon, SpeakerLoudIcon, SpeakerMuteIcon } from "./Icons";
-import { secondsToTimecode } from "../utils/stringUtils";
+import { secondsToTimecode } from "../utils/string";
 import { useAudioPlayer } from "../hooks/useAudioPlayer";
 
 interface AudioPlayerProps {

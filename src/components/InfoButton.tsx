@@ -3,13 +3,13 @@ import { useState } from "react";
 import { Modal } from "./Modal";
 
 // @ts-ignore
-interface ButtonInfoProps
+interface InfoButtonProps
     extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     icon: React.ReactNode;
     content?: React.ReactNode;
 }
 
-export const ButtonInfo: React.FC<ButtonInfoProps> = ({ icon, content }) => {
+export const InfoButton: React.FC<InfoButtonProps> = ({ icon, content }) => {
     const [showModal, setShowModal] = useState(false);
 
     const handleClick = () => {
