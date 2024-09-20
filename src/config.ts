@@ -14,8 +14,8 @@ export const MODELS: { [key: string]: number } = {
     // "onnx-community/whisper-tiny.en": 65,
     // "onnx-community/whisper-base.en": 101,
     // "onnx-community/whisper-small.en": 273,
-    "distil-whisper/distil-small.en": 196,
-    "distil-whisper/distil-medium.en": 426,
+    // "distil-whisper/distil-small.en": 196,
+    // "distil-whisper/distil-medium.en": 426,
 };
 
 export const DEFAULT_LANGUAGE = "en";
