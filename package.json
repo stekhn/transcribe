@@ -15,7 +15,7 @@
     },
     "dependencies": {
         "@headlessui/react": "^1.7.13",
-        "@huggingface/transformers": "github:stekhn/transformers.js",
+        "@huggingface/transformers": "^3.0.2",
         "axios": "^1.3.4",
         "clsx": "^2.1.1",
         "react": "^18.2.0",
