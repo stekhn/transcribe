@@ -5,6 +5,7 @@ import { Switch } from "./Switch";
 import { titleCase } from "../utils/string";
 import { MODELS, LANGUAGES } from "../config";
 import { useNotificationPermission } from "../hooks/useNotificationPermission";
+import { useModelCacheStatus } from "../hooks/useModelCacheStatus";
 import { Transcriber } from "../hooks/useTranscriber";
 
 interface SettingsProps {
@@ -18,6 +19,12 @@ export const Settings: React.FC<SettingsProps> = ({ transcriber }) => {
     const { notificationsEnabled, toggleNotifications } =
         useNotificationPermission();
 
+    const { cacheStatus } = useModelCacheStatus(
+        Object.keys(MODELS),
+        transcriber.progressItems,
+        transcriber.isModelLoading,
+    );
+
     return (
         <>
             <Select
@@ -30,6 +37,7 @@ export const Settings: React.FC<SettingsProps> = ({ transcriber }) => {
                 {Object.keys(MODELS).map((key) => (
                     <Option key={key} value={key}>
                         {`${key} (${MODELS[key]} MB)`}
+                        {cacheStatus[key] ? " ✓" : ""}
                     </Option>
                 ))}
             </Select>

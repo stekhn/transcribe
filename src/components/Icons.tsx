@@ -178,6 +178,49 @@ export const DownloadIcon: React.FC<IconProps> = ({ className }) => {
     );
 };
 
+export const DownloadedIcon: React.FC<IconProps> = ({ className }) => {
+    return (
+        <svg
+            xmlns='http://www.w3.org/2000/svg'
+            viewBox='0 0 20 20'
+            fill='currentColor'
+            className={className}
+        >
+            <circle cx='10' cy='10' r='8' className='text-green-100 dark:text-green-900' fill='currentColor' />
+            <path
+                fillRule='evenodd'
+                d='M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.236 4.53L7.53 10.28a.75.75 0 00-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z'
+                clipRule='evenodd'
+                className='text-green-600 dark:text-green-400'
+                fill='currentColor'
+            />
+        </svg>
+    );
+};
+
+export const NotDownloadedIcon: React.FC<IconProps> = ({ className }) => {
+    return (
+        <svg
+            xmlns='http://www.w3.org/2000/svg'
+            viewBox='0 0 20 20'
+            fill='currentColor'
+            className={className}
+        >
+            <circle cx='10' cy='10' r='8' className='text-gray-100 dark:text-gray-700' fill='currentColor' />
+            <path
+                d='M10.75 6.75a.75.75 0 0 0-1.5 0v2.614L6.295 6.235a.75.75 0 1 0-1.09 1.03l4.25 4.5a.75.75 0 0 0 1.09 0l4.25-4.5a.75.75 0 0 0-1.09-1.03l-2.955 3.129V6.75Z'
+                className='text-gray-500 dark:text-gray-400'
+                fill='currentColor'
+            />
+            <path
+                d='M3.5 12.75a.75.75 0 0 0-1.5 0v1.5A2.75 2.75 0 0 0 4.75 17h10.5A2.75 2.75 0 0 0 18 14.25v-1.5a.75.75 0 0 0-1.5 0v1.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-1.5Z'
+                className='text-gray-500 dark:text-gray-400'
+                fill='currentColor'
+            />
+        </svg>
+    );
+};
+
 export const PlayIcon: React.FC<IconProps> = ({ className }) => {
     return (
         <svg
