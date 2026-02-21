@@ -122,6 +122,29 @@ export const AudioManager: React.FC<AudioManagerProps> = ({ transcriber }) => {
   return (
     <Stack gap='lg'>
       <Settings transcriber={transcriber} />
+      <Stack gap='xs'>
+        {hasWebGpu && (
+          <Switch
+            id='switch-webgpu'
+            defaultChecked={false}
+            onChange={transcriber.setWebGPU}
+            label='Enable WebGPU support (experimental)'
+            info='Fast, but potentially unstable'
+            showLine={true}
+          />
+        )}
+        {hasNotification && (
+          <Switch
+            id='switch-notification'
+            defaultChecked={notificationsEnabled}
+            onChange={toggleNotifications}
+            overrideStoredValue={true}
+            label='Turn on notifications'
+            info='Alert when the transcription is done'
+            showLine={true}
+          />
+        )}
+      </Stack>
       <Stack gap="0.25rem">
         <Text size='sm' c='dimmed'>
           Add the audio source
@@ -162,29 +185,6 @@ export const AudioManager: React.FC<AudioManagerProps> = ({ transcriber }) => {
             />
           )}
         </Group>
-      </Stack>
-      <Stack gap='xs'>
-        {hasWebGpu && (
-          <Switch
-            id='switch-webgpu'
-            defaultChecked={false}
-            onChange={transcriber.setWebGPU}
-            label='Enable WebGPU support (experimental)'
-            info='Fast, but potentially unstable'
-            showLine={true}
-          />
-        )}
-        {hasNotification && (
-          <Switch
-            id='switch-notification'
-            defaultChecked={notificationsEnabled}
-            onChange={toggleNotifications}
-            overrideStoredValue={true}
-            label='Turn on notifications'
-            info='Alert when the transcription is done'
-            showLine={true}
-          />
-        )}
       </Stack>
       <AudioProgress progress={progress} />
       {audioData && (

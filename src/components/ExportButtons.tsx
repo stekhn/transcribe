@@ -59,7 +59,7 @@ export const ExportButtons: React.FC<ExportButtonsProps> = ({
     <Button
       variant='default'
       leftSection={<IconDownload size='1.25rem' />}
-      style={{ flex: 1 }}
+      style={{ flex: "1 0 auto" }}
       aria-label='Download text as text file'
       onClick={() => exportTXT(transcribedData, showTimestamps)}
     >
@@ -68,7 +68,7 @@ export const ExportButtons: React.FC<ExportButtonsProps> = ({
     <Button
       variant='default'
       leftSection={<IconDownload size='1.25rem' />}
-      style={{ flex: 1 }}
+      style={{ flex: "1 0 auto" }}
       aria-label='Download text as SRT file'
       onClick={() => exportSRT(transcribedData)}
     >
@@ -77,7 +77,7 @@ export const ExportButtons: React.FC<ExportButtonsProps> = ({
     <Button
       variant='default'
       leftSection={<IconDownload size='1.25rem' />}
-      style={{ flex: 1 }}
+      style={{ flex: "1 0 auto" }}
       aria-label='Download text as JSON file'
       onClick={() => exportJSON(transcribedData)}
     >

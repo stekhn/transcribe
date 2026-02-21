@@ -8,11 +8,6 @@ body,
   height: 100%;
 }
 
-.source-tile:hover {
-  background-color: var(--mantine-primary-color-light);
-  color: var(--mantine-primary-color-light-color);
-}
-
 .mantine-Switch-track {
   --switch-bg: var(--mantine-color-default-border);
   cursor: pointer;
