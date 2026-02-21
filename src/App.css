@@ -1,27 +1,19 @@
-.app-container {
-  background-color: light-dark(
-    var(--mantine-color-gray-0),
-    var(--mantine-color-dark-7)
-  );
-  min-height: 100vh;
+html {
+  scrollbar-gutter: stable;
 }
 
-.app-title {
-  letter-spacing: -0.025em;
-  font-size: clamp(2rem, 5vw, 3rem);
+html,
+body,
+#root {
+  height: 100%;
 }
 
-.app-subtitle {
-  letter-spacing: -0.025em;
-  font-size: clamp(1.125rem, 3vw, 1.25rem);
+.source-tile:hover {
+  background-color: var(--mantine-primary-color-light);
+  color: var(--mantine-primary-color-light-color);
 }
 
-.app-logo {
-  width: 2.5rem;
-  height: 2.5rem;
-  fill: var(--mantine-color-blue-6);
-}
-
-.info-icon {
+.mantine-Switch-track {
+  --switch-bg: var(--mantine-color-default-border);
   cursor: pointer;
 }

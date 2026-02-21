@@ -17,9 +17,12 @@ export const TranscribeButton: React.FC<TranscribeButtonProps> = ({
       variant='filled'
       size='sm'
       radius='md'
-      style={{ height: "2.5rem", minWidth: "12rem" }}
+      style={{
+        height: "2.5rem",
+        minWidth: "12rem",
+        pointerEvents: isTranscribing || isModelLoading ? "none" : undefined,
+      }}
       aria-label='Start transcription'
-      disabled={isTranscribing}
       onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
         if (onClick && !isTranscribing && !isModelLoading) {
           onClick(event);
@@ -28,12 +31,12 @@ export const TranscribeButton: React.FC<TranscribeButtonProps> = ({
     >
       {isModelLoading ? (
         <Group gap='xs'>
-          <Loader size='sm' color='white' />
+          <Loader size='xs' color='white' />
           Loading model...
         </Group>
       ) : isTranscribing ? (
         <Group gap='xs'>
-          <Loader size='sm' color='white' />
+          <Loader size='xs' color='white' />
           Transcribing...
         </Group>
       ) : (

@@ -9,8 +9,10 @@ import { useShareWorker } from "../hooks/useShareWorker";
 import { Transcriber } from "../hooks/useTranscriber";
 
 import { Settings } from "./Settings";
+import { Switch } from "./Switch";
 import { AudioProgress } from "./AudioProgress";
 import { ErrorMessage } from "./ErrorMessage";
+import { useNotificationPermission } from "../hooks/useNotificationPermission";
 
 import { UrlTile } from "./AudioInput";
 import { FileTile } from "./AudioInput";
@@ -29,6 +31,10 @@ interface AudioManagerProps {
 }
 
 export const AudioManager: React.FC<AudioManagerProps> = ({ transcriber }) => {
+  const hasWebGpu = !!("gpu" in navigator);
+  const hasNotification = "Notification" in window;
+  const { notificationsEnabled, toggleNotifications } =
+    useNotificationPermission();
   const [progress, setProgress] = useState(0);
   const [audioData, setAudioData] = useState<
     | {
@@ -114,9 +120,9 @@ export const AudioManager: React.FC<AudioManagerProps> = ({ transcriber }) => {
   }, [audioDownloadUrl]);
 
   return (
-    <Stack>
+    <Stack gap='lg'>
       <Settings transcriber={transcriber} />
-      <Stack>
+      <Stack gap="0.25rem">
         <Text size='sm' c='dimmed'>
           Add the audio source
         </Text>
@@ -156,6 +162,29 @@ export const AudioManager: React.FC<AudioManagerProps> = ({ transcriber }) => {
             />
           )}
         </Group>
+      </Stack>
+      <Stack gap='xs'>
+        {hasWebGpu && (
+          <Switch
+            id='switch-webgpu'
+            defaultChecked={false}
+            onChange={transcriber.setWebGPU}
+            label='Enable WebGPU support (experimental)'
+            info='Fast, but potentially unstable'
+            showLine={true}
+          />
+        )}
+        {hasNotification && (
+          <Switch
+            id='switch-notification'
+            defaultChecked={notificationsEnabled}
+            onChange={toggleNotifications}
+            overrideStoredValue={true}
+            label='Turn on notifications'
+            info='Alert when the transcription is done'
+            showLine={true}
+          />
+        )}
       </Stack>
       <AudioProgress progress={progress} />
       {audioData && (

@@ -46,10 +46,11 @@ export const AudioRecorder: React.FC<AudioRecorderProps> = ({
 
       {blobUrl && (
         <Paper
-          withBorder
+          radius='md'
           style={{
             flex: "auto",
             width: "100%",
+            backgroundColor: "var(--inset-bg)",
           }}
         >
           <AudioPlayer src={blobUrl} />

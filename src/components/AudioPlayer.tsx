@@ -1,6 +1,11 @@
 import React from "react";
 import { Group, Paper, ActionIcon, Text, Slider } from "@mantine/core";
-import { IconPlayerPause, IconPlayerPlay, IconVolume, IconVolumeOff } from "@tabler/icons-react";
+import {
+  IconPlayerPause,
+  IconPlayerPlay,
+  IconVolume,
+  IconVolumeOff,
+} from "@tabler/icons-react";
 
 import { secondsToTimecode } from "../utils/string";
 import { useAudioPlayer } from "../hooks/useAudioPlayer";
@@ -24,7 +29,7 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({ src, type }) => {
   } = useAudioPlayer({ src, type });
 
   return (
-    <Paper withBorder shadow='none' h={40} px='xs' style={{ flexGrow: 1 }}>
+    <Paper shadow='none' h={40} px='xs' style={{ flexGrow: 1 }}>
       <Group gap='xs' h='100%' align='center' justify='center'>
         <PlayControl isPlaying={isPlaying} togglePlayPause={togglePlaying} />
         <ProgressBar
@@ -60,7 +65,11 @@ const PlayControl: React.FC<PlayControlProps> = ({
       aria-label='Play/Pause audio'
       onClick={togglePlayPause}
     >
-      {isPlaying ? <IconPlayerPause size='1.25rem' /> : <IconPlayerPlay size='1.25rem' />}
+      {isPlaying ? (
+        <IconPlayerPause size='1.25rem' />
+      ) : (
+        <IconPlayerPlay size='1.25rem' />
+      )}
     </ActionIcon>
   );
 };

@@ -39,7 +39,14 @@ export const Tile: React.FC<TileProps> = ({
   onClick,
 }) => {
   return (
-    <Button variant='light' onClick={onClick} aria-label={ariaLabel} h={40} style={{ flex: '1 1 180px' }}>
+    <Button
+      variant='default'
+      className='source-tile'
+      onClick={onClick}
+      aria-label={ariaLabel}
+      h={40}
+      style={{ flex: "1 1 180px" }}
+    >
       <Group gap='0.25rem' wrap='nowrap'>
         {icon}
         <Text>{text}</Text>

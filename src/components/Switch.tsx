@@ -48,12 +48,20 @@ export const Switch: React.FC<SwitchProps> = ({
   }, []);
 
   return (
-    <Group justify='space-between' gap='md' wrap='nowrap' className={className} style={style}>
+    <Group
+      justify='space-between'
+      gap='md'
+      wrap='nowrap'
+      className={className}
+      style={style}
+    >
       <Group gap='0.25rem' wrap='nowrap'>
-        <Text size='sm' c='dimmed'>{label}</Text>
+        <Text size='sm' c='dimmed'>
+          {label}
+        </Text>
         {info && (
           <MantineTooltip label={info}>
-            <ActionIcon variant='transparent' size='xs' c='dimmed'>
+            <ActionIcon variant='transparent' size='xs' color='gray'>
               <IconHelp />
             </ActionIcon>
           </MantineTooltip>

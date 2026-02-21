@@ -1,4 +1,10 @@
-import { Modal as MantineModal, Group, Title, Text, Button } from "@mantine/core";
+import {
+  Modal as MantineModal,
+  Group,
+  Title,
+  Text,
+  Button,
+} from "@mantine/core";
 
 interface ModalProps {
   opened: boolean;
@@ -46,7 +52,13 @@ export const Modal: React.FC<ModalProps> = ({
           Close
         </Button>
         {submitText && (
-          <Button disabled={submitDisabled} onClick={onSubmit} variant='filled' size='sm' radius='md'>
+          <Button
+            disabled={submitDisabled}
+            onClick={onSubmit}
+            variant='filled'
+            size='sm'
+            radius='md'
+          >
             {submitText}
           </Button>
         )}

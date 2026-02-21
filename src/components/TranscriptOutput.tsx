@@ -18,12 +18,7 @@ export const TranscriptOutput: React.FC<TranscriptOutputProps> = ({
           key={`${i}-${chunk.text}`}
           radius='md'
           p='sm'
-          withBorder
           shadow='none'
-          style={{
-            backgroundColor:
-              "light-dark(var(--mantine-color-gray-0), var(--mantine-color-gray-8))",
-          }}
         >
           <Group gap='md' align='flex-start'>
             <Text size='sm' c='dimmed' style={{ minWidth: "60px" }}>
@@ -36,15 +31,7 @@ export const TranscriptOutput: React.FC<TranscriptOutputProps> = ({
         </Paper>
       ))
     ) : (
-      <Paper
-        radius='md'
-        p='sm'
-        withBorder
-        style={{
-          backgroundColor:
-            "light-dark(var(--mantine-color-gray-0), var(--mantine-color-gray-8))",
-        }}
-      >
+      <Paper radius='md' p='sm' shadow='none'>
         <Text size='sm'>
           {transcribedData.text
             ? transcribedData.text.trim()

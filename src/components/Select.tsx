@@ -33,7 +33,7 @@ export const Select = <T extends string = string>({
       const typedValue = value as T;
       setStoredValue(typedValue);
       // Handle both React setState and plain functions
-      if (typeof setValue === 'function') {
+      if (typeof setValue === "function") {
         setValue(typedValue);
       }
     }
@@ -47,9 +47,13 @@ export const Select = <T extends string = string>({
   const selectData =
     React.Children.map(children, (child) => {
       if (React.isValidElement(child) && child.props.value) {
+        const children = child.props.children;
+        const label = Array.isArray(children)
+          ? children.join("")
+          : String(children);
         return {
           value: child.props.value,
-          label: child.props.children,
+          label,
         };
       }
       return null;
@@ -78,7 +82,6 @@ export const Select = <T extends string = string>({
       variant='filled'
       size='sm'
       radius='md'
-      mb='md'
       {...props}
     />
   );

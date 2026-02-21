@@ -1,4 +1,4 @@
-import { Progress, Text, Paper } from "@mantine/core";
+import { Text, Box } from "@mantine/core";
 
 interface ModelProgressProps {
   text: string;
@@ -11,36 +11,31 @@ export const ModelProgress: React.FC<ModelProgressProps> = ({
 }) => {
   percentage = percentage ?? 0;
   return (
-    <Paper
-      withBorder
-      mt='xs'
-      p='xs'
+    <Box
+      px='sm'
+      py='xs'
       style={{
-        width: "100%",
         position: "relative",
         overflow: "hidden",
+        borderRadius: "var(--mantine-radius-md)",
+        backgroundColor: "var(--inset-bg)",
+        border: "1px solid var(--mantine-color-default-border)",
       }}
     >
-      <Progress
-        value={percentage}
-        size='lg'
-        color='gray'
-        style={{ position: "relative" }}
-      />
-      <Text
-        size='sm'
+      <Box
         style={{
           position: "absolute",
-          top: "50%",
-          left: 8,
-          transform: "translateY(-50%)",
-          whiteSpace: "nowrap",
-          zIndex: 10,
-          color: "inherit",
+          top: 0,
+          left: 0,
+          bottom: 0,
+          width: `${percentage}%`,
+          backgroundColor: "var(--mantine-color-default-border)",
+          transition: "width 300ms ease",
         }}
-      >
+      />
+      <Text size='sm' style={{ position: "relative", whiteSpace: "nowrap" }}>
         {text} ({`${percentage.toFixed(0)} %`})
       </Text>
-    </Paper>
+    </Box>
   );
 };

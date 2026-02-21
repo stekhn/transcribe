@@ -18,14 +18,14 @@ input[type="range"]:focus {
 
 /* slider track */
 input[type="range"]::-webkit-slider-runnable-track {
-  background-color: var(--mantine-color-gray-2);
+  background-color: var(--mantine-color-default-border);
   border-radius: 2px;
   height: 4px;
 }
 
 @media (prefers-color-scheme: dark) {
   input[type="range"]::-webkit-slider-runnable-track {
-    background: var(--mantine-color-gray-7);
+    background-color: var(--mantine-color-default-border);
   }
 }
 
@@ -64,7 +64,7 @@ input[type="range"]::-webkit-slider-thumb {
 
 @media (prefers-color-scheme: dark) {
   input[type="range"]::-webkit-slider-thumb {
-    background-color: var(--mantine-color-gray-2);
+    background-color: var(--mantine-color-default-border);
     box-shadow: 0 0 0 2px var(--mantine-color-gray-9);
   }
 }
@@ -84,14 +84,14 @@ input[type="range"]:focus::-webkit-slider-thumb {
 
 /* slider track */
 input[type="range"]::-moz-range-track {
-  background-color: var(--mantine-color-gray-2);
+  background-color: var(--mantine-color-default-border);
   border-radius: 2px;
   height: 4px;
 }
 
 @media (prefers-color-scheme: dark) {
   input[type="range"]::-moz-range-track {
-    background-color: var(--mantine-color-gray-7);
+    background-color: var(--mantine-color-default-border);
   }
 }
 
@@ -121,7 +121,7 @@ input[type="range"]::-moz-range-thumb {
 
 @media (prefers-color-scheme: dark) {
   input[type="range"]::-moz-range-thumb {
-    background-color: var(--mantine-color-gray-2);
+    background-color: var(--mantine-color-default-border);
     box-shadow: 0 0 0 2px var(--mantine-color-gray-9);
   }
 }

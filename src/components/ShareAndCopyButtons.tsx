@@ -46,7 +46,7 @@ export const ShareAndCopyButtons: React.FC<ShareAndCopyButtonsProps> = ({
     <Group gap='xs' w={{ base: "100%", sm: "auto" }}>
       {!!navigator.clipboard && (
         <ActionIcon
-          variant='light'
+          variant='default'
           size='36'
           aria-label='Copy to clipboard'
           onClick={() => copyToClipboard(transcribedData, showTimestamps)}
@@ -57,7 +57,7 @@ export const ShareAndCopyButtons: React.FC<ShareAndCopyButtonsProps> = ({
       )}
       {!!navigator.share && (
         <ActionIcon
-          variant='light'
+          variant='default'
           size='36'
           aria-label='Share text'
           onClick={() => shareText(transcribedData, showTimestamps)}

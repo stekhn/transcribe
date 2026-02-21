@@ -1,4 +1,4 @@
-import { createTheme } from "@mantine/core";
+import { createTheme, CSSVariablesResolver } from "@mantine/core";
 import { generateColors } from "@mantine/colors-generator";
 
 export const theme = createTheme({
@@ -58,6 +58,13 @@ export const theme = createTheme({
         radius: "xl",
       },
     },
+    Divider: {
+      styles: {
+        root: {
+          borderColor: "var(--mantine-color-default-border)",
+        },
+      },
+    },
     Select: {
       defaultProps: {
         size: "sm",
@@ -68,16 +75,22 @@ export const theme = createTheme({
           color: "var(--mantine-color-dimmed)",
         },
         input: {
-          backgroundColor:
-            "light-dark(var(--mantine-color-gray-0), var(--mantine-color-gray-8))",
+          backgroundColor: "var(--inset-bg)",
+          border: "1px solid var(--mantine-color-default-border)",
         },
       },
     },
     Paper: {
       defaultProps: {
         radius: "md",
-        withBorder: true,
         shadow: "none",
+        withBorder: true,
+      },
+      styles: {
+        root: {
+          "--paper-border-color": "var(--mantine-color-default-border)",
+          backgroundColor: "var(--mantine-color-white)",
+        },
       },
     },
     Modal: {
@@ -86,6 +99,11 @@ export const theme = createTheme({
         radius: "md",
         shadow: "xl",
         centered: true,
+      },
+      styles: {
+        header: {
+          backgroundColor: "transparent",
+        },
       },
     },
   },
@@ -100,5 +118,21 @@ export const theme = createTheme({
       medium: "1.25rem",
       large: "1.5rem",
     },
+  },
+});
+
+export const cssVariablesResolver: CSSVariablesResolver = (theme) => ({
+  variables: {},
+  light: {
+    "--mantine-color-body": theme.colors.gray[0],
+    "--mantine-color-dimmed": theme.colors.gray[5],
+    "--mantine-color-default-border": theme.colors.gray[2],
+    "--inset-bg": theme.colors.gray[0],
+  },
+  dark: {
+    "--mantine-color-body": theme.colors.dark[7],
+    "--mantine-color-dimmed": theme.colors.gray[4],
+    "--mantine-color-default-border": theme.colors.dark[5],
+    "--inset-bg": theme.colors.dark[6],
   },
 });

@@ -9,7 +9,6 @@ import {
 } from "@mantine/core";
 import { IconInfoCircle } from "@tabler/icons-react";
 import { Logo } from "./components/Icons";
-import "./App.css";
 import { InfoButton } from "./components/InfoButton";
 import { AudioManager } from "./components/AudioManager";
 import { Transcript } from "./components/Transcript";
@@ -19,25 +18,38 @@ export const App: React.FC = () => {
   const transcriber = useTranscriber();
 
   return (
-    <Stack align='center' p='md' className='app-container'>
+    <Stack align='center' p='md' mih='100vh'>
       <Container size='sm' p='md'>
         <Group justify='center' gap='sm' mb='md'>
-          <Logo className='app-logo' />
+          <Logo
+            style={{
+              width: "2.5rem",
+              height: "2.5rem",
+              fill: "var(--mantine-color-blue-6)",
+            }}
+          />
           <Title
             order={1}
-            size='3rem'
             fw={800}
             ta='center'
-            className='app-title'
+            fz='clamp(2rem, 5vw, 3rem)'
+            lts='-0.025em'
           >
             Transcribe
           </Title>
         </Group>
-        <Text size='xl' fw={600} ta='center' className='app-subtitle'>
+        <Text
+          size='xl'
+          fw={600}
+          ta='center'
+          fz='clamp(1.125rem, 3vw, 1.25rem)'
+          lts='-0.025em'
+          lh='1'
+        >
           Use Whisper speech-to-text models directly in your browser.
           Privacy-focused and free.{" "}
           <InfoButton
-            icon={<IconInfoCircle className='info-icon' />}
+            icon={<IconInfoCircle style={{ cursor: "pointer" }} />}
             content={<ContentInfo />}
           />
         </Text>
