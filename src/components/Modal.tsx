@@ -30,7 +30,7 @@ export const Modal: React.FC<ModalProps> = ({
       onClose={onClose}
       title={
         typeof title === "string" ? (
-          <Text size='lg' fw={500}>
+          <Text size='lg' fw='bold'>
             {title}
           </Text>
         ) : (

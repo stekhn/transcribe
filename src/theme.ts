@@ -73,6 +73,7 @@ export const theme = createTheme({
       styles: {
         label: {
           color: "var(--mantine-color-dimmed)",
+          fontWeight: "normal",
         },
         input: {
           backgroundColor: "var(--inset-bg)",
@@ -108,11 +109,6 @@ export const theme = createTheme({
     },
   },
   other: {
-    heights: {
-      button: "2.5rem",
-      input: 44,
-      tile: 40,
-    },
     iconSizes: {
       small: "1rem",
       medium: "1.25rem",

@@ -18,7 +18,6 @@ export const TranscribeButton: React.FC<TranscribeButtonProps> = ({
       size='sm'
       radius='md'
       style={{
-        height: "2.5rem",
         flex: "1 1 12rem",
         pointerEvents: isTranscribing || isModelLoading ? "none" : undefined,
       }}
@@ -31,12 +30,12 @@ export const TranscribeButton: React.FC<TranscribeButtonProps> = ({
     >
       {isModelLoading ? (
         <Group gap='xs'>
-          <Loader size='xs' color='white' />
+          <Loader size='xs' color='white' type='bars' />
           Loading model...
         </Group>
       ) : isTranscribing ? (
         <Group gap='xs'>
-          <Loader size='xs' color='white' />
+          <Loader size='xs' color='white' type='bars' />
           Transcribing...
         </Group>
       ) : (

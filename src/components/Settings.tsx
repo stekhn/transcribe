@@ -26,7 +26,6 @@ export const Settings: React.FC<SettingsProps> = ({ transcriber }) => {
         defaultValue={transcriber.model}
         setValue={transcriber.setModel}
         label='Choose a transcription model'
-        info='Bigger is better, smaller is faster'
         renderOption={({ option }) => (
           <Group gap='xs' justify='space-between' wrap='nowrap'>
             <span>{option.label}</span>
@@ -49,7 +48,6 @@ export const Settings: React.FC<SettingsProps> = ({ transcriber }) => {
         defaultValue={transcriber.language || "en"}
         setValue={transcriber.setLanguage}
         label='Select the source language'
-        info='English is best supported'
       >
         {Object.keys(LANGUAGES).map((key) => (
           <Option key={key} value={key}>

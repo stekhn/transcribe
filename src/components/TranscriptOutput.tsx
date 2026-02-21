@@ -20,8 +20,8 @@ export const TranscriptOutput: React.FC<TranscriptOutputProps> = ({
           p='sm'
           shadow='none'
         >
-          <Group gap='md' align='flex-start'>
-            <Text size='sm' c='dimmed' style={{ minWidth: "60px" }}>
+          <Group gap='xs' align='flex-start'>
+            <Text size='sm' c='dimmed' style={{ fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }}>
               {formatAudioTimestamp(chunk.timestamp[0])}
             </Text>
             <Text size='sm' style={{ flex: 1 }}>

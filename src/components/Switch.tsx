@@ -2,13 +2,10 @@ import { useEffect } from "react";
 import {
   Switch as MantineSwitch,
   Group,
-  ActionIcon,
-  Tooltip as MantineTooltip,
   Divider,
   Box,
   Text,
 } from "@mantine/core";
-import { IconHelp } from "@tabler/icons-react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 
 interface SwitchProps {
@@ -17,7 +14,6 @@ interface SwitchProps {
   defaultChecked?: boolean;
   overrideStoredValue?: boolean;
   label?: string;
-  info?: string;
   showLine?: boolean;
   className?: string;
   style?: React.CSSProperties;
@@ -29,7 +25,6 @@ export const Switch: React.FC<SwitchProps> = ({
   defaultChecked = false,
   overrideStoredValue = false,
   label,
-  info,
   showLine = false,
   className,
   style,
@@ -55,18 +50,9 @@ export const Switch: React.FC<SwitchProps> = ({
       className={className}
       style={style}
     >
-      <Group gap='0.25rem' wrap='nowrap'>
-        <Text size='sm' c='dimmed'>
-          {label}
-        </Text>
-        {info && (
-          <MantineTooltip label={info}>
-            <ActionIcon variant='transparent' size='xs' color='gray'>
-              <IconHelp />
-            </ActionIcon>
-          </MantineTooltip>
-        )}
-      </Group>
+      <Text size='sm' c='dimmed'>
+        {label}
+      </Text>
       {showLine && (
         <Box flex={1}>
           <Divider />

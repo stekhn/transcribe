@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Group, Button, Text, TextInput } from "@mantine/core";
+import { Group, Button, TextInput } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 
 import { Modal } from "./Modal";
@@ -16,7 +16,7 @@ const UrlInput: React.FC<React.InputHTMLAttributes<HTMLInputElement>> = (
         type='url'
         placeholder='www.example.com'
         required
-        h={44}
+        size='sm'
         mt='xs'
         mb='md'
         {...restProps}
@@ -43,13 +43,10 @@ export const Tile: React.FC<TileProps> = ({
       variant='default'
       onClick={onClick}
       aria-label={ariaLabel}
-      h={40}
+      leftSection={icon}
       style={{ flex: "1 1 180px" }}
     >
-      <Group gap='0.25rem' wrap='nowrap'>
-        {icon}
-        <Text>{text}</Text>
-      </Group>
+      {text}
     </Button>
   );
 };

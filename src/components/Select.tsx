@@ -1,11 +1,5 @@
 import React, { useEffect, ReactNode } from "react";
-import {
-  Select as MantineSelect,
-  Group,
-  ActionIcon,
-  Tooltip as MantineTooltip,
-} from "@mantine/core";
-import { IconHelp } from "@tabler/icons-react";
+import { Select as MantineSelect } from "@mantine/core";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 
 interface SelectProps<T = string> {
@@ -13,7 +7,6 @@ interface SelectProps<T = string> {
   defaultValue: T;
   setValue: React.Dispatch<React.SetStateAction<T>> | ((value: T) => void);
   label?: string;
-  info?: string;
   children: React.ReactNode;
   renderOption?: (item: {
     option: { value: string; label: string };
@@ -26,7 +19,6 @@ export const Select = <T extends string = string>({
   defaultValue,
   setValue,
   label,
-  info,
   children,
   renderOption,
   ...props
@@ -67,20 +59,7 @@ export const Select = <T extends string = string>({
   return (
     <MantineSelect
       id={id}
-      label={
-        label && info ? (
-          <Group gap='0.25rem'>
-            {label}
-            <MantineTooltip label={info}>
-              <ActionIcon variant='transparent' size='xs' color='gray'>
-                <IconHelp />
-              </ActionIcon>
-            </MantineTooltip>
-          </Group>
-        ) : (
-          label
-        )
-      }
+      label={label}
       value={storedValue}
       onChange={handleChange}
       data={selectData}

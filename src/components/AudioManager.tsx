@@ -129,7 +129,6 @@ export const AudioManager: React.FC<AudioManagerProps> = ({ transcriber }) => {
             defaultChecked={false}
             onChange={transcriber.setWebGPU}
             label='Enable WebGPU support (experimental)'
-            info='Fast, but potentially unstable'
             showLine={true}
           />
         )}
@@ -140,7 +139,6 @@ export const AudioManager: React.FC<AudioManagerProps> = ({ transcriber }) => {
             onChange={toggleNotifications}
             overrideStoredValue={true}
             label='Turn on notifications'
-            info='Alert when the transcription is done'
             showLine={true}
           />
         )}
@@ -151,7 +149,7 @@ export const AudioManager: React.FC<AudioManagerProps> = ({ transcriber }) => {
         </Text>
         <Group gap='sm' grow preventGrowOverflow={false} wrap='wrap'>
           <UrlTile
-            icon={<IconLink />}
+            icon={<IconLink size='1.25rem' color='var(--mantine-color-blue-5)' />}
             text={"Link"}
             ariaLabel='Enter audio URL'
             onUrlUpdate={(url) => {
@@ -160,7 +158,7 @@ export const AudioManager: React.FC<AudioManagerProps> = ({ transcriber }) => {
             }}
           />
           <FileTile
-            icon={<IconFolder />}
+            icon={<IconFolder size='1.25rem' color='var(--mantine-color-yellow-5)' />}
             text={"File"}
             ariaLabel='Upload audio file'
             onFileUpdate={(decoded, blobUrl, mimeType) => {
@@ -175,7 +173,7 @@ export const AudioManager: React.FC<AudioManagerProps> = ({ transcriber }) => {
           />
           {navigator.mediaDevices && (
             <RecordTile
-              icon={<IconMicrophone />}
+              icon={<IconMicrophone size='1.25rem' color='var(--mantine-color-red-5)' />}
               text={"Record"}
               ariaLabel='Record audio'
               setAudioData={(blob) => {

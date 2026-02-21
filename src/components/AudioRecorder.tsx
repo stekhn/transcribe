@@ -35,7 +35,6 @@ export const AudioRecorder: React.FC<AudioRecorderProps> = ({
           variant='filled'
           color={recording ? "red" : undefined}
           fullWidth
-          h={44}
           style={{ transition: "background-color 300ms" }}
         >
           {recording
