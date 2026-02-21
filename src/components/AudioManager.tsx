@@ -189,7 +189,7 @@ export const AudioManager: React.FC<AudioManagerProps> = ({ transcriber }) => {
       <AudioProgress progress={progress} />
       {audioData && (
         <Stack pos='relative' style={{ zIndex: 10 }}>
-          <Group gap='sm'>
+          <Group gap='sm' wrap='wrap'>
             <AudioPlayer src={audioData.url} type={audioData.mimeType} />
             <TranscribeButton
               onClick={() => {

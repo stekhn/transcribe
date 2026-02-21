@@ -19,7 +19,7 @@ export const TranscribeButton: React.FC<TranscribeButtonProps> = ({
       radius='md'
       style={{
         height: "2.5rem",
-        minWidth: "12rem",
+        flex: "1 1 12rem",
         pointerEvents: isTranscribing || isModelLoading ? "none" : undefined,
       }}
       aria-label='Start transcription'
