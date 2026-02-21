@@ -1,7 +1,6 @@
 import {
   Modal as MantineModal,
   Group,
-  Title,
   Text,
   Button,
 } from "@mantine/core";
@@ -31,9 +30,9 @@ export const Modal: React.FC<ModalProps> = ({
       onClose={onClose}
       title={
         typeof title === "string" ? (
-          <Title order={3} size='lg' fw={500}>
+          <Text size='lg' fw={500}>
             {title}
-          </Title>
+          </Text>
         ) : (
           title
         )
@@ -43,9 +42,9 @@ export const Modal: React.FC<ModalProps> = ({
       shadow='xl'
       centered
     >
-      <Text size='sm' c='dimmed' mb='md'>
+      <div style={{ color: "var(--mantine-color-dimmed)", fontSize: "var(--mantine-font-size-sm)", marginBottom: "var(--mantine-spacing-md)" }}>
         {content}
-      </Text>
+      </div>
 
       <Group justify='flex-end' gap='sm'>
         <Button onClick={onClose} variant='light' size='sm' radius='md'>

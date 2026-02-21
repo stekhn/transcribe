@@ -15,6 +15,10 @@ interface SelectProps<T = string> {
   label?: string;
   info?: string;
   children: React.ReactNode;
+  renderOption?: (item: {
+    option: { value: string; label: string };
+    checked: boolean;
+  }) => React.ReactNode;
 }
 
 export const Select = <T extends string = string>({
@@ -24,6 +28,7 @@ export const Select = <T extends string = string>({
   label,
   info,
   children,
+  renderOption,
   ...props
 }: SelectProps<T>) => {
   const [storedValue, setStoredValue] = useLocalStorage<T>(id, defaultValue);
@@ -82,6 +87,7 @@ export const Select = <T extends string = string>({
       variant='filled'
       size='sm'
       radius='md'
+      renderOption={renderOption}
       {...props}
     />
   );

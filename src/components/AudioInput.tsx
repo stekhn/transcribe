@@ -45,6 +45,7 @@ export const Tile: React.FC<TileProps> = ({
       onClick={onClick}
       aria-label={ariaLabel}
       h={40}
+      bg="var(--inset-bg)"
       style={{ flex: "1 1 180px" }}
     >
       <Group gap='0.25rem' wrap='nowrap'>

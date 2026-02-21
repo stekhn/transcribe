@@ -89,7 +89,7 @@ export const theme = createTheme({
       styles: {
         root: {
           "--paper-border-color": "var(--mantine-color-default-border)",
-          backgroundColor: "var(--mantine-color-white)",
+          backgroundColor: "var(--paper-bg)",
         },
       },
     },
@@ -128,11 +128,13 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => ({
     "--mantine-color-dimmed": theme.colors.gray[5],
     "--mantine-color-default-border": theme.colors.gray[2],
     "--inset-bg": theme.colors.gray[0],
+    "--paper-bg": "#fff",
   },
   dark: {
     "--mantine-color-body": theme.colors.dark[7],
     "--mantine-color-dimmed": theme.colors.gray[4],
     "--mantine-color-default-border": theme.colors.dark[5],
-    "--inset-bg": theme.colors.dark[6],
+    "--inset-bg": theme.colors.dark[7],
+    "--paper-bg": theme.colors.dark[6],
   },
 });

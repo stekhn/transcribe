@@ -29,7 +29,7 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({ src, type }) => {
   } = useAudioPlayer({ src, type });
 
   return (
-    <Paper shadow='none' h={40} px='xs' style={{ flexGrow: 1 }}>
+    <Paper shadow='none' h={40} px='xs' bg='var(--inset-bg)' style={{ flexGrow: 1 }}>
       <Group gap='xs' h='100%' align='center' justify='center'>
         <PlayControl isPlaying={isPlaying} togglePlayPause={togglePlaying} />
         <ProgressBar
