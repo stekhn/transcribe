@@ -25,7 +25,6 @@ export function useModelCacheStatus(
   // Check cache status only on initial load and only once
   useEffect(() => {
     if (!hasInitialized && models.length > 0) {
-      console.log("Initial cache check for models:", models);
       modelsRef.current = models;
       const checkCache = async () => {
         setIsLoading(true);
@@ -52,7 +51,6 @@ export function useModelCacheStatus(
       prevLoadingRef.current === true &&
       isModelLoading === false
     ) {
-      console.log("Model loading completed, refreshing cache status");
       const refreshCache = async () => {
         try {
           const status = await checkModelCacheStatus(modelsRef.current);
@@ -72,7 +70,6 @@ export function useModelCacheStatus(
   }, [isModelLoading, hasInitialized]);
 
   const refreshCacheStatus = async () => {
-    console.log("Manual cache refresh requested");
     if (modelsRef.current.length > 0) {
       try {
         const status = await checkModelCacheStatus(modelsRef.current);

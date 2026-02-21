@@ -17,7 +17,7 @@ interface SelectProps<T = string> {
   children: React.ReactNode;
   renderOption?: (item: {
     option: { value: string; label: string };
-    checked: boolean;
+    checked?: boolean;
   }) => React.ReactNode;
 }
 
