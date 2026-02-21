@@ -1,0 +1,27 @@
+.app-container {
+  background-color: light-dark(
+    var(--mantine-color-gray-0),
+    var(--mantine-color-dark-7)
+  );
+  min-height: 100vh;
+}
+
+.app-title {
+  letter-spacing: -0.025em;
+  font-size: clamp(2rem, 5vw, 3rem);
+}
+
+.app-subtitle {
+  letter-spacing: -0.025em;
+  font-size: clamp(1.125rem, 3vw, 1.25rem);
+}
+
+.app-logo {
+  width: 2.5rem;
+  height: 2.5rem;
+  fill: var(--mantine-color-blue-6);
+}
+
+.info-icon {
+  cursor: pointer;
+}

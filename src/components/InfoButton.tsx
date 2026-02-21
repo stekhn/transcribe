@@ -1,45 +1,34 @@
-import { useState } from "react";
+import { ActionIcon, Text } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
 
 import { Modal } from "./Modal";
 
-// @ts-ignore
-interface InfoButtonProps
-    extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-    icon: React.ReactNode;
-    content?: React.ReactNode;
+interface InfoButtonProps {
+  icon: React.ReactNode;
+  content?: React.ReactNode;
 }
 
 export const InfoButton: React.FC<InfoButtonProps> = ({ icon, content }) => {
-    const [showModal, setShowModal] = useState(false);
+  const [opened, { open, close }] = useDisclosure(false);
 
-    const handleClick = () => {
-        setShowModal(true);
-    };
-
-    const handleClose = () => {
-        setShowModal(false);
-    };
-
-    return (
-        <>
-            <button
-                className='rounded-full align-bottom focus:outline-none focus:ring-2 focus:ring-blue-700 dark:focus:ring-slate-400'
-                aria-label='App info'
-                onClick={handleClick}
-            >
-                {icon}
-            </button>
-            <Modal
-                show={showModal}
-                title={"About Transcribe"}
-                content={
-                    <div className='text-sm text-slate-900 dark:text-slate-100'>
-                        {content}
-                    </div>
-                }
-                onClose={handleClose}
-                onSubmit={() => {}}
-            />
-        </>
-    );
+  return (
+    <>
+      <ActionIcon
+        variant='subtle'
+        radius='xl'
+        aria-label='App info'
+        onClick={open}
+        style={{ alignSelf: "flex-end" }}
+      >
+        {icon}
+      </ActionIcon>
+      <Modal
+        opened={opened}
+        title={"About Transcribe"}
+        content={<Text size='sm'>{content}</Text>}
+        onClose={close}
+        onSubmit={() => {}}
+      />
+    </>
+  );
 };

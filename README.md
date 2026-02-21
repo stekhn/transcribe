@@ -29,9 +29,9 @@ Update the list of available Whisper models and the default model:
 export const DEFAULT_MODEL = "onnx-community/whisper-tiny";
 
 export const MODELS: { [key: string]: number } = {
-    "onnx-community/whisper-tiny": 120,
-    "onnx-community/whisper-base": 206,
-    "onnx-community/whisper-small": 586,
+  "onnx-community/whisper-tiny": 120,
+  "onnx-community/whisper-base": 206,
+  "onnx-community/whisper-small": 586,
 };
 ```
 
@@ -45,10 +45,10 @@ Update the list of Whisper languages and update the default language:
 export const DEFAULT_LANGUAGE = "en";
 
 export const LANGUAGES: { [key: string]: string } = {
-    en: "english",
-    fr: "french",
-    de: "german",
-    es: "spanish",
+  en: "english",
+  fr: "french",
+  de: "german",
+  es: "spanish",
 };
 ```
 
