@@ -19,20 +19,21 @@ export const TranscriptOutput: React.FC<TranscriptOutputProps> = ({
           radius='md'
           p='sm'
           shadow='none'
+          bg='var(--mantine-color-default)'
         >
           <Group gap='xs' align='flex-start'>
-            <Text size='sm' c='dimmed' style={{ fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }}>
+            <Text size='md' c='dimmed' style={{ fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }}>
               {formatAudioTimestamp(chunk.timestamp[0])}
             </Text>
-            <Text size='sm' style={{ flex: 1 }}>
+            <Text size='md' style={{ flex: 1 }}>
               {chunk.text}
             </Text>
           </Group>
         </Paper>
       ))
     ) : (
-      <Paper radius='md' p='sm' shadow='none'>
-        <Text size='sm'>
+      <Paper radius='md' p='sm' shadow='none' bg='var(--mantine-color-default)'>
+        <Text size='md'>
           {transcribedData.text
             ? transcribedData.text.trim()
             : "Transcription in progress. Enable timestamps to see the progress in real-time."}

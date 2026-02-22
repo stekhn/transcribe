@@ -49,7 +49,7 @@ export const AudioRecorder: React.FC<AudioRecorderProps> = ({
           style={{
             flex: "auto",
             width: "100%",
-            backgroundColor: "var(--inset-bg)",
+            backgroundColor: "var(--mantine-color-default)",
           }}
         >
           <AudioPlayer src={blobUrl} />

@@ -18,7 +18,7 @@ export const ModelProgress: React.FC<ModelProgressProps> = ({
         position: "relative",
         overflow: "hidden",
         borderRadius: "var(--mantine-radius-md)",
-        backgroundColor: "var(--inset-bg)",
+        backgroundColor: "var(--mantine-color-default)",
         border: "1px solid var(--mantine-color-default-border)",
       }}
     >

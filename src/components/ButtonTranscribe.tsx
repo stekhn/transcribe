@@ -15,7 +15,7 @@ export const TranscribeButton: React.FC<TranscribeButtonProps> = ({
   return (
     <Button
       variant='filled'
-      size='sm'
+      size='md'
       radius='md'
       style={{
         flex: "1 1 12rem",

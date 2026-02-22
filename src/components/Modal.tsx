@@ -47,7 +47,7 @@ export const Modal: React.FC<ModalProps> = ({
       </div>
 
       <Group justify='flex-end' gap='sm'>
-        <Button onClick={onClose} variant='light' size='sm' radius='md'>
+        <Button onClick={onClose} variant='default' size='sm' radius='md'>
           Close
         </Button>
         {submitText && (

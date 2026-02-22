@@ -22,7 +22,7 @@ export const App: React.FC = () => {
     useDisclosure(false);
 
   return (
-    <Stack align='center' p='md' mih='100vh'>
+    <Stack align='center' p='md' mih='100vh' gap='xl'>
       <Container size='sm' p='md'>
         <Group justify='center' gap='sm' mb='md'>
           <Logo
@@ -199,8 +199,8 @@ const ContentHelp: React.FC = () => {
         Source language
       </Text>
       <Text size='sm'>
-        Select the language spoken in your audio. English is best supported and
-        produces the most accurate results.
+        Select the language spoken in your audio or use auto-detect. Specifying
+        the correct language can improve accuracy. English is best supported.
       </Text>
       <Text size='sm' fw='bold'>
         WebGPU support

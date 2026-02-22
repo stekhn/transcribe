@@ -76,7 +76,7 @@ export const theme = createTheme({
           fontWeight: "normal",
         },
         input: {
-          backgroundColor: "var(--inset-bg)",
+          backgroundColor: "var(--mantine-color-default)",
           border: "1px solid var(--mantine-color-default-border)",
         },
       },
@@ -127,7 +127,6 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => ({
     "--mantine-color-default-hover": "var(--mantine-primary-color-light)",
     "--mantine-color-default-color": "var(--mantine-color-text)",
     "--mantine-color-default-color-hover": "var(--mantine-primary-color-light-color)",
-    "--inset-bg": theme.colors.gray[0],
     "--paper-bg": "#fff",
   },
   dark: {
@@ -138,7 +137,6 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => ({
     "--mantine-color-default-hover": "var(--mantine-primary-color-light)",
     "--mantine-color-default-color": "var(--mantine-color-text)",
     "--mantine-color-default-color-hover": "var(--mantine-primary-color-light-color)",
-    "--inset-bg": theme.colors.dark[7],
     "--paper-bg": theme.colors.dark[6],
   },
 });

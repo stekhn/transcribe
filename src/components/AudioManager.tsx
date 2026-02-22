@@ -121,35 +121,13 @@ export const AudioManager: React.FC<AudioManagerProps> = ({ transcriber }) => {
 
   return (
     <Stack gap='lg'>
-      <Settings transcriber={transcriber} />
-      <Stack gap='xs'>
-        {hasWebGpu && (
-          <Switch
-            id='switch-webgpu'
-            defaultChecked={false}
-            onChange={transcriber.setWebGPU}
-            label='Enable WebGPU support (experimental)'
-            showLine={true}
-          />
-        )}
-        {hasNotification && (
-          <Switch
-            id='switch-notification'
-            defaultChecked={notificationsEnabled}
-            onChange={toggleNotifications}
-            overrideStoredValue={true}
-            label='Turn on notifications'
-            showLine={true}
-          />
-        )}
-      </Stack>
       <Stack gap="0.25rem">
         <Text size='sm' c='dimmed'>
-          Add the audio source
+          Audio source
         </Text>
         <Group gap='sm' grow preventGrowOverflow={false} wrap='wrap'>
           <UrlTile
-            icon={<IconLink size='1.25rem' color='var(--mantine-color-blue-5)' />}
+            icon={<IconLink size='1.25rem' color='var(--mantine-primary-color-filled)' />}
             text={"Link"}
             ariaLabel='Enter audio URL'
             onUrlUpdate={(url) => {
@@ -158,7 +136,7 @@ export const AudioManager: React.FC<AudioManagerProps> = ({ transcriber }) => {
             }}
           />
           <FileTile
-            icon={<IconFolder size='1.25rem' color='var(--mantine-color-yellow-5)' />}
+            icon={<IconFolder size='1.25rem' color='var(--mantine-primary-color-filled)' />}
             text={"File"}
             ariaLabel='Upload audio file'
             onFileUpdate={(decoded, blobUrl, mimeType) => {
@@ -173,7 +151,7 @@ export const AudioManager: React.FC<AudioManagerProps> = ({ transcriber }) => {
           />
           {navigator.mediaDevices && (
             <RecordTile
-              icon={<IconMicrophone size='1.25rem' color='var(--mantine-color-red-5)' />}
+              icon={<IconMicrophone size='1.25rem' color='var(--mantine-primary-color-filled)' />}
               text={"Record"}
               ariaLabel='Record audio'
               setAudioData={(blob) => {
@@ -183,6 +161,28 @@ export const AudioManager: React.FC<AudioManagerProps> = ({ transcriber }) => {
             />
           )}
         </Group>
+      </Stack>
+      <Settings transcriber={transcriber} />
+      <Stack gap='xs'>
+        {hasWebGpu && (
+          <Switch
+            id='switch-webgpu'
+            defaultChecked={false}
+            onChange={transcriber.setWebGPU}
+            label='WebGPU acceleration (experimental)'
+            showLine={true}
+          />
+        )}
+        {hasNotification && (
+          <Switch
+            id='switch-notification'
+            defaultChecked={notificationsEnabled}
+            onChange={toggleNotifications}
+            overrideStoredValue={true}
+            label='Notify when done'
+            showLine={true}
+          />
+        )}
       </Stack>
       <AudioProgress progress={progress} />
       {audioData && (

@@ -52,7 +52,7 @@ export const ShareAndCopyButtons: React.FC<ShareAndCopyButtonsProps> = ({
           onClick={() => copyToClipboard(transcribedData, showTimestamps)}
           style={{ flex: 1 }}
         >
-          <IconClipboard size='1.25rem' />
+          <IconClipboard size='1.25rem' color='var(--mantine-primary-color-filled)' />
         </ActionIcon>
       )}
       {!!navigator.share && (
@@ -63,7 +63,7 @@ export const ShareAndCopyButtons: React.FC<ShareAndCopyButtonsProps> = ({
           onClick={() => shareText(transcribedData, showTimestamps)}
           style={{ flex: 1 }}
         >
-          <IconShare size='1.25rem' />
+          <IconShare size='1.25rem' color='var(--mantine-primary-color-filled)' />
         </ActionIcon>
       )}
     </Group>

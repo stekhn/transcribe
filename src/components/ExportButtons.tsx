@@ -58,7 +58,7 @@ export const ExportButtons: React.FC<ExportButtonsProps> = ({
   <Group gap='xs' w={{ base: "100%", sm: "auto" }}>
     <Button
       variant='default'
-      leftSection={<IconDownload size='1.25rem' />}
+      leftSection={<IconDownload size='1.25rem' color='var(--mantine-primary-color-filled)' />}
       style={{ flex: "1 0 auto" }}
       aria-label='Download text as text file'
       onClick={() => exportTXT(transcribedData, showTimestamps)}
@@ -67,7 +67,7 @@ export const ExportButtons: React.FC<ExportButtonsProps> = ({
     </Button>
     <Button
       variant='default'
-      leftSection={<IconDownload size='1.25rem' />}
+      leftSection={<IconDownload size='1.25rem' color='var(--mantine-primary-color-filled)' />}
       style={{ flex: "1 0 auto" }}
       aria-label='Download text as SRT file'
       onClick={() => exportSRT(transcribedData)}
@@ -76,7 +76,7 @@ export const ExportButtons: React.FC<ExportButtonsProps> = ({
     </Button>
     <Button
       variant='default'
-      leftSection={<IconDownload size='1.25rem' />}
+      leftSection={<IconDownload size='1.25rem' color='var(--mantine-primary-color-filled)' />}
       style={{ flex: "1 0 auto" }}
       aria-label='Download text as JSON file'
       onClick={() => exportJSON(transcribedData)}
