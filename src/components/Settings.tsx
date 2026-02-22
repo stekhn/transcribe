@@ -25,12 +25,15 @@ export const Settings: React.FC<SettingsProps> = ({ transcriber }) => {
         id='select-model'
         defaultValue={transcriber.model}
         setValue={transcriber.setModel}
-        label='Choose a transcription model'
+        label='Transcription model'
         renderOption={({ option }) => (
           <Group gap='xs' justify='space-between' wrap='nowrap'>
             <span>{option.label}</span>
             {cacheStatus[option.value] ? (
-              <IconCircleCheck size='1rem' color='var(--mantine-color-dimmed)' />
+              <IconCircleCheck
+                size='1rem'
+                color='var(--mantine-color-dimmed)'
+              />
             ) : (
               <IconCircle size='1rem' color='var(--mantine-color-dimmed)' />
             )}
@@ -45,10 +48,13 @@ export const Settings: React.FC<SettingsProps> = ({ transcriber }) => {
       </Select>
       <Select
         id='select-language'
-        defaultValue={transcriber.language || "en"}
+        defaultValue={transcriber.language || "auto"}
         setValue={transcriber.setLanguage}
-        label='Select the source language'
+        label='Source language'
       >
+        <Option key='auto' value='auto'>
+          Auto-detect
+        </Option>
         {Object.keys(LANGUAGES).map((key) => (
           <Option key={key} value={key}>
             {titleCase(LANGUAGES[key])}
