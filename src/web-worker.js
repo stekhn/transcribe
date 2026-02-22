@@ -161,8 +161,8 @@ const transcribe = async ({ audio, model, subtask, language, device }) => {
     stride_length_s,
 
     // Language and task
-    language: isEnglish ? "" : language,
-    task: isEnglish ? "" : subtask,
+    language: isEnglish || language === "auto" ? undefined : language,
+    task: isEnglish || language === "auto" ? undefined : subtask,
 
     // Return timestamps
     return_timestamps: true,
