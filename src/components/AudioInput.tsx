@@ -41,7 +41,7 @@ export const Tile: React.FC<TileProps> = ({
   return (
     <Button
       variant='default'
-      size='md'
+      size='sm'
       onClick={onClick}
       aria-label={ariaLabel}
       leftSection={icon}
