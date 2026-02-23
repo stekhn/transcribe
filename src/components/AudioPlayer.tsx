@@ -1,5 +1,5 @@
 import React from "react";
-import { Group, Paper, ActionIcon, Text, Slider } from "@mantine/core";
+import { Group, Paper, ActionIcon, Text, Progress } from "@mantine/core";
 import {
   IconPlayerPause,
   IconPlayerPlay,
@@ -11,11 +11,15 @@ import { secondsToTimecode } from "../utils/string";
 import { useAudioPlayer } from "../hooks/useAudioPlayer";
 
 interface AudioPlayerProps {
-  src: string;
+  src?: string;
   type?: string;
+  loadingProgress?: number;
 }
 
-export const AudioPlayer: React.FC<AudioPlayerProps> = ({ src, type }) => {
+export const AudioPlayer: React.FC<AudioPlayerProps> = ({ src, type, loadingProgress = 0 }) => {
+  const isLoading = loadingProgress > 0 && loadingProgress < 1 && !src;
+  const isReady = !!src;
+
   const {
     currentTime,
     totalTime,
@@ -26,22 +30,41 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({ src, type }) => {
     audioRef,
     progressBarRef,
     handleUpdate,
-  } = useAudioPlayer({ src, type });
+  } = useAudioPlayer({ src: src || "", type });
 
   return (
-    <Paper shadow='none' h={42} px='xs' bg='var(--mantine-color-default)' style={{ flexGrow: 1 }}>
-      <Group gap='xs' h='100%' align='center' justify='center'>
-        <PlayControl isPlaying={isPlaying} togglePlayPause={togglePlaying} />
-        <ProgressBar
-          progressBarRef={progressBarRef}
-          currentTime={currentTime}
-          totalTime={totalTime}
-          handleUpdate={handleUpdate}
-        />
-        <VolumeControl isMuted={isMuted} toggleMute={toggleMuted} />
-        <audio ref={audioRef}>
-          <source src={src} type={type} />
-        </audio>
+    <Paper shadow='none' h={36} px='xs' bg='var(--mantine-color-default)' style={{ flexGrow: 1 }}>
+      <Group
+        gap='xs'
+        h='100%'
+        align='center'
+        justify='center'
+        style={!isReady && !isLoading ? { color: "var(--color-disabled)", pointerEvents: "none" } : undefined}
+      >
+        {isLoading ? (
+          <Progress
+            value={Math.round(loadingProgress * 100)}
+            size='xs'
+            style={{ flex: 1, transition: "all 100ms" }}
+          />
+        ) : (
+          <>
+            <PlayControl isPlaying={isPlaying} togglePlayPause={togglePlaying} />
+            <ProgressBar
+              progressBarRef={progressBarRef}
+              currentTime={currentTime}
+              totalTime={totalTime}
+              handleUpdate={handleUpdate}
+              disabled={!isReady}
+            />
+            <VolumeControl isMuted={isMuted} toggleMute={toggleMuted} />
+          </>
+        )}
+        {src && (
+          <audio ref={audioRef}>
+            <source src={src} type={type} />
+          </audio>
+        )}
       </Group>
     </Paper>
   );
@@ -79,6 +102,7 @@ interface ProgressBarProps {
   currentTime: number;
   totalTime: number;
   handleUpdate: (value: string) => void;
+  disabled?: boolean;
 }
 
 const ProgressBar: React.FC<ProgressBarProps> = ({
@@ -86,6 +110,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
   currentTime,
   totalTime,
   handleUpdate,
+  disabled,
 }) => {
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) =>
     handleUpdate(e.target.value);
@@ -108,6 +133,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
         step={0.1}
         defaultValue='0'
         onInput={handleInput}
+        disabled={disabled}
         style={{ flex: 1 }}
       />
     </Group>

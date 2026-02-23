@@ -7,6 +7,7 @@ input[type="range"] {
   background: transparent;
   cursor: pointer;
   width: 100%;
+  color: inherit;
 }
 
 /* Removes default focus */
@@ -27,7 +28,7 @@ input[type="range"]::-webkit-slider-runnable-track {
 input[type="range"]::before {
   content: "";
   height: 4px;
-  background: var(--mantine-color-text);
+  background: currentColor;
   width: var(--range-progress);
   border-bottom-left-radius: 2px;
   border-top-left-radius: 2px;
@@ -43,7 +44,7 @@ input[type="range"]::-webkit-slider-thumb {
   position: relative;
   z-index: 1;
   margin-top: -4px; /* Centers thumb on the track */
-  background-color: var(--mantine-color-text);
+  background-color: currentColor;
   box-shadow: 0 0 0 2px var(--paper-bg);
   border-radius: 50%;
   height: 12px;
@@ -66,7 +67,7 @@ input[type="range"]::-moz-range-track {
 
 /* played progress length */
 input[type="range"]::-moz-range-progress {
-  background: var(--mantine-color-text);
+  background: currentColor;
   border-bottom-left-radius: 2px;
   border-top-left-radius: 2px;
   height: 4px;
@@ -74,7 +75,7 @@ input[type="range"]::-moz-range-progress {
 
 /* slider thumb */
 input[type="range"]::-moz-range-thumb {
-  background-color: var(--mantine-color-text);
+  background-color: currentColor;
   box-shadow: 0 0 0 2px var(--paper-bg);
   border: none; /* Removes extra border */
   border-radius: 50%;

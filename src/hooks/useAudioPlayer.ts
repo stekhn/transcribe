@@ -79,6 +79,8 @@ export const useAudioPlayer = ({ src, type }: Audio): UseAudioPlayer => {
   );
 
   useEffect(() => {
+    if (!src) return;
+
     const onLoadedMetadata = () => {
       const seconds = audioRef.current?.duration || 0;
       setTotalTime(seconds);
@@ -99,7 +101,7 @@ export const useAudioPlayer = ({ src, type }: Audio): UseAudioPlayer => {
       audioRef.current?.removeEventListener("loadedmetadata", onLoadedMetadata);
       audioRef.current?.removeEventListener("ended", handleAudioEnd);
     };
-  }, [updateProgress]);
+  }, [src, updateProgress]);
 
   useEffect(() => {
     setIsPlaying(false);
@@ -111,7 +113,7 @@ export const useAudioPlayer = ({ src, type }: Audio): UseAudioPlayer => {
       progressBarRef.current.style.setProperty("--range-progress", "0%");
     }
 
-    if (audioRef.current) {
+    if (src && audioRef.current) {
       audioRef.current.currentTime = 0;
       audioRef.current.load();
     }

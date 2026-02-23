@@ -4,26 +4,37 @@ import { Group, Loader, Button } from "@mantine/core";
 interface TranscribeButtonProps {
   isModelLoading: boolean;
   isTranscribing: boolean;
+  disabled?: boolean;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 export const TranscribeButton: React.FC<TranscribeButtonProps> = ({
   isModelLoading,
   isTranscribing,
+  disabled,
   onClick,
 }) => {
+  const isBusy = isTranscribing || isModelLoading;
+
+  const isDisabled = disabled && !isBusy;
+
   return (
     <Button
       variant='filled'
-      size='md'
+      size='sm'
       radius='md'
       style={{
         flex: "1 1 12rem",
-        pointerEvents: isTranscribing || isModelLoading ? "none" : undefined,
+        pointerEvents: isBusy || isDisabled ? "none" : undefined,
+        ...(isDisabled ? {
+          backgroundColor: "var(--mantine-color-default)",
+          color: "var(--color-disabled)",
+          border: "1px solid var(--mantine-color-default-border)",
+        } : {}),
       }}
       aria-label='Start transcription'
       onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
-        if (onClick && !isTranscribing && !isModelLoading) {
+        if (onClick && !isBusy && !disabled) {
           onClick(event);
         }
       }}
