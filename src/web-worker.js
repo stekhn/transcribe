@@ -40,7 +40,10 @@ self.addEventListener("message", async (event) => {
   let transcript = await transcribe(message).catch((error) => {
     self.postMessage({
       status: "error",
-      data: error,
+      data: {
+        name: error?.name || "Transcription Error",
+        message: error?.message || "An unknown error occurred during transcription.",
+      },
     });
   });
 
@@ -174,7 +177,10 @@ const transcribe = async ({ audio, model, subtask, language, device }) => {
     console.error(error);
     self.postMessage({
       status: "error",
-      data: error,
+      data: {
+        name: error?.name || "Transcription Error",
+        message: error?.message || "An unknown error occurred during transcription.",
+      },
     });
     return null;
   });

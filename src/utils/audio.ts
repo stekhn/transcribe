@@ -90,7 +90,8 @@ export const downloadAudioFromUrl = async (
       }
       await setAudioFromDownload(data, mimeType);
     } catch (error) {
-      console.log("Request failed or aborted", error);
+      if (axios.isCancel(error)) return;
+      throw error;
     }
   }
 };

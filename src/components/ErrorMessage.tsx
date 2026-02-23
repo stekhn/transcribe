@@ -1,5 +1,5 @@
 import React from "react";
-import { Alert, Text } from "@mantine/core";
+import { Alert } from "@mantine/core";
 
 interface ErrorMessageProps {
   error: { name: string; message: string };
@@ -7,10 +7,8 @@ interface ErrorMessageProps {
 
 export const ErrorMessage: React.FC<ErrorMessageProps> = ({ error }) => {
   return (
-    <Alert color='red' radius='md' mt='md'>
-      <Text size='sm'>
-        {error.name}: {error.message}
-      </Text>
+    <Alert>
+      {error.name}: {error.message}
     </Alert>
   );
 };

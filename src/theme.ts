@@ -94,6 +94,23 @@ export const theme = createTheme({
         },
       },
     },
+    Alert: {
+      defaultProps: {
+        variant: "outline",
+        color: "red",
+        radius: "md",
+        p: "0.4rem 0.5rem",
+      },
+      styles: {
+        root: {
+          backgroundColor: "var(--mantine-color-red-light)",
+          borderColor: "var(--mantine-color-red-2)",
+        },
+        message: {
+          color: "var(--mantine-color-red-8)",
+        },
+      },
+    },
     Modal: {
       defaultProps: {
         size: "md",
@@ -128,6 +145,7 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => ({
     "--mantine-color-default-color": "var(--mantine-color-text)",
     "--mantine-color-default-color-hover": "var(--mantine-primary-color-light-color)",
     "--paper-bg": "#fff",
+    "--color-disabled": theme.colors.gray[3],
   },
   dark: {
     "--mantine-color-body": theme.colors.dark[7],
@@ -138,5 +156,6 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => ({
     "--mantine-color-default-color": "var(--mantine-color-text)",
     "--mantine-color-default-color-hover": "var(--mantine-primary-color-light-color)",
     "--paper-bg": theme.colors.dark[6],
+    "--color-disabled": theme.colors.dark[4],
   },
 });
